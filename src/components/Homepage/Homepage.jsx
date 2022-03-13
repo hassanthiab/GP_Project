@@ -36,14 +36,14 @@ border-bottom: 3 px solid transparent;
 
 
 export const NavLink = styled(Link)`
-font-size: 26px;
+font-size: 22px;
 color: white;
 
 display: flex;
 align-items: center ;
 text-decoration: none ;
 padding    : 2rem ;
-text-transform: uppercase ;
+
 height: 100% ;  
 cursor: pointer ;
 &:hover
@@ -94,7 +94,7 @@ export const NavBtn = styled.nav`
 
 export const NavBtnLink = styled(Link)`
 
-    font-size: 22px;
+    font-size: 17px;
     margin-right: 2rem ;
     background-color: #2196f3 ;
     color: #fff;

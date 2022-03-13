@@ -19,38 +19,33 @@ const Container = styled.div`
     letter-spacing: 0.5em;
 
     @media screen and (max-width: 320px) {
-        weight: 80 vw;
-        height: 90 vh ;
+        width: 90% ;
+        height: 90% ;
     }
 
-    @media screen and (max-width: 320px) {
-        weight: 80 vw;
-        height: 90 vh ;
-    }
-
-    @media screen and (min-width: 360px) {
-        weight: 80 vw;
-        height: 90 vh ;
+    @media screen and (max-width: 360px) {
+        width: 90% ;
+        height: 90% ;
 
     }
-     @media screen and (min-width: 411px) {
-        weight: 80 vw;
-        height: 90 vh ;
+     @media screen and (max-width: 411px) {
+        width: 90% ;
+        height: 90% ;
 
     }
-    @media screen and (min-width: 768px) {
-        weight: 80 vw;
-        height: 80 vh ;
+    @media screen and (max-width: 768px) {
+        width: 90% ;
+        height: 90% ;
 
     }
-     @media screen and (min-width: 1024px) {
-        weight: 70 vw;
-        height: 50 vh ;
+     @media screen and (max-width: 1024px) {
+        width: 90% ;
+        height: 90% ;
 
     }
-    @media screen and (min-width: 1280px) {
-        weight: 80 vw;
-        height: 90 vh ;
+    @media screen and (max-width: 1280px) {
+        width: 90% ;
+        height: 90% ;
 
     }
     
