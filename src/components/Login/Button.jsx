@@ -12,7 +12,7 @@ export default function({nameButton})
 </div>
 
 <div class="col-md-10">
-    {/* <button type="button" style={{ width:"100%"}} class="btn btn-outline-primary">{nameButton}</button> */}
+    {/* <button type="button" style={{ width:"100%"}} class="btn btn-outline-primary">{nameButton}</button>  */}
     <StyledButton>{nameButton}</StyledButton>
     </div>
 
