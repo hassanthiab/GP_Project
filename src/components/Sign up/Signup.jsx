@@ -5,6 +5,7 @@ import FancyInput from "../Login/Input"
 import FancyButton from "../Login/Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
+import { ThemeProvider } from 'styled-components';
 const Container = styled.div`
     display: flex;
     align-items: center;
@@ -106,10 +107,7 @@ export class Signup extends Component
          
                 
         let registerReq=()=>{
-            console.log(this.state.input['name']);
-            console.log(this.state.input['email']);
-            console.log(this.state.input['password']);
-            console.log(this.state.input['password_confirmation']);
+     
          
             axios.post("http://localhost:8000/api/register",{
                 "name":this.state.input['name'],
@@ -118,34 +116,51 @@ export class Signup extends Component
            "password_confirmation":this.state.input['password_confirmation'],
         
         }).then(response=> {
-            this.setState({
-                error:response.statusText
-                });
-            console.log(response);
+            if(response.status==201){
+                this.setState({
+                    input:{
+                        name:"",
+                        email:"",
+                        password:"",
+                        password_confirmation:"",
+                        
+                        }, 
+                
+                        errors:{
+                            name:"",
+                            email:"",
+                            password:"",
+                        }
+                })
+            }
+
           })
           .catch(error=> {
            
-            error=error.response.data.errors
+            let errors=error.response.data.errors
             
-            console.log(Object.keys(error))
+           
            let stateErrrors={...this.state.errors}
            
-           Object.keys(error).forEach(element => {
-            stateErrrors[element]=error[element]
-           });
+           Object.keys(this.state.errors).forEach(element=>{
+            if(Object.keys(errors).includes(element)){
+                stateErrrors[element]=errors[element]
+            }else{
+                stateErrrors[element]=""
+            }
+             
+           })
+          
            
-      
-        
             this.setState({
                 errors: stateErrrors
                 });
-            console.log(error)
+         
           });
         }
       
         let changed=(event,inputId)=>{
-            
-         console.log(this.state.input[inputId])
+
            let input={...this.state.input}
             input[inputId]=event.target.value
             this.setState(
