@@ -16,8 +16,6 @@ const Container = styled.div`
     backdrop-filter: blur(2.5px);
     border-radius:15px ;
     color: #ffffff;
-    text-transform: uppercase ;
-    letter-spacing: 0.5em;
     @media screen and (max-width: 320px) {
         width: 90% ;
         height: 90% ;
@@ -88,58 +86,109 @@ let error=""
 export class Login extends Component{
     state={
      
-        error:""
+        input:{
+            email:"",
+            password:"",
+            
+            }, 
+    
+            errors:{
+                email:"",
+                password:"",
+            },
+            message:"",
     }
     render() {
 
   
         let loginReq = () => {
-            console.log("login");
-        
-          
-        
-         
+
                 axios.post("http://localhost:8000/api/login",{    
-                "email":"teddfsfdsfdfsst@test.com",
-                "password":"123456789@aA",     
+                    "email":this.state.input['email'],
+                    "password":this.state.input['password'],  
            
             }).then(response=> {
-                this.setState({
-                    error:response.statusText
-                    });
-                console.log(response);
+               if(response.status==200)
+               {
+                   this.setState({
+                    input:{
+                        email:"",
+                        password:"",
+                        
+                        }, 
+                
+                        errors:{
+                            email:"",
+                            password:"",
+                        },
+                        message:"",
+                   })
+               }
               })
               .catch(error=> {
               
-                error=error.response.data.message
-                
+               let errors=error.response.data.errors
+            
+              
+               let stateErrrors={...this.state.errors}
+               if(errors){
+               Object.keys(errors).forEach(element => {
+                stateErrrors[element]=errors[element]
+               });
+               this.setState({
+                errors: stateErrrors,
+                message:""
+                });
+            }
+               else
+               {
+                   
                 this.setState({
-                    error:error
-                    });
-                console.log(error)
+                    errors:{
+                        email:"",
+                        password:"",
+                    },
+                    message:error.response.data.message
+                })
+               }
+               
+                
+               
               });
            
-           
-        
-        
-        
+
         }
+
+        let changed=(event,inputId)=>{
+            
+              let input={...this.state.input}
+               input[inputId]=event.target.value
+               this.setState(
+                   {
+                 
+                       input:input
+                   }
+                   )
+                 
+           }
     return (
     <body className="Login">
 
 <Container>   
         <Title>welcome</Title>
         <InputText>
-        <FancyInput type="text" placeholder='Email'></FancyInput>
-        <FancyInput type="password" placeholder='Password'></FancyInput>
+        <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'></FancyInput>
+      
+        <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'></FancyInput>
+      <label>{this.state.errors['email'][0]}</label>
+      <label>{this.state.message}</label>
         </InputText>
         <ClickableText>Forgot Password?</ClickableText>
         <Buttons>
             <FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
             <FancyButton nameButton='Register'></FancyButton>
         </Buttons>
-      
-        <label>{this.state.error}</label>
+       
     </Container>
     </body>
 
