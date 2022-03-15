@@ -6,53 +6,9 @@ import FancyButton from "../Login/Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
 import { ThemeProvider } from 'styled-components';
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 80vh;
-    width: 30vw;
-    background: #1312128f;
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.3);
-    backdrop-filter: blur(2.5px);
-    border-radius:15px ;
-    color: #ffffff;
- 
 
-    @media screen and (max-width: 320px) {
-        width: 90% ;
-        height: 90% ;
-    }
-
-    @media screen and (max-width: 360px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-     @media screen and (max-width: 411px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-    @media screen and (max-width: 768px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-     @media screen and (max-width: 1024px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-    @media screen and (max-width: 1280px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-    
-    
-
-`;
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Container from '../Login/ContainerBox';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -175,7 +131,7 @@ export class Signup extends Component
         
     return (
         <body className="Login">
-    <Container>   
+    <Container size="80vh">   
             <Title>Signup</Title>
             <InputText>
             <FancyInput onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
@@ -183,11 +139,21 @@ export class Signup extends Component
             <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{this.state.email}</FancyInput>
             <label>{this.state.errors['email'][0]}</label>
             <FancyInput onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{this.state.password}</FancyInput>
-            <FancyInput onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Password'>{this.state.password_confirmation}</FancyInput>
+            <FancyInput onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{this.state.password_confirmation}</FancyInput>
             <label>{this.state.errors['password'][0]}</label>
             </InputText>
             <Buttons>
-                <FancyButton onClick={registerReq} nameButton='Sign up'></FancyButton>
+            <div class="container">
+     <div class="row">
+    <div class="col-md-1">
+        </div>
+    <div class="col-md-10">
+    <FancyButton onClick={registerReq} nameButton='Sign up'></FancyButton>
+     </div>
+    <div class="col-md-1">
+    </div>
+     </div>
+        </div>
             </Buttons>
             
         </Container>
