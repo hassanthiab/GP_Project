@@ -1,30 +1,13 @@
 import React from 'react';
 import { Fragment } from 'react/cjs/react.production.min';
 import styled from 'styled-components';
+import Button from  '@material-ui/core/Button';
 export default function(props)
 {
     return (
-        <div class="container">
-<div class="row">
-
-<div class="col-md-1">
-
-</div>
-
-<div class="col-md-10">
-    {/* <button type="button" style={{ width:"100%"}} class="btn btn-outline-primary">{nameButton}</button>  */}
     <StyledButton onClick={props.onClick}>{props.nameButton}</StyledButton>
-    </div>
-
-    <div class="col-md-1">
-
-</div>
-
-    </div>
-
-    </div>
+   
     )
-    {/* <StyledButton>{nameButton}</StyledButton>; */}
    
 
 }

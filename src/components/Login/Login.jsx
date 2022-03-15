@@ -5,49 +5,8 @@ import FancyInput from "./Input"
 import FancyButton from "./Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 80vh;
-    width: 30vw;
-    background: #1312128f;
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.3);
-    backdrop-filter: blur(2.5px);
-    border-radius:15px ;
-    color: #ffffff;
-    @media screen and (max-width: 320px) {
-        width: 90% ;
-        height: 90% ;
-    }
-
-    @media screen and (max-width: 360px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-     @media screen and (max-width: 411px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-    @media screen and (max-width: 768px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-     @media screen and (max-width: 1024px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-    @media screen and (max-width: 1280px) {
-        width: 90% ;
-        height: 90% ;
-
-    }
-
-`;
+import { Link,RouterLink } from 'react-router-dom';
+import Container from './ContainerBox';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -201,7 +160,7 @@ export class Login extends Component{
     return (
     <body className="Login">
 
-<Container>   
+<Container size="80vh">   
         <Title>welcome</Title>
         <InputText>
         <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'></FancyInput>
@@ -211,12 +170,41 @@ export class Login extends Component{
       <label>{this.state.errors['password'][0]}</label>
       <label>{this.state.message?"Please Try Again In 1 Minute":""}</label>
         </InputText>
-        <ClickableText >Forgot Password?</ClickableText>
+        <Link to="/Login/ForgotPassword">
+        <ClickableText>Forgot Password?</ClickableText>
+        </Link>
+
         <Buttons>
-            <FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
-            <FancyButton nameButton='Register'></FancyButton>
-        </Buttons>
+        <div class="container">
+<div class="row">
+<div class="col-md-1">
+</div>
+<div class="col-md-10">
+<FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
+    </div>
+    <div class="col-md-1">
+</div>
+    </div>
+    </div>
        
+            <div class="container">
+            <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                        <Link to="/Signup">
+                        <FancyButton nameButton='Register'></FancyButton> 
+                        </Link>
+                </div>
+            <div class="col-md-1">
+            </div>
+                </div>
+            </div>
+            
+           
+        
+            </Buttons>
+        
     </Container>
     </body>
 
