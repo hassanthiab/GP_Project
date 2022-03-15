@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { Fragment } from "react/cjs/react.production.min";
-export default function Input({type,placeholder})
+export default function Input(props)
 {
     return(
         <div class="container ">
@@ -12,7 +12,7 @@ export default function Input({type,placeholder})
 
   <div class="col-md-10">
         <div class="input-group mb-3">
-        <StyInput type={type} placeholder={placeholder}></StyInput>
+        <StyInput onChange={props.onChange} type={props.type} value={props.children} name={props.name} placeholder={props.placeholder}></StyInput>
       </div>
 </div>
 

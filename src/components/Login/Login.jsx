@@ -3,7 +3,8 @@ import React from 'react';
 import './LoginStyle.css';
 import FancyInput from "./Input"
 import FancyButton from "./Button"
-
+import axios from 'axios';
+import { Component } from 'react/cjs/react.production.min';
 const Container = styled.div`
     display: flex;
     align-items: center;
@@ -82,28 +83,70 @@ const Buttons = styled.div`
     margin: 1rem 0 2rem 0 ;
     width:100% ;
 `;
-function Login()
-{
-    
-    return (
-        <body class="Login">
+let error=""
 
-    <Container>   
-            <Title>welcome</Title>
-            <InputText>
-            <FancyInput type="text" placeholder='Email'></FancyInput>
-            <FancyInput type="password" placeholder='Password'></FancyInput>
-            </InputText>
-            <ClickableText>Forgot Password?</ClickableText>
-            <Buttons>
-                <FancyButton nameButton='Login'></FancyButton>
-                <FancyButton nameButton='Register'></FancyButton>
-            </Buttons>
-            
-        </Container>
-        </body>
-    
-         );
-}
+export class Login extends Component{
+    state={
+     
+        error:""
+    }
+    render() {
+
+  
+        let loginReq = () => {
+            console.log("login");
+        
+          
+        
+         
+                axios.post("http://localhost:8000/api/login",{    
+                "email":"teddfsfdsfdfsst@test.com",
+                "password":"123456789@aA",     
+           
+            }).then(response=> {
+                this.setState({
+                    error:response.statusText
+                    });
+                console.log(response);
+              })
+              .catch(error=> {
+              
+                error=error.response.data.message
+                
+                this.setState({
+                    error:error
+                    });
+                console.log(error)
+              });
+           
+           
+        
+        
+        
+        }
+    return (
+    <body className="Login">
+
+<Container>   
+        <Title>welcome</Title>
+        <InputText>
+        <FancyInput type="text" placeholder='Email'></FancyInput>
+        <FancyInput type="password" placeholder='Password'></FancyInput>
+        </InputText>
+        <ClickableText>Forgot Password?</ClickableText>
+        <Buttons>
+            <FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
+            <FancyButton nameButton='Register'></FancyButton>
+        </Buttons>
+      
+        <label>{this.state.error}</label>
+    </Container>
+    </body>
+
+     );
+    }
+    } 
+
+
 
 export default Login;
