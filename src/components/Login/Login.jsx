@@ -132,9 +132,17 @@ export class Login extends Component{
               
                let stateErrrors={...this.state.errors}
                if(errors){
-               Object.keys(errors).forEach(element => {
-                stateErrrors[element]=errors[element]
-               });
+                Object.keys(this.state.errors).forEach(element=>{
+                    if(Object.keys(errors).includes(element)){
+                        stateErrrors[element]=errors[element]
+                    }else{
+                        stateErrrors[element]=""
+                    }
+                     
+                   })
+           
+            
+          
                this.setState({
                 errors: stateErrrors,
                 message:""
@@ -171,6 +179,25 @@ export class Login extends Component{
                    )
                  
            }
+
+           let forgotPassReq =()=> {
+
+            axios.post("http://localhost:8000/api/forgot-password",{    
+                "email":'Mohammad1162002@gmail.com',
+       
+        }).then(response=> {
+          
+          })
+          .catch(error=> {
+          
+            
+           
+          });
+       
+
+    }
+
+
     return (
     <body className="Login">
 
@@ -181,9 +208,10 @@ export class Login extends Component{
       
         <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'></FancyInput>
       <label>{this.state.errors['email'][0]}</label>
-      <label>{this.state.message}</label>
+      <label>{this.state.errors['password'][0]}</label>
+      <label>{this.state.message?"Please Try Again In 1 Minute":""}</label>
         </InputText>
-        <ClickableText>Forgot Password?</ClickableText>
+        <ClickableText >Forgot Password?</ClickableText>
         <Buttons>
             <FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
             <FancyButton nameButton='Register'></FancyButton>
