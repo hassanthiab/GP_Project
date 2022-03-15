@@ -139,22 +139,7 @@ export class Login extends Component{
                  
            }
 
-           let forgotPassReq =()=> {
-
-            axios.post("http://localhost:8000/api/forgot-password",{    
-                "email":'Mohammad1162002@gmail.com',
-       
-        }).then(response=> {
-          
-          })
-          .catch(error=> {
-          
-            
-           
-          });
-       
-
-    }
+     
 
 
     return (
@@ -163,9 +148,9 @@ export class Login extends Component{
 <Container size="80vh">   
         <Title>welcome</Title>
         <InputText>
-        <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'></FancyInput>
+        <FancyInput onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
       
-        <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'></FancyInput>
+        <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{this.state.password}</FancyInput>
       <label>{this.state.errors['email'][0]}</label>
       <label>{this.state.errors['password'][0]}</label>
       <label>{this.state.message?"Please Try Again In 1 Minute":""}</label>
