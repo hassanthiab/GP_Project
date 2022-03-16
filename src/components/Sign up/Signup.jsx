@@ -3,60 +3,12 @@ import React from 'react';
 import '../Login/LoginStyle.css';
 import FancyInput from "../Login/Input"
 import FancyButton from "../Login/Button"
+import axios from 'axios';
+import { Component } from 'react/cjs/react.production.min';
+import { ThemeProvider } from 'styled-components';
 
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 80vh;
-    width: 30vw;
-    background: #1312128f;
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.3);
-    backdrop-filter: blur(2.5px);
-    border-radius:15px ;
-    color: #ffffff;
-    text-transform: uppercase ;
-    letter-spacing: 0.5em;
-
-    @media screen and (max-width: 320px) {
-        weight: 80 vw;
-        height: 90 vh ;
-    }
-
-    @media screen and (max-width: 320px) {
-        weight: 80 vw;
-        height: 90 vh ;
-    }
-
-    @media screen and (min-width: 360px) {
-        weight: 80 vw;
-        height: 90 vh ;
-
-    }
-     @media screen and (min-width: 411px) {
-        weight: 80 vw;
-        height: 90 vh ;
-
-    }
-    @media screen and (min-width: 768px) {
-        weight: 80 vw;
-        height: 80 vh ;
-
-    }
-     @media screen and (min-width: 1024px) {
-        weight: 70 vw;
-        height: 50 vh ;
-
-    }
-    @media screen and (min-width: 1280px) {
-        weight: 80 vw;
-        height: 90 vh ;
-
-    }
-    
-    
-
-`;
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Container from '../Login/ContainerBox';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -84,28 +36,131 @@ const Buttons = styled.div`
     margin: 2rem 0 2rem 0 ;
     width:100% ;
 `;
-function Signup()
+
+export class Signup extends Component
 {
-    
-    return (
-        <body class="Login">
-    <Container>   
-            <Title>welcome</Title>
-            <InputText>
-            <FancyInput type="text" placeholder='Email'></FancyInput>
+    state={
+        input:{
+        name:"",
+        email:"",
+        password:"",
+        password_confirmation:"",
+        
+        }, 
+
+        errors:{
+            name:"",
+            email:"",
+            password:"",
+        }
+
+        
+    }
+  
+
+    render(){
+   
+         
+                
+        let registerReq=()=>{
+     
+         
+            axios.post("http://localhost:8000/api/register",{
+                "name":this.state.input['name'],
+            "email":this.state.input['email'],
+            "password":this.state.input['password'],
+           "password_confirmation":this.state.input['password_confirmation'],
+        
+        }).then(response=> {
+            if(response.status==201){
+                this.setState({
+                    input:{
+                        name:"",
+                        email:"",
+                        password:"",
+                        password_confirmation:"",
+                        
+                        }, 
+                
+                        errors:{
+                            name:"",
+                            email:"",
+                            password:"",
+                        }
+                })
+            }
+
+          })
+          .catch(error=> {
+           
+            let errors=error.response.data.errors
             
-            <FancyInput type="password" placeholder='Password'></FancyInput>
-            <FancyInput type="password" placeholder='Confirm Password'></FancyInput>
-            <FancyInput type="number" placeholder='Phone Number'></FancyInput>
+           
+           let stateErrrors={...this.state.errors}
+           
+           Object.keys(this.state.errors).forEach(element=>{
+            if(Object.keys(errors).includes(element)){
+                stateErrrors[element]=errors[element]
+            }else{
+                stateErrrors[element]=""
+            }
+             
+           })
+          
+           
+            this.setState({
+                errors: stateErrrors
+                });
+         
+          });
+        }
+      
+        let changed=(event,inputId)=>{
+
+           let input={...this.state.input}
+            input[inputId]=event.target.value
+            this.setState(
+                {
+                    input:input
+                }
+                )
+              
+        }
+
+      
+        
+    return (
+        <body className="Login">
+    <Container size="80vh">   
+            <Title>Signup</Title>
+            <InputText>
+            <FancyInput onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
+            <label>{this.state.errors['name'][0]}</label>
+            <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{this.state.email}</FancyInput>
+            <label>{this.state.errors['email'][0]}</label>
+            <FancyInput onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{this.state.password}</FancyInput>
+            <FancyInput onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{this.state.password_confirmation}</FancyInput>
+            <label>{this.state.errors['password'][0]}</label>
             </InputText>
             <Buttons>
-                <FancyButton nameButton='Sign up'></FancyButton>
+            <div class="container">
+     <div class="row">
+    <div class="col-md-1">
+        </div>
+    <div class="col-md-10">
+    <FancyButton onClick={registerReq} nameButton='Sign up'></FancyButton>
+     </div>
+    <div class="col-md-1">
+    </div>
+     </div>
+        </div>
             </Buttons>
             
         </Container>
         </body>
     
          );
+        }
 }
 
 export default Signup;

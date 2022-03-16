@@ -3,6 +3,10 @@ import React from 'react';
 import './LoginStyle.css';
 import FancyInput from "./Input"
 import FancyButton from "./Button"
+import axios from 'axios';
+import { Component } from 'react/cjs/react.production.min';
+import { Link,RouterLink } from 'react-router-dom';
+import Container from './ContainerBox';
 
 const Container = styled.div`
     display: flex;
@@ -55,6 +59,8 @@ const Container = styled.div`
 
 `;
 
+
+
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
 
@@ -64,6 +70,8 @@ const ClickableText = styled.h3`
 margin: 1rem 0 2rem 0 ;
 cursor: pointer;
 color:white;
+font-size:small;
+
 `;
 
 const InputText = styled.div`
@@ -85,28 +93,163 @@ const Buttons = styled.div`
     margin: 1rem 0 2rem 0 ;
     width:100% ;
 `;
-function Login()
-{
-    
-    return (
-        <body class="Login">
+let error=""
 
-    <Container>   
-            <Title>welcome</Title>
-            <InputText>
-            <FancyInput type="text" placeholder='Email'></FancyInput>
-            <FancyInput type="password" placeholder='Password'></FancyInput>
-            </InputText>
-            <ClickableText>Forgot Password?</ClickableText>
-            <Buttons>
-                <FancyButton nameButton='Login'></FancyButton>
-                <FancyButton nameButton='Register'></FancyButton>
-            </Buttons>
+export class Login extends Component{
+    state={
+     
+        input:{
+            email:"",
+            password:"",
             
-        </Container>
-        </body>
+            }, 
     
-         );
-}
+            errors:{
+                email:"",
+                password:"",
+            },
+            message:"",
+    }
+    render() {
+
+  
+        let loginReq = () => {
+
+                axios.post("http://localhost:8000/api/login",{    
+                    "email":this.state.input['email'],
+                    "password":this.state.input['password'],  
+           
+            }).then(response=> {
+               if(response.status==200)
+               {
+                   this.setState({
+                    input:{
+                        email:"",
+                        password:"",
+                        
+                        }, 
+                
+                        errors:{
+                            email:"",
+                            password:"",
+                        },
+                        message:"",
+                   })
+               }
+              })
+              .catch(error=> {
+              
+               let errors=error.response.data.errors
+            
+              
+               let stateErrrors={...this.state.errors}
+               if(errors){
+                Object.keys(this.state.errors).forEach(element=>{
+                    if(Object.keys(errors).includes(element)){
+                        stateErrrors[element]=errors[element]
+                    }else{
+                        stateErrrors[element]=""
+                    }
+                     
+                   })
+           
+            
+          
+               this.setState({
+                errors: stateErrrors,
+                message:""
+                });
+            }
+               else
+               {
+                   
+                this.setState({
+                    errors:{
+                        email:"",
+                        password:"",
+                    },
+                    message:error.response.data.message
+                })
+               }
+               
+                
+               
+              });
+           
+
+        }
+
+        let changed=(event,inputId)=>{
+            
+              let input={...this.state.input}
+               input[inputId]=event.target.value
+               this.setState(
+                   {
+                 
+                       input:input
+                   }
+                   )
+                 
+           }
+
+     
+
+
+    return (
+    <body className="Login">
+
+<Container size="80vh">   
+        <Title>welcome</Title>
+        <InputText>
+        <FancyInput onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
+      
+        <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{this.state.password}</FancyInput>
+      <label>{this.state.errors['email'][0]}</label>
+      <label>{this.state.errors['password'][0]}</label>
+      <label>{this.state.message?"Please Try Again In 1 Minute":""}</label>
+        </InputText>
+        <Link to="/Login/ForgotPassword">
+        <ClickableText>Forgot Password?</ClickableText>
+        </Link>
+
+        <Buttons>
+        <div class="container">
+<div class="row">
+<div class="col-md-1">
+</div>
+<div class="col-md-10">
+<FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
+    </div>
+    <div class="col-md-1">
+</div>
+    </div>
+    </div>
+       
+            <div class="container">
+            <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                        <Link to="/Signup">
+                        <FancyButton nameButton='Register'></FancyButton> 
+                        </Link>
+                </div>
+            <div class="col-md-1">
+            </div>
+                </div>
+            </div>
+            
+           
+        
+            </Buttons>
+        
+    </Container>
+    </body>
+
+     );
+    }
+    } 
+
+
 
 export default Login;
