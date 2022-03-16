@@ -5,8 +5,9 @@ import FancyInput from "./Input"
 import FancyButton from "./Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
-import { Link,RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Container from './ContainerBox';
+import { Slide } from '@material-ui/core';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -144,9 +145,9 @@ export class Login extends Component{
 
     return (
     <body className="Login">
-
+<Slide direction='up' in="true">
 <Container size="80vh">   
-        <Title>welcome</Title>
+        <Title>Welcome</Title>
         <InputText>
         <FancyInput onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
       
@@ -191,6 +192,8 @@ export class Login extends Component{
             </Buttons>
         
     </Container>
+
+    </Slide>
     </body>
 
      );

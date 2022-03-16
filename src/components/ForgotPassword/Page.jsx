@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '../Login/Button';
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
+import { Slide } from '@material-ui/core';
 
 
 const Title = styled.h2`
@@ -77,6 +78,7 @@ console.log(this.state.input['email'])
 
   return (
       <body class="Login">
+          <Slide direction='up' in="true">
    <Container size="30vh">
        <Title>
            Forgot Password
@@ -101,6 +103,8 @@ console.log(this.state.input['email'])
        </Buttons>
 
    </Container>
+
+   </Slide>
       </body>
 
   )
