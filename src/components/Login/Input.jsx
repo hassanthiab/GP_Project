@@ -12,7 +12,7 @@ export default function Input(props)
 
   <div class="col-md-10">
         <div class="input-group mb-3">
-        <StyInput onChange={props.onChange} type={props.type} value={props.children} name={props.name} placeholder={props.placeholder}></StyInput>
+        <StyInput class="form-control" onChange={props.onChange} type={props.type} value={props.children} name={props.name} placeholder={props.placeholder}></StyInput>
       </div>
 </div>
 
