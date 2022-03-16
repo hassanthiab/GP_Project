@@ -6,7 +6,7 @@ import FancyButton from "../Login/Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
 import { ThemeProvider } from 'styled-components';
-
+import { Slide } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Container from '../Login/ContainerBox';
 
@@ -131,7 +131,8 @@ export class Signup extends Component
         
     return (
         <body className="Login">
-    <Container size="80vh">   
+            <Slide direction='up' in="true">
+            <Container size="80vh">   
             <Title>Signup</Title>
             <InputText>
             <FancyInput onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
@@ -143,7 +144,7 @@ export class Signup extends Component
             <label>{this.state.errors['password'][0]}</label>
             </InputText>
             <Buttons>
-            <div class="container">
+                <div class="container">
      <div class="row">
     <div class="col-md-1">
         </div>
@@ -157,6 +158,10 @@ export class Signup extends Component
             </Buttons>
             
         </Container>
+        
+
+            </Slide>
+ 
         </body>
     
          );
