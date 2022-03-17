@@ -23,23 +23,28 @@ export default class TwoFA extends Component{
 
 render(){
   const qr2FA=()=>{
-    axios.get("http://localhost:8000/api/user/two-factor-qr-code",{ 
+     axios.get("http://localhost:8000/api/user/two-factor-recovery-codes",{ 
     }).then(response=> {
+    
+   
       this.setState({
-        qr:response.data.svg
+        codes:response.data[0]
       })
+   
     }).catch(error=>{
 
      
      }) 
-
   }
   const codes2FA=()=>{
     axios.get("http://localhost:8000/api/user/two-factor-recovery-codes",{ 
     }).then(response=> {
+    
+   
       this.setState({
-        codes:response.data
+        codes:response.data[0]
       })
+   
     }).catch(error=>{
 
      
@@ -47,33 +52,57 @@ render(){
 
   }
   const enable2FA=()=>{
-  
-       axios.post("http://localhost:8000/api/user/two-factor-authentication",{ 
-       }).then(response=> {}).catch((error,status)=>{
-
-        if(status==423)
-        {
-          showModad2FA()
-        }
-        
-        })
-        
-   
-  }
-  const confirm2FA=()=>{
-    axios.post("http://localhost:8000/api/user/confirmed-two-factor-authentication",{ 
+    axios.defaults.withCredentials = true;
+        axios.post("http://localhost:8000/api/user/two-factor-authentication",{ 
     }).then(response=> {
-     if(response.data.status==200)
+      if(response.status==200)
      {hideModal2FA()
-        qr2FA()
+        
         codes2FA()
       this.setState({
         TwoFA:true
         
       })
     }
-    }).catch(error=>{
-      
+    console.log(this.state.codes)
+   
+    
+
+    }).catch((error)=>{
+    
+      if(error.response.data.message=="Password confirmation required."){
+       axios.get("http://localhost:8000/api/user/confirmed-password-status").then(response=>{
+        if(response.data.confirmed){
+          hideModal2FA()
+     
+          codes2FA()
+        this.setState({
+          TwoFA:true
+          
+        })}
+        else
+        showModal2FA();
+
+     
+
+      }).catch(error=>{})
+    }
+     
+     })
+    
+        
+   
+  }
+  const confirm2FA=()=>{
+    axios.post("http://localhost:8000/api/user/confirm-password",{ password:this.state.input.password
+    }).then(response=> {
+
+      hideModal2FA()
+      enable2FA()
+ 
+    console.log(this.state.codes)
+    }).catch((error)=>{
+      console.log(error)
       let StateError={...this.state.errors}
               StateError['password']=error.response.data.errors['password']
           this.setState({
@@ -88,7 +117,7 @@ render(){
   }
 
 
-  const showModad2FA=()=>{
+  const showModal2FA=()=>{
   
     this.setState({
       TwoFAPop:true,
@@ -107,7 +136,7 @@ render(){
     axios.delete("http://localhost:8000/api/user/two-factor-authentication",{ 
     }).then(
       response=>{
-        if(response.data.status==200){
+        if(response.status==200){
           this.setState(
             {
               TwoFA:false,
@@ -194,7 +223,7 @@ render(){
             </div>
             <div class="col-sm-5">
             <p>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button onClick={codes2FA} class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               Reveal the codes
             </button>
             </p>
