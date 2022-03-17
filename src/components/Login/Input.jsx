@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import { Fragment } from "react/cjs/react.production.min";
+import { borderColor } from "@mui/system";
 export default function Input(props)
 {
     return(
@@ -12,7 +13,7 @@ export default function Input(props)
 
   <div class="col-md-10">
         <div class="input-group mb-3">
-        <StyInput class="form-control" onChange={props.onChange} type={props.type} value={props.children} name={props.name} placeholder={props.placeholder}></StyInput>
+        <StyInput class="form-control" style={{borderColor:props.bordercolor}} onChange={props.onChange} type={props.type} value={props.children} name={props.name} placeholder={props.placeholder}></StyInput>
       </div>
 </div>
 
@@ -33,7 +34,8 @@ width: 100%;
 margin: 0.5rem 0 0.5rem 0 ;
 height: 2rem;
 padding: 1rem;
-border:none;
+border-width:2px;
+border-color:white;
 color:black;
 outline:none;
     &:focus

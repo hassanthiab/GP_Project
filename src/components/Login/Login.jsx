@@ -5,7 +5,7 @@ import FancyInput from "./Input"
 import FancyButton from "./Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 
@@ -57,19 +57,24 @@ export class Login extends Component{
                 password:"",
             },
             message:"",
+            navigate:false,
     }
     render() {
 
-  
-        let loginReq = () => {
+       
 
+ 
+        let loginReq = () => {
+            axios.get("http://localhost:8000/sanctum/csrf-cookie").then()  
                 axios.post("http://localhost:8000/api/login",{    
                     "email":this.state.input['email'],
                     "password":this.state.input['password'],  
            
             }).then(response=> {
+           
                if(response.status==200)
                {
+                    
                    this.setState({
                     input:{
                         email:"",
@@ -82,8 +87,11 @@ export class Login extends Component{
                             password:"",
                         },
                         message:"",
-                   })
-               }
+                        navigate:true
+                   });
+                  
+               
+                }
               })
               .catch(error=> {
               
@@ -141,20 +149,22 @@ export class Login extends Component{
            }
 
      
-
+      
 
     return (
+       
+   this.state.navigate?<Navigate to="/twoFA"/>:
     <body className="Login">
 <Slide direction='up' in="true">
 <Container size="80vh">   
         <Title>Welcome</Title>
         <InputText>
-        <FancyInput onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
-      
-        <FancyInput onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{this.state.password}</FancyInput>
-      <label>{this.state.errors['email'][0]}</label>
-      <label>{this.state.errors['password'][0]}</label>
-      <label>{this.state.message?"Please Try Again In 1 Minute":""}</label>
+        <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
+    
+        <FancyInput bordercolor={this.state.errors['password']||this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{this.state.password}</FancyInput>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['email'][0]}</label>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['password'][0]}</label>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.message?"Please Try Again In 1 Minute":""}</label>
         </InputText>
         <Link to="/Login/ForgotPassword">
         <ClickableText>Forgot Password?</ClickableText>
@@ -166,7 +176,9 @@ export class Login extends Component{
 <div class="col-md-1">
 </div>
 <div class="col-md-10">
+
 <FancyButton onClick={loginReq} nameButton='Login'></FancyButton>
+
     </div>
     <div class="col-md-1">
 </div>
