@@ -9,57 +9,6 @@ import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: 80vh;
-    width: 30vw;
-    background: #1312128f;
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.3);
-    backdrop-filter: blur(2.5px);
-    border-radius:15px ;
-    color: #ffffff;
-    text-transform: uppercase ;
-    letter-spacing: 0.5em;
-    @media screen and (max-width: 320px) {
-        width: 80 vw;
-        height: 90 vh ;
-    }
-
-    @media screen and (max-width: 320px) {
-        width: 80 vw;
-        height: 90 vh ;
-    }
-
-    @media screen and (min-width: 360px) {
-        width: 80 vw;
-        height: 90 vh ;
-
-    }
-     @media screen and (min-width: 411px) {
-        width: 80 vw;
-        height: 90 vh ;
-
-    }
-    @media screen and (min-width: 768px) {
-        width: 80 vw;
-        height: 80 vh ;
-
-    }
-     @media screen and (min-width: 1024px) {
-        width: 70 vw;
-        height: 50 vh ;
-
-    }
-    @media screen and (min-width: 1280px) {
-        width: 80 vw;
-        height: 90 vh ;
-
-    }
-
-`;
-
 
 
 const Title = styled.h2`
