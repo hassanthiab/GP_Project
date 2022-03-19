@@ -58,14 +58,7 @@ function Carousel() {
         <h5>Third slide label</h5>
         <p>Some representative placeholder content for the third slide.</p>
         </Container>
-   
 
-
-    <div class="carousel-item">
-    <Link to="/Signup">
-      <img src={img}   class="d-block w-100" alt="..." />
-      </Link>
-    </div>
   
 
       </div>
