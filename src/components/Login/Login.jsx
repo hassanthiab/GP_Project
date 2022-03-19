@@ -9,7 +9,6 @@ import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 
-
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
 
