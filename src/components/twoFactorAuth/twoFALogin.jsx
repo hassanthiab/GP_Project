@@ -7,7 +7,7 @@ import Button from '../Login/Button';
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
 import { Slide } from '@material-ui/core';
-
+import { Navigate } from 'react-router-dom';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -34,22 +34,25 @@ width: 100% ;
 
 
 
-class Page extends Component {
+class TwoFALogin extends Component {
     state={
         input:{
-            email:""
+            code:""
         },
-        error:""
+        error:"",
+        navigate:false
     }
     render(){
      
-let forgotPassReq =()=> {
-console.log(this.state.input['email'])
-    axios.post("http://localhost:8000/api/forgot-password",{    
-        "email":this.state.input['email'],
+let codeFAReq =()=> {
+console.log(this.state.input.code)
+    axios.post("http://localhost:8000/api/two-factor-challenge",{    
+        "code":this.state.input.code,
 
 }).then(response=> {
- 
+    this.setState({
+      navigate:true,
+    })
   })
   .catch(error=> {
   this.setState({
@@ -77,14 +80,15 @@ console.log(this.state.input['email'])
 
 
   return (
-      <body class="Login" >
+    this.state.navigate?<Navigate to="/"/>:
+      <body class="Login">
           <Slide direction='up' in="true">
-   <Container size="30vh" wide="30vw">
+   <Container size="30vh">
        <Title>
-           Forgot Password
+           Please Enter your 2FA code
        </Title>
        <InputText>
-       <Input onChange={(event)=>changed(event,'email')} type="email" placeholder="Email of your account" />
+       <Input onChange={(event)=>changed(event,'code')} type="text" placeholder="the code" />
        <label style={{cursor:'pointer'}}>{this.state.error}</label>
        </InputText>
        <Buttons>
@@ -93,7 +97,7 @@ console.log(this.state.input['email'])
     <div class="col-md-1">
         </div>
     <div class="col-md-10">
-    <Button onClick={forgotPassReq} nameButton="Submit"></Button>
+    <Button onClick={codeFAReq} nameButton="Submit"></Button>
      </div>
     <div class="col-md-1">
     </div>
@@ -111,4 +115,4 @@ console.log(this.state.input['email'])
   }
 }
 
-export default Page
+export default TwoFALogin

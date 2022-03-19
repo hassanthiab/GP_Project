@@ -1,6 +1,7 @@
 import React, {useState, useEffect}from 'react'
 import {Nav, NavLink, NavMenu, NavBtn, NavBtnLink, BarsDiv, NavItem } from './Homepage'
 import {FaBars, FaTimes} from 'react-icons/fa';
+import axios from 'axios';
 function Pagetop() {
 
 
@@ -23,6 +24,10 @@ useEffect(()=>{
 }, []);
 
 window.addEventListener('resize', showButton)
+
+    let logoutReq=()=>{
+        axios.post("http://localhost:8000/api/logout").then().catch()
+    }
 
   return (
     <div>
@@ -59,6 +64,7 @@ window.addEventListener('resize', showButton)
             </NavLink>
                 </NavItem >
 
+            
                 <NavItem button={buttonShow}>
             <NavLink to="/Login"  activestyle="True">
                 Login
@@ -71,6 +77,12 @@ window.addEventListener('resize', showButton)
             </NavLink>
             </NavItem>
           
+            <NavItem button={buttonShow}>
+            <NavLink to="/Login"  activestyle="True">
+            Logout
+            </NavLink>
+                </NavItem>
+
 
             </NavMenu>
             
@@ -78,7 +90,7 @@ window.addEventListener('resize', showButton)
                 
                 <NavBtnLink to="/Signup">Sign up</NavBtnLink>
                 <NavBtnLink to="/Login">Log in</NavBtnLink>
-           
+                <NavBtnLink onClick={logoutReq} to="/Login">Log out</NavBtnLink>
 
             </NavBtn>
         </Nav>

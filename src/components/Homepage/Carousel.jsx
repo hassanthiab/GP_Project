@@ -7,6 +7,7 @@ function Carousel() {
   return (
   <React.Fragment>
 <div id="carouselExampleCaptions" class="carousel slide " data-bs-ride="carousel"   >
+
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -35,6 +36,7 @@ function Carousel() {
       <Link to="/Login">
       <div class="carousel-caption d-none d-md-block">
 
+
       <Container>
         <h5>Third slide label</h5>
         <p>Some representative placeholder content for the third slide.</p>
@@ -57,6 +59,14 @@ function Carousel() {
         <p>Some representative placeholder content for the third slide.</p>
         </Container>
    
+
+
+    <div class="carousel-item">
+    <Link to="/Signup">
+      <img src={img}   class="d-block w-100" alt="..." />
+      </Link>
+    </div>
+  
 
       </div>
       </Link>
