@@ -100,7 +100,7 @@ class NewPass extends Component {
       <Slide direction='up' in="true">
 
 
-   <Container size="30vh">
+   <Container size="30vh" wide="30vw">
        <Title>
            Forgot Password
        </Title>

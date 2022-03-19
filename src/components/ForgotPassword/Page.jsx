@@ -77,9 +77,9 @@ console.log(this.state.input['email'])
 
 
   return (
-      <body class="Login">
+      <body class="Login" >
           <Slide direction='up' in="true">
-   <Container size="30vh">
+   <Container size="30vh" wide="30vw">
        <Title>
            Forgot Password
        </Title>

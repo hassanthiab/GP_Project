@@ -146,7 +146,7 @@ export class Login extends Component{
     return (
     <body className="Login">
 <Slide direction='up' in="true">
-<Container size="80vh">   
+<Container size="80vh" wide="40vw">   
         <Title>Welcome</Title>
         <InputText>
         <FancyInput onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
