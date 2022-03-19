@@ -4,7 +4,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 30vw;
+    width: ${props=> props.wide};
     background: #1312128f;
     box-shadow: 0 8px 32px 0 rgba(31,38,135,0.3);
     backdrop-filter: blur(2.5px);

@@ -134,7 +134,7 @@ export class Signup extends Component
         this.state.navigate?<Navigate to="/login"/>:
         <body className="Login">
             <Slide direction='up' in="true">
-            <Container size="80vh">   
+            <Container size="80vh"  wide="40vw">   
             <Title>Signup</Title>
             <InputText>
             <FancyInput bordercolor={this.state.errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>

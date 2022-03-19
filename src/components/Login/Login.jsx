@@ -9,8 +9,6 @@ import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 
-
-
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
 
@@ -158,7 +156,7 @@ export class Login extends Component{
    this.state.navigate?<Navigate to="/twoFA"/>:
     <body className="Login">
 <Slide direction='up' in="true">
-<Container size="80vh">   
+<Container size="80vh" wide="40vw">   
         <Title>Welcome</Title>
         <InputText>
         <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>

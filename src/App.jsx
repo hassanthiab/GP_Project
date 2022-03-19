@@ -11,6 +11,8 @@ import TwoFA from "./components/twoFactorAuth/twoFA"
 import TwoFALogin from "./components/twoFactorAuth/twoFALogin"
 import Home from "./components/Homepage/Home";
 import Tournament from "./components/Tournament/Tournament";
+import ProfileSettings from "./components/ProfileSettings/ProfileSettings";
+
 
 function App()
 {
@@ -23,6 +25,7 @@ function App()
       <Route  path="/Signup"   element={<Signup></Signup>} />
       <Route  path="/Login/ForgotPassword"   element={<Page />} />
       <Route  path="/reset-password"   element={<NewPass />} />
+      <Route path="/Profile" element={<ProfileSettings></ProfileSettings>} />
       <Route  path="/twoFA"   element={<TwoFA />} />
       <Route  path="/FAcode"   element={<TwoFALogin />} />
       <Route path="/" element={<Home></Home>} />

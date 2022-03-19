@@ -5,12 +5,15 @@ import Footer from './Footer'
 
 function Home() {
   return (
-      <React.Fragment>
+
+    <body style={{backgroundColor:"#101522"}}>
+    <React.Fragment>
    <Carousel></Carousel>
     <Cards></Cards>
-
     <Footer></Footer>
       </React.Fragment>
+    </body>
+  
  
   )
 }

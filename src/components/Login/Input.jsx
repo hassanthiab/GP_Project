@@ -7,8 +7,8 @@ export default function Input(props)
     return(
         <div class="container ">
 <div class="row">
-          <div class="col-md-1">
-  
+          <div style={{marginTop:"12px", fontSize:"12px"}}class="col-md-1">
+            <label>{props.input_label}</label>
     </div>
 
   <div class="col-md-10">
