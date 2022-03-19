@@ -9,6 +9,7 @@ import { Component } from 'react/cjs/react.production.min';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { Slide } from '@material-ui/core';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -96,6 +97,9 @@ class NewPass extends Component {
    
   return (
     <body class="Login">
+      <Slide direction='up' in="true">
+
+
    <Container size="30vh">
        <Title>
            Forgot Password
@@ -120,7 +124,9 @@ class NewPass extends Component {
        
        </Buttons>
 
+
    </Container>
+   </Slide>
       </body>
   )}
 }

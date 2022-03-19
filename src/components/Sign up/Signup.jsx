@@ -5,9 +5,8 @@ import FancyInput from "../Login/Input"
 import FancyButton from "../Login/Button"
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
-import { ThemeProvider } from 'styled-components';
-
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { Slide } from '@material-ui/core';
+import { BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import Container from '../Login/ContainerBox';
 
 const Title = styled.h2`
@@ -52,15 +51,15 @@ export class Signup extends Component
             name:"",
             email:"",
             password:"",
-        }
-
+        },
+        navigate:false
         
     }
   
 
     render(){
    
-         
+         console.log(this.state.navigate)
                 
         let registerReq=()=>{
      
@@ -85,9 +84,11 @@ export class Signup extends Component
                         errors:{
                             name:"",
                             email:"",
-                            password:"",
-                        }
+                            password:"", 
+                        },
+                        navigate:true
                 })
+                
             }
 
           })
@@ -130,20 +131,22 @@ export class Signup extends Component
       
         
     return (
+        this.state.navigate?<Navigate to="/login"/>:
         <body className="Login">
-    <Container size="80vh">   
+            <Slide direction='up' in="true">
+            <Container size="80vh">   
             <Title>Signup</Title>
             <InputText>
-            <FancyInput onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
-            <label>{this.state.errors['name'][0]}</label>
-            <FancyInput onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{this.state.email}</FancyInput>
-            <label>{this.state.errors['email'][0]}</label>
-            <FancyInput onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{this.state.password}</FancyInput>
-            <FancyInput onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{this.state.password_confirmation}</FancyInput>
-            <label>{this.state.errors['password'][0]}</label>
+            <FancyInput bordercolor={this.state.errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['name'][0]}</label>
+            <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{this.state.email}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['email'][0]}</label>
+            <FancyInput bordercolor={this.state.errors['password']? '#960000':'white'}   onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{this.state.password}</FancyInput>
+            <FancyInput bordercolor={this.state.errors['password']=="The password confirmation does not match."? '#960000':'white'} onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{this.state.password_confirmation}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['password'][0]}</label>
             </InputText>
             <Buttons>
-            <div class="container">
+                <div class="container">
      <div class="row">
     <div class="col-md-1">
         </div>
@@ -157,6 +160,10 @@ export class Signup extends Component
             </Buttons>
             
         </Container>
+        
+
+            </Slide>
+ 
         </body>
     
          );
