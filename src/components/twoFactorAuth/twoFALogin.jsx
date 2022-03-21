@@ -32,11 +32,12 @@ height: 20% ;
 width: 100% ;
 `;
 
-
+let data={}
 
 class TwoFALogin extends Component {
     state={
         input:{
+            recovery_code:"",
             code:""
         },
         error:"",
@@ -45,11 +46,13 @@ class TwoFALogin extends Component {
     render(){
      
 let codeFAReq =()=> {
-console.log(this.state.input.code)
-    axios.post("http://localhost:8000/api/two-factor-challenge",{    
-        "code":this.state.input.code,
+    data.recovery_code=this.state.input.code
+    data.code=this.state.input.recovery_code
+console.log(data)
+    axios.post("http://localhost:8000/api/two-factor-challenge",data   
 
-}).then(response=> {
+
+).then(response=> {
     this.setState({
       navigate:true,
     })
@@ -66,7 +69,7 @@ console.log(this.state.input.code)
 }
 
         let changed=(event,inputId)=>{
-            
+       
             let input={...this.state.input}
              input[inputId]=event.target.value
              this.setState(
@@ -75,7 +78,7 @@ console.log(this.state.input.code)
                      input:input
                  }
                  )
-               
+                 console.log(this.state.input)
          }
 
 
