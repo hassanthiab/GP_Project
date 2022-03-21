@@ -164,7 +164,7 @@ export class Login extends Component{
    this.state.navigate?a:
     <body className="Login">
 <Slide direction='up' in="true">
-<Container size="80vh">   
+<Container size="80vh" wide="40vw">   
         <Title>Welcome</Title>
         <InputText>
         <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>

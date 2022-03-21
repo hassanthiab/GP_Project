@@ -1,5 +1,4 @@
 import React from 'react';
-import { Fragment } from 'react/cjs/react.production.min';
 import styled from 'styled-components';
 export default function(props)
 {
@@ -14,7 +13,7 @@ export default function(props)
 const StyledButton = styled.button`
 
 background: #2196f3;
-text-transform: uppercase ;
+text-transform: capitalize ;
 letter-spacing: 0.15rem;
 box-shadow: 0 8px 32px 0 rgba (31,38,135, 0.37);
 border-radius: 2rem;
