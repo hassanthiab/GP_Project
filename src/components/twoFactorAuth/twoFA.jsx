@@ -4,6 +4,7 @@ import FancyInput from "../../components/Login/Input"
 import axios from "axios";
 import  { Navigate } from 'react-router-dom'
 import { fontWeight } from "@mui/system";
+import { SvgIcon } from "@material-ui/core";
 
 export default class TwoFA extends Component{
 
@@ -17,18 +18,29 @@ export default class TwoFA extends Component{
       password:""
     },
       qr:"",
-      codes:""
+      codes:[]
          
   } 
 
 render(){
+
+let codes=[]
+  this.state.codes.forEach((element,index) => {
+  
+   
+    codes.push(<li key={index}>{element}</li>)
+      
+  
+    })
+         
+
   const qr2FA=()=>{
-     axios.get("http://localhost:8000/api/user/two-factor-recovery-codes",{ 
+     axios.get("http://localhost:8000/api/user/two-factor-qr-code",{ 
     }).then(response=> {
     
    
       this.setState({
-        codes:response.data[0]
+        qr:response.data
       })
    
     }).catch(error=>{
@@ -42,7 +54,7 @@ render(){
     
    
       this.setState({
-        codes:response.data[0]
+        codes:response.data
       })
    
     }).catch(error=>{
@@ -57,7 +69,7 @@ render(){
     }).then(response=> {
       if(response.status==200)
      {hideModal2FA()
-        
+      qr2FA()
         codes2FA()
       this.setState({
         TwoFA:true
@@ -74,7 +86,7 @@ render(){
        axios.get("http://localhost:8000/api/user/confirmed-password-status").then(response=>{
         if(response.data.confirmed){
           hideModal2FA()
-     
+          qr2FA()
           codes2FA()
         this.setState({
           TwoFA:true
@@ -155,7 +167,7 @@ render(){
   
 
   let changed=(event,inputId)=>{
-            
+           
     let input={...this.state.input}
      input[inputId]=event.target.value
      this.setState(
@@ -229,7 +241,14 @@ render(){
             </p>
               <div class="collapse" id="collapseExample">
                  <div class="card card-body">
-                    {this.state.TwoFA?this.state.codes:"your 2FA is Disabled"}
+                 
+                    {this.state.TwoFA? <div>{ <span dangerouslySetInnerHTML={{__html:this.state.qr.svg}} />}            
+                    <ul>
+                      {codes}
+                    </ul>
+
+                     </div>:"your 2FA is Disabled"}
+               
                  </div>
               </div>
             </div>
