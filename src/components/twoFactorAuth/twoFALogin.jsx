@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Button from '../Login/Button';
 import axios from 'axios';
 import { Component } from 'react/cjs/react.production.min';
-import { Slide } from '@material-ui/core';
+import { Checkbox, Slide } from '@material-ui/core';
 import { Navigate } from 'react-router-dom';
 
 const Title = styled.h2`
@@ -37,19 +37,22 @@ width: 100% ;
 class TwoFALogin extends Component {
     state={
         input:{
-            code:""
+            recovery_code:'',
+           code:'',
+           EN_r_code:false
         },
         error:"",
         navigate:false
     }
+    
     render(){
-     
+        let data={}
 let codeFAReq =()=> {
-console.log(this.state.input.code)
-    axios.post("http://localhost:8000/api/two-factor-challenge",{    
-        "code":this.state.input.code,
-
-}).then(response=> {
+ 
+   this.state.input.EN_r_code?data.recovery_code=this.state.input.recovery_code:data.code=this.state.input.code
+   console.log(data )
+console.log(this.state.input)   
+    axios.post("http://localhost:8000/api/two-factor-challenge",data).then(response=> {
     this.setState({
       navigate:true,
     })
@@ -61,26 +64,31 @@ console.log(this.state.input.code)
       )
     
    
-  });
+  })
+    
 
 }
 
         let changed=(event,inputId)=>{
-            
+             
             let input={...this.state.input}
-             input[inputId]=event.target.value
+            inputId==='EN_r_code' ?input[inputId]=!input[inputId]:input[inputId]=event.target.value
+             
+
+             console.log(input[inputId])
              this.setState(
                  {
                
                      input:input
                  }
                  )
-               
+           
+                
          }
 
 
   return (
-    this.state.navigate?<Navigate to="/"/>:
+    this.state.navigate?<Navigate to="/twoFA"/>:
       <body class="Login">
           <Slide direction='up' in="true">
    <Container size="30vh">
@@ -88,8 +96,12 @@ console.log(this.state.input.code)
            Please Enter your 2FA code
        </Title>
        <InputText>
-       <Input onChange={(event)=>changed(event,'code')} type="text" placeholder="the code" />
+       <Input onChange={(event)=>changed(event,this.state.input.EN_r_code?'recovery_code':'code')} type="text" placeholder="the code" />
        <label style={{cursor:'pointer'}}>{this.state.error}</label>
+       <div class="form-check form-switch">
+  <input class="form-check-input" onChange={(event)=>changed(event,'EN_r_code')} type="checkbox" id="flexSwitchCheckDefault" />
+  <label class="form-check-label" for="flexSwitchCheckDefault">use recovery code</label>
+</div>
        </InputText>
        <Buttons>
        <div class="container">

@@ -8,7 +8,8 @@ import { Component } from 'react/cjs/react.production.min';
 import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
-
+axios.defaults.withCredentials=true
+let a=""
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
 
@@ -41,9 +42,9 @@ const Buttons = styled.div`
     margin: 1rem 0 2rem 0 ;
     width:100% ;
 `;
-let error=""
 
 export class Login extends Component{
+
     state={
      
         input:{
@@ -59,13 +60,16 @@ export class Login extends Component{
             message:"",
             navigate:false,
     }
+  
     render() {
 
-       
+      
 
  
         let loginReq = () => {
-            axios.get("http://localhost:8000/sanctum/csrf-cookie").then()  
+            
+           
+           axios.get("http://localhost:8000/sanctum/csrf-cookie").then(
                 axios.post("http://localhost:8000/api/login",{    
                     "email":this.state.input['email'],
                     "password":this.state.input['password'],  
@@ -74,7 +78,10 @@ export class Login extends Component{
            
                if(response.status==200)
                {
-                    
+                console.log(response.data.two_factor)
+               response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
+                a=<Navigate to={'/twoFA'}/>
+                console.log(a.props)
                    this.setState({
                     input:{
                         email:"",
@@ -90,11 +97,12 @@ export class Login extends Component{
                         navigate:true
                    });
                   
+                   
                
                 }
               })
               .catch(error=> {
-              
+             
                let errors=error.response.data.errors
             
               
@@ -130,9 +138,10 @@ export class Login extends Component{
                
                 
                
-              });
+              })
+              
            
-
+           )
         }
 
         let changed=(event,inputId)=>{
@@ -148,12 +157,11 @@ export class Login extends Component{
                  
            }
 
-     
-      
+       
 
     return (
        
-   this.state.navigate?<Navigate to="/twoFA"/>:
+   this.state.navigate?a:
     <body className="Login">
 <Slide direction='up' in="true">
 <Container size="80vh" wide="40vw">   
