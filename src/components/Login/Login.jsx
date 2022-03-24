@@ -8,7 +8,6 @@ import { Component } from 'react/cjs/react.production.min';
 import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
-axios.defaults.withCredentials=true
 let a=""
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -69,6 +68,7 @@ export class Login extends Component{
         let loginReq = () => {
             
            
+            axios.defaults.withCredentials=true
            axios.get("http://localhost:8000/sanctum/csrf-cookie").then(
                 axios.post("http://localhost:8000/api/login",{    
                     "email":this.state.input['email'],
@@ -103,41 +103,104 @@ export class Login extends Component{
               })
               .catch(error=> {
              
-               let errors=error.response.data.errors
+                if(error.response.data.message=='These credentials do not match our records.')
+                {
+                  
+                        axios.post("http://localhost:8000/api/admin/login",{    
+                            "email":this.state.input['email'],
+                            "password":this.state.input['password'],  
+                   
+                    }).then(response=> {
+           
+                        if(response.status==200)
+                        {
+                         console.log(response.data.two_factor)
+                        response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
+                         a=<Navigate to={'/twoFA'}/>
+                         console.log(a.props)
+                            this.setState({
+                             input:{
+                                 email:"",
+                                 password:"",
+                                 
+                                 }, 
+                         
+                                 errors:{
+                                     email:"",
+                                     password:"",
+                                 },
+                                 message:"",
+                                 navigate:true
+                            });
+                           
+                            
+                        
+                         }
+                       }).catch(error=>{
+                        let errors=error.response.data.errors
             
               
-               let stateErrrors={...this.state.errors}
-               if(errors){
-                Object.keys(this.state.errors).forEach(element=>{
-                    if(Object.keys(errors).includes(element)){
-                        stateErrrors[element]=errors[element]
-                    }else{
-                        stateErrrors[element]=""
-                    }
-                     
-                   })
-           
-            
-          
-               this.setState({
-                errors: stateErrrors,
-                message:""
-                });
-            }
-               else
-               {
+                        let stateErrrors={...this.state.errors}
+                        if(errors){
+                        
+                        stateErrrors['email']=errors.email
+                        stateErrrors['password']=""
                    
+                        this.setState({
+                         errors: stateErrrors,
+                         message:""
+                         });
+                     }
+                        else
+                        {
+                            
+                         this.setState({
+                             errors:{
+                                 email:"",
+                                 password:"",
+                             },
+                             message:error.response.data.message
+                         })
+                        }
+                        
+                       })
+                    
+                }
+else{
+                let errors=error.response.data.errors
+            
+
+                let stateErrrors={...this.state.errors}
+                if(errors){
+                 Object.keys(this.state.errors).forEach(element=>{
+                     if(Object.keys(errors).includes(element)){
+                         stateErrrors[element]=errors[element]
+                     }else{
+                         stateErrrors[element]=""
+                     }
+                      
+                    })
+            
+             
+           
                 this.setState({
-                    errors:{
-                        email:"",
-                        password:"",
-                    },
-                    message:error.response.data.message
-                })
-               }
-               
+                 errors: stateErrrors,
+                 message:""
+                 });
+             }
+                else
+                {
+                    
+                 this.setState({
+                     errors:{
+                         email:"",
+                         password:"",
+                     },
+                     message:error.response.data.message
+                 })
+                }
                 
-               
+            }
               })
               
            

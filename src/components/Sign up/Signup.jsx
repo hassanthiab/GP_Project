@@ -131,7 +131,7 @@ export class Signup extends Component
       
         
     return (
-        this.state.navigate?<Navigate to="/login"/>:
+        this.state.navigate?<Navigate to="/verification"/>:
         <body className="Login">
             <Slide direction='up' in="true">
             <Container size="80vh"  wide="40vw">   

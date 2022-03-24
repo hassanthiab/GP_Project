@@ -188,11 +188,12 @@ let codes=[]
             </div>
           
             <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="col-sm-5 danger card shadow  border-danger">
-         <div class="card-body">
+         <div class="card-body" style={{justifyContent:"space-between",display:"flex",alignItems:"center"}} >
+        
          <strong>Your two Factor Auth is <span className={this.state.TwoFA?"text-success":"text-danger"} style={{fontSize:19,fontWeight:'bold'}}>{this.state.TwoFA?"Enabled":"Disabled"}</span></strong>
         
 
-         <button onClick={this.state.TwoFA?disable2FA:enable2FA} style={{marginLeft:60}} type="button" class={this.state.TwoFA?" btn btn-danger":"btn btn-success "}>
+         <button onClick={this.state.TwoFA?disable2FA:enable2FA} type="button" class={this.state.TwoFA?" btn btn-danger":"btn btn-success "}>
          {this.state.TwoFA?"Disable":"Enable"}
 </button>
        
