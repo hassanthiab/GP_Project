@@ -1,7 +1,7 @@
 import React, {useState, useEffect}from 'react'
 import {Nav, NavLink, NavMenu, NavBtn, NavBtnLink, BarsDiv, NavItem } from './Homepage'
 import {FaBars, FaTimes} from 'react-icons/fa';
-import axios from 'axios';
+import axios from '../axios/axios';
 function Pagetop() {
 
 
@@ -26,7 +26,7 @@ useEffect(()=>{
 window.addEventListener('resize', showButton)
 
     let logoutReq=()=>{
-        axios.post("http://localhost:8000/api/logout").then().catch()
+        axios().post("/api/logout").then().catch()
     }
 
   return (

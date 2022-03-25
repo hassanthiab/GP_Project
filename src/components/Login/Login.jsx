@@ -3,11 +3,13 @@ import React from 'react';
 import './LoginStyle.css';
 import FancyInput from "./Input"
 import FancyButton from "./Button"
-import axios from 'axios';
+import axios from '../axios/axios';
 import { Component } from 'react/cjs/react.production.min';
 import { Link, Navigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
+import {useState} from 'react'
+
 let a=""
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -42,37 +44,28 @@ const Buttons = styled.div`
     width:100% ;
 `;
 
-export class Login extends Component{
+let Login=()=>{
 
-    state={
-     
-        input:{
+    const [input, setInput] = useState({
+        email:"",
+        password:"",
+        
+        });
+
+        const [errors, setErrors] = useState({
             email:"",
             password:"",
-            
-            }, 
-    
-            errors:{
-                email:"",
-                password:"",
-            },
-            message:"",
-            navigate:false,
-    }
-  
-    render() {
-
-      
-
- 
+        });
+        const [message, setMessage] = useState("");
+        const [navigate, setNavigate] = useState(false);
+   
         let loginReq = () => {
             
-           
-            axios.defaults.withCredentials=true
-           axios.get("http://localhost:8000/sanctum/csrf-cookie").then(
-                axios.post("http://localhost:8000/api/login",{    
-                    "email":this.state.input['email'],
-                    "password":this.state.input['password'],  
+   
+           axios().get("/sanctum/csrf-cookie").then(
+                axios().post("/api/login",{    
+                    "email":input['email'],
+                    "password":input['password'],  
            
             }).then(response=> {
            
@@ -82,33 +75,35 @@ export class Login extends Component{
                response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
                 a=<Navigate to={'/twoFA'}/>
                 console.log(a.props)
-                   this.setState({
-                    input:{
+                   setInput(
+                        {
                         email:"",
                         password:"",
-                        
-                        }, 
-                
-                        errors:{
+                        }
+                        )
+
+                        setErrors({
                             email:"",
                             password:"",
-                        },
-                        message:"",
-                        navigate:true
-                   });
+                        }) 
+                
+                       
+                        setMessage("")
+
+                        setNavigate(true)
                   
-                   
                
                 }
+
               })
               .catch(error=> {
              
                 if(error.response.data.message=='These credentials do not match our records.')
                 {
                   
-                        axios.post("http://localhost:8000/api/admin/login",{    
-                            "email":this.state.input['email'],
-                            "password":this.state.input['password'],  
+                      axios().post("api/admin/login",{    
+                            "email":input['email'],
+                            "password":input['password'],  
                    
                     }).then(response=> {
            
@@ -118,86 +113,80 @@ export class Login extends Component{
                         response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
                          a=<Navigate to={'/twoFA'}/>
                          console.log(a.props)
-                            this.setState({
-                             input:{
-                                 email:"",
-                                 password:"",
-                                 
-                                 }, 
-                         
-                                 errors:{
-                                     email:"",
-                                     password:"",
-                                 },
-                                 message:"",
-                                 navigate:true
-                            });
+                         setInput(
+                            {
+                            email:"",
+                            password:"",
+                            }
+                            )
+    
+                            setErrors({
+                                email:"",
+                                password:"",
+                            }) 
+                    
+                           
+                            setMessage("")
+    
+                            setNavigate(true)
                            
                             
                         
                          }
                        }).catch(error=>{
-                        let errors=error.response.data.errors
+                        let resErrors=error.response.data.errors
             
               
-                        let stateErrrors={...this.state.errors}
-                        if(errors){
+                        let stateErrrors={...errors}
+                        if(resErrors){
                         
-                        stateErrrors['email']=errors.email
+                        stateErrrors['email']=resErrors.email
                         stateErrrors['password']=""
                    
-                        this.setState({
-                         errors: stateErrrors,
-                         message:""
-                         });
+                        setErrors(stateErrrors) 
+                         setMessage("")
+                        
                      }
                         else
                         {
-                            
-                         this.setState({
-                             errors:{
-                                 email:"",
-                                 password:"",
-                             },
-                             message:error.response.data.message
-                         })
+                            setErrors({
+                                email:"",
+                                password:"",
+                            })
+                            setMessage(error.response.data.message)
+                         
                         }
                         
                        })
                     
                 }
 else{
-                let errors=error.response.data.errors
+                let resErrors=error.response.data.errors
             
 
-                let stateErrrors={...this.state.errors}
-                if(errors){
-                 Object.keys(this.state.errors).forEach(element=>{
-                     if(Object.keys(errors).includes(element)){
-                         stateErrrors[element]=errors[element]
+                let stateErrrors={...errors}
+                if(resErrors){
+                 Object.keys(errors).forEach(element=>{
+                     if(Object.keys(resErrors).includes(element)){
+                         stateErrrors[element]=resErrors[element]
                      }else{
                          stateErrrors[element]=""
                      }
                       
                     })
-            
+
+                    setErrors(stateErrrors) 
+                    setMessage("")
              
-           
-                this.setState({
-                 errors: stateErrrors,
-                 message:""
-                 });
              }
                 else
                 {
-                    
-                 this.setState({
-                     errors:{
-                         email:"",
-                         password:"",
-                     },
-                     message:error.response.data.message
-                 })
+                    setErrors({
+                        email:"",
+                        password:"",
+                    })
+                    setMessage(error.response.data.message)
+                
                 }
                 
             }
@@ -209,33 +198,28 @@ else{
 
         let changed=(event,inputId)=>{
             
-              let input={...this.state.input}
-               input[inputId]=event.target.value
-               this.setState(
-                   {
-                 
-                       input:input
-                   }
-                   )
-                 
+              let Sinput={...input}
+              Sinput[inputId]=event.target.value
+              setInput(Sinput)
+                      
            }
 
        
 
     return (
        
-   this.state.navigate?a:
+   navigate?a:
     <body className="Login">
 <Slide direction='up' in="true">
 <Container size="80vh" wide="40vw">   
         <Title>Welcome</Title>
         <InputText>
-        <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{this.state.email}</FancyInput>
+        <FancyInput bordercolor={errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{input['email']}</FancyInput>
     
-        <FancyInput bordercolor={this.state.errors['password']||this.state.errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{this.state.password}</FancyInput>
-      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['email'][0]}</label>
-      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['password'][0]}</label>
-      <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.message?"Please Try Again In 1 Minute":""}</label>
+        <FancyInput bordercolor={errors['password']||errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"password")} type="password" placeholder='Password'>{input['password']}</FancyInput>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['email'][0]}</label>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['password'][0]}</label>
+      <label style={{color:'#960000' ,fontWeight:'bold'}}>{message?"Please Try Again In 1 Minute":""}</label>
         </InputText>
         <Link to="/Login/ForgotPassword">
         <ClickableText>Forgot Password?</ClickableText>
@@ -280,7 +264,7 @@ else{
     </body>
 
      );
-    }
+    
     } 
 
 

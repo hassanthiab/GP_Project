@@ -1,61 +1,55 @@
-import React from "react";
+import React,{useState} from "react";
 import { Component, Fragment } from "react/cjs/react.production.min";
 import FancyInput from "../../components/Login/Input"
-import axios from "axios";
+import axios from '../axios/axios';
 import  { Navigate } from 'react-router-dom'
 import { fontWeight } from "@mui/system";
 import { SvgIcon } from "@material-ui/core";
 
-export default class TwoFA extends Component{
+let TwoFA=()=>{
 
-  state={
-    TwoFA:false,
-    TwoFAPop:false,
-    input:{
-      password:""
-  },
-    errors:{
-      password:""
-    },
-      qr:"",
-      codes:[]
-         
-  } 
 
-render(){
+  const [twoFA, setTwoFA] = useState(false);
+  const [twoFAPop, setTwoFAPop] = useState(false);
+  const [input, setInput] = useState({
+    password:""
+});
+  const [errors, setErrors] = useState({
+    password:""
+  });
 
-let codes=[]
-  this.state.codes.forEach((element,index) => {
+  const [qr, setQr] = useState("");
+  const [codes, setCodes] = useState([]);
+
+
+
+let Rcodes=[]
+ codes.forEach((element,index) => {
   
    
-    codes.push(<li key={index}>{element}</li>)
+    Rcodes.push(<li key={index}>{element}</li>)
       
   
     })
          
 
   const qr2FA=()=>{
-     axios.get("http://localhost:8000/api/user/two-factor-qr-code",{ 
+     axios().get("/api/user/two-factor-qr-code",{ 
     }).then(response=> {
     
-   
-      this.setState({
-        qr:response.data
-      })
-   
+      setQr(response.data)
+  
     }).catch(error=>{
 
      
      }) 
   }
   const codes2FA=()=>{
-    axios.get("http://localhost:8000/api/user/two-factor-recovery-codes",{ 
+    axios().get("/api/user/two-factor-recovery-codes",{ 
     }).then(response=> {
     
-   
-      this.setState({
-        codes:response.data
-      })
+      setCodes(response.data)
+      
    
     }).catch(error=>{
 
@@ -64,34 +58,30 @@ let codes=[]
 
   }
   const enable2FA=()=>{
-    axios.defaults.withCredentials = true;
-        axios.post("http://localhost:8000/api/user/two-factor-authentication",{ 
+    
+        axios().post("/api/user/two-factor-authentication",{ 
     }).then(response=> {
       if(response.status==200)
      {hideModal2FA()
       qr2FA()
         codes2FA()
-      this.setState({
-        TwoFA:true
-        
-      })
+        setTwoFA(true)
+     
     }
-    console.log(this.state.codes)
+    console.log(codes)
    
     
 
     }).catch((error)=>{
     
       if(error.response.data.message=="Password confirmation required."){
-       axios.get("http://localhost:8000/api/user/confirmed-password-status").then(response=>{
+       axios().get("/api/user/confirmed-password-status").then(response=>{
         if(response.data.confirmed){
           hideModal2FA()
           qr2FA()
           codes2FA()
-        this.setState({
-          TwoFA:true
-          
-        })}
+          setTwoFA(true)
+       }
         else
         showModal2FA();
 
@@ -106,23 +96,20 @@ let codes=[]
    
   }
   const confirm2FA=()=>{
-    axios.post("http://localhost:8000/api/user/confirm-password",{ password:this.state.input.password
+    axios().post("/api/user/confirm-password",{ password:input['password']
     }).then(response=> {
 
       hideModal2FA()
       enable2FA()
  
-    console.log(this.state.codes)
+    console.log(codes)
     }).catch((error)=>{
       console.log(error)
-      let StateError={...this.state.errors}
+      let StateError={...errors}
               StateError['password']=error.response.data.errors['password']
-          this.setState({
-            errors:StateError
-            }
-            
-              )
-              console.log(this.state.errors['password'][0])
+              setErrors(StateError)
+   
+              console.log(errors['password'][0])
     
      })
 
@@ -131,30 +118,21 @@ let codes=[]
 
   const showModal2FA=()=>{
   
-    this.setState({
-      TwoFAPop:true,
-    })
+    setTwoFAPop(true)
+   
   }
   const hideModal2FA=()=>{
     console.log("d")
-    this.setState(
-      {
-        TwoFAPop:false
-      }
-      )
+    setTwoFAPop(false)
   }
   const disable2FA=()=>{
     console.log("d")
-    axios.delete("http://localhost:8000/api/user/two-factor-authentication",{ 
+    axios().delete("/api/user/two-factor-authentication",{ 
     }).then(
       response=>{
         if(response.status==200){
-          this.setState(
-            {
-              TwoFA:false,
-          
-            }
-            )
+          setTwoFA(false)
+         
         }}
      ).catch(error=>{
 
@@ -168,14 +146,10 @@ let codes=[]
 
   let changed=(event,inputId)=>{
            
-    let input={...this.state.input}
-     input[inputId]=event.target.value
-     this.setState(
-         {
-       
-             input:input
-         }
-         )
+    let Sinput={...input}
+     Sinput[inputId]=event.target.value
+     setInput(Sinput)
+    
        
  }
 
@@ -190,17 +164,17 @@ let codes=[]
             <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="col-sm-5 danger card shadow  border-danger">
          <div class="card-body" style={{justifyContent:"space-between",display:"flex",alignItems:"center"}} >
         
-         <strong>Your two Factor Auth is <span className={this.state.TwoFA?"text-success":"text-danger"} style={{fontSize:19,fontWeight:'bold'}}>{this.state.TwoFA?"Enabled":"Disabled"}</span></strong>
+         <strong>Your two Factor Auth is <span className={twoFA?"text-success":"text-danger"} style={{fontSize:19,fontWeight:'bold'}}>{twoFA?"Enabled":"Disabled"}</span></strong>
         
 
-         <button onClick={this.state.TwoFA?disable2FA:enable2FA} type="button" class={this.state.TwoFA?" btn btn-danger":"btn btn-success "}>
-         {this.state.TwoFA?"Disable":"Enable"}
+         <button onClick={twoFA?disable2FA:enable2FA} type="button" class={twoFA?" btn btn-danger":"btn btn-success "}>
+         {twoFA?"Disable":"Enable"}
 </button>
        
 
 
 
-       <div class={this.state.TwoFAPop?"modal fade show":"modal"} style={{display:this.state.TwoFAPop?'block':'none'}} tabindex="-1" id="myModal">
+       <div class={twoFAPop?"modal fade show":"modal"} style={{display:twoFAPop?'block':'none'}} tabindex="-1" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -209,7 +183,7 @@ let codes=[]
       </div>
       <div class="modal-body">
       <input onChange={(event)=>changed(event,"password")} class="form-control" placeholder="password" type="password" />
-        <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['password'][0]}</label>
+        <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['password'][0]}</label>
       </div>
       <div class="modal-footer">
         <button onClick={hideModal2FA}  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -243,9 +217,9 @@ let codes=[]
               <div class="collapse" id="collapseExample">
                  <div class="card card-body">
                  
-                    {this.state.TwoFA? <div>{ <span dangerouslySetInnerHTML={{__html:this.state.qr.svg}} />}            
+                    {twoFA? <div>{ <span dangerouslySetInnerHTML={{__html:qr.svg}} />}            
                     <ul>
-                      {codes}
+                      {Rcodes}
                     </ul>
 
                      </div>:"your 2FA is Disabled"}
@@ -264,8 +238,9 @@ let codes=[]
   )
 
 
+
+
+
+
 }
-
-
-
-}
+export default TwoFA

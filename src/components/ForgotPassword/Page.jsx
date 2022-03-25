@@ -1,13 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Container from '../Login/ContainerBox'
 import Input from '../Login/Input'
 import '../Login/LoginStyle.css';
 import styled from 'styled-components';
 import Button from '../Login/Button';
-import axios from 'axios';
+import axios from '../axios/axios';
 import { Component } from 'react/cjs/react.production.min';
 import { Slide } from '@material-ui/core';
-
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -34,44 +33,39 @@ width: 100% ;
 
 
 
-class Page extends Component {
-    state={
-        input:{
-            email:""
-        },
-        error:""
-    }
-    render(){
-     
+let Page=()=>  {
+
+    const [input, setInput] = useState({
+        email:""
+    });
+        const [message, setMessage] = useState("");
+        const [error, setError] = useState("");
+   
+
 let forgotPassReq =()=> {
-console.log(this.state.input['email'])
-    axios.post("http://localhost:8000/api/forgot-password",{    
-        "email":this.state.input['email'],
+
+console.log(input['email'])
+    axios().post("/api/forgot-password",{    
+        "email":input['email'],
 
 }).then(response=> {
- 
+    setError("")
+    setMessage(response.data.message)
   })
   .catch(error=> {
-  this.setState({
-      error:error.response.data.message
-    }
-      )
-    
-   
-  });
+      setMessage("")
+ setError(error.response.data.message)
+
+  })
 
 }
 
         let changed=(event,inputId)=>{
             
-            let input={...this.state.input}
-             input[inputId]=event.target.value
-             this.setState(
-                 {
-               
-                     input:input
-                 }
-                 )
+            let Sinput={...input}
+            Sinput[inputId]=event.target.value
+             setInput(Sinput)
+           
                
          }
 
@@ -85,7 +79,8 @@ console.log(this.state.input['email'])
        </Title>
        <InputText>
        <Input onChange={(event)=>changed(event,'email')} type="email" placeholder="Email of your account" />
-       <label style={{cursor:'pointer'}}>{this.state.error}</label>
+   
+       <label style={{color:message?'#58d68d ':' #960000 ' ,fontWeight:'bold'}}>{message?message:error}</label>
        </InputText>
        <Buttons>
        <div class="container">
@@ -108,7 +103,7 @@ console.log(this.state.input['email'])
       </body>
 
   )
-  }
+  
 }
 
 export default Page
