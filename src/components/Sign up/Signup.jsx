@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import React from 'react';
+import React,{useState} from 'react';
 import '../Login/LoginStyle.css';
 import FancyInput from "../Login/Input"
 import FancyButton from "../Login/Button"
-import axios from 'axios';
+import axios from '../axios/axios';
 import { Component } from 'react/cjs/react.production.min';
 import { Slide } from '@material-ui/core';
 import { BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
@@ -36,114 +36,105 @@ const Buttons = styled.div`
     width:100% ;
 `;
 
-export class Signup extends Component
-{
-    state={
-        input:{
+let Signup=()=>{
+
+    const [input, setInput] = useState({
         name:"",
         email:"",
         password:"",
         password_confirmation:"",
         
-        }, 
+        });
 
-        errors:{
+        const [errors, setErrors] = useState({
             name:"",
             email:"",
             password:"",
-        },
-        navigate:false
-        
-    }
-  
+        });
 
-    render(){
+        const [navigate, setNavigate] = useState(false);
    
-         console.log(this.state.navigate)
+  
+         console.log(navigate)
                 
         let registerReq=()=>{
      
          
-            axios.post("http://localhost:8000/api/register",{
-                "name":this.state.input['name'],
-            "email":this.state.input['email'],
-            "password":this.state.input['password'],
-           "password_confirmation":this.state.input['password_confirmation'],
+            axios().post("/api/register",{
+                "name":input['name'],
+            "email":input['email'],
+            "password":input['password'],
+           "password_confirmation":input['password_confirmation'],
         
         }).then(response=> {
             if(response.status==201){
-                this.setState({
-                    input:{
+
+                setInput({
+                    name:"",
+                    email:"",
+                    password:"",
+                    password_confirmation:"",
+                    
+                    })
+
+                    setErrors({
                         name:"",
                         email:"",
-                        password:"",
-                        password_confirmation:"",
-                        
-                        }, 
-                
-                        errors:{
-                            name:"",
-                            email:"",
-                            password:"", 
-                        },
-                        navigate:true
-                })
+                        password:"", 
+                    })
+
+                    setNavigate(true)
                 
             }
 
           })
           .catch(error=> {
            
-            let errors=error.response.data.errors
+            let Reserrors=error.response.data.errors
             
            
-           let stateErrrors={...this.state.errors}
+           let stateErrrors={...errors}
            
-           Object.keys(this.state.errors).forEach(element=>{
-            if(Object.keys(errors).includes(element)){
-                stateErrrors[element]=errors[element]
+           Object.keys(errors).forEach(element=>{
+            if(Object.keys(Reserrors).includes(element)){
+                stateErrrors[element]=Reserrors[element]
             }else{
                 stateErrrors[element]=""
             }
              
            })
           
-           
-            this.setState({
-                errors: stateErrrors
-                });
-         
-          });
+           setErrors(stateErrrors)
+          
+          })
+          
         }
       
         let changed=(event,inputId)=>{
 
-           let input={...this.state.input}
-            input[inputId]=event.target.value
-            this.setState(
-                {
-                    input:input
-                }
-                )
+           let Sinput={...input}
+           Sinput[inputId]=event.target.value
+           setInput(Sinput)
+           
               
         }
 
       
         
     return (
-        this.state.navigate?<Navigate to="/verification"/>:
+        navigate?<Navigate to="/verification"/>:
         <body className="Login">
             <Slide direction='up' in="true">
             <Container size="80vh"  wide="40vw">   
             <Title>Signup</Title>
             <InputText>
-            <FancyInput bordercolor={this.state.errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{this.state.name}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['name'][0]}</label>
-            <FancyInput bordercolor={this.state.errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{this.state.email}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['email'][0]}</label>
-            <FancyInput bordercolor={this.state.errors['password']? '#960000':'white'}   onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{this.state.password}</FancyInput>
-            <FancyInput bordercolor={this.state.errors['password']=="The password confirmation does not match."? '#960000':'white'} onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{this.state.password_confirmation}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{this.state.errors['password'][0]}</label>
+            <FancyInput bordercolor={errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{input['name']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['name'][0]}</label>
+            <FancyInput bordercolor={errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{input['email']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['email'][0]}</label>
+            <FancyInput bordercolor={errors['password']? '#960000':'white'}   onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{input['password']}</FancyInput>
+            <FancyInput bordercolor={errors['password']=="The password confirmation does not match."? '#960000':'white'} onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{input['password_confirmation']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['password'][0]}</label>
             </InputText>
             <Buttons>
                 <div class="container">
@@ -167,7 +158,8 @@ export class Signup extends Component
         </body>
     
          );
-        }
+
 }
+
 
 export default Signup;

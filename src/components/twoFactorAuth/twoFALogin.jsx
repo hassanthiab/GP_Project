@@ -1,10 +1,10 @@
-import React from 'react'
+import React,{useState}from 'react'
 import Container from '../Login/ContainerBox'
 import Input from '../Login/Input'
 import '../Login/LoginStyle.css';
 import styled from 'styled-components';
 import Button from '../Login/Button';
-import axios from 'axios';
+import axios from '../axios/axios';
 import { Component } from 'react/cjs/react.production.min';
 import { Checkbox, Slide } from '@material-ui/core';
 import { Navigate } from 'react-router-dom';
@@ -34,36 +34,30 @@ width: 100% ;
 
 
 
-class TwoFALogin extends Component {
-    state={
-        input:{
-            recovery_code:'',
-           code:'',
-           EN_r_code:false
-        },
-        error:"",
-        navigate:false
-    }
-    
-    render(){
-        let data={}
+let TwoFALogin=()=>  {
+
+    const [input, setInput] = useState({
+      recovery_code:'',
+     code:'',
+     EN_r_code:false
+  })
+
+  const [error, setError] = useState("")
+  const [navigate, setNavigate] = useState(false);
+
+  let data={}
 let codeFAReq =()=> {
  
-   this.state.input.EN_r_code?data.recovery_code=this.state.input.recovery_code:data.code=this.state.input.code
-   console.log(data )
-console.log(this.state.input)   
-    axios.post("http://localhost:8000/api/two-factor-challenge",data).then(response=> {
-    this.setState({
-      navigate:true,
-    })
+   input.EN_r_code?data.recovery_code=input.recovery_code:data.code=input.code
+   console.log(data)
+console.log(input)   
+    axios().post("/api/two-factor-challenge",data).then(response=> {
+      setNavigate(true)
+  
   })
   .catch(error=> {
-  this.setState({
-      error:error.response.data.message
-    }
-      )
-    
-   
+    setError(error.response.data.message)
+
   })
     
 
@@ -71,24 +65,19 @@ console.log(this.state.input)
 
         let changed=(event,inputId)=>{
              
-            let input={...this.state.input}
-            inputId==='EN_r_code' ?input[inputId]=!input[inputId]:input[inputId]=event.target.value
+            let Sinput={...input}
+            inputId==='EN_r_code' ?Sinput[inputId]=!Sinput[inputId]:Sinput[inputId]=event.target.value
              
 
-             console.log(input[inputId])
-             this.setState(
-                 {
-               
-                     input:input
-                 }
-                 )
-           
-                
+             console.log(Sinput[inputId])
+
+             setInput(Sinput)
+          
          }
 
 
   return (
-    this.state.navigate?<Navigate to="/twoFA"/>:
+    navigate?<Navigate to="/twoFA"/>:
       <body class="Login">
           <Slide direction='up' in="true">
    <Container size="30vh">
@@ -96,8 +85,8 @@ console.log(this.state.input)
            Please Enter your 2FA code
        </Title>
        <InputText>
-       <Input onChange={(event)=>changed(event,this.state.input.EN_r_code?'recovery_code':'code')} type="text" placeholder="the code" />
-       <label style={{cursor:'pointer'}}>{this.state.error}</label>
+       <Input onChange={(event)=>changed(event,input.EN_r_code?'recovery_code':'code')} type="text" placeholder="the code" />
+       <label style={{cursor:'pointer'}}>{error}</label>
        <div class="form-check form-switch">
   <input class="form-check-input" onChange={(event)=>changed(event,'EN_r_code')} type="checkbox" id="flexSwitchCheckDefault" />
   <label class="form-check-label" for="flexSwitchCheckDefault">use recovery code</label>
@@ -124,7 +113,7 @@ console.log(this.state.input)
       </body>
 
   )
-  }
+  
 }
 
 export default TwoFALogin
