@@ -18,10 +18,10 @@ import AfterRegisterVerify from './components/verifyEmail/AfterRegisterVerify'
 function App()
 {
   return( 
-  <Router>
-  <Pagetop />
-
-    <Routes>
+    
+  <Router >
+    <Pagetop />
+<Routes>
       <Route  path="/Login/ForgotPassword"   element={<Page />} />
       <Route  path="/Login" element={<Login />} />
       <Route  path="/Signup"   element={<Signup></Signup>} />
@@ -35,6 +35,7 @@ function App()
       <Route path="/require-verification" element={<RequireVerification/>} />
       <Route path="/" element={<Home></Home>} />
     </Routes>
+
     
 
   </Router>
