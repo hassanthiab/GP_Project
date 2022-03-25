@@ -78,7 +78,7 @@ window.addEventListener('resize', showButton)
             </NavItem>
           
             <NavItem button={buttonShow}>
-            <NavLink to="/Login"  activestyle="True">
+            <NavLink to="/"  activestyle="True">
             Logout
             </NavLink>
                 </NavItem>
@@ -90,7 +90,7 @@ window.addEventListener('resize', showButton)
                 
                 <NavBtnLink to="/Signup">Sign up</NavBtnLink>
                 <NavBtnLink to="/Login">Log in</NavBtnLink>
-                <NavBtnLink onClick={logoutReq} to="/Login">Log out</NavBtnLink>
+                <NavBtnLink onClick={logoutReq} to="/">Log out</NavBtnLink>
 
             </NavBtn>
         </Nav>
