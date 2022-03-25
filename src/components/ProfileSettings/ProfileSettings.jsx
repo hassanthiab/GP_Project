@@ -1,11 +1,16 @@
-
+import { useState } from 'react'
 import React from 'react'
-import Container from '../Login/ContainerBox'
 import "./Bottom.css"
-import Button from '../Login/Button'
-import Input from '../Login/Input'
+import { Button, ButtonBase, Slide } from '@material-ui/core'
 import styled from 'styled-components'
+import ProfileInput from './ProfileInput'
+import TwoFALogin from '../twoFactorAuth/twoFALogin'
+import TwoFA from '../twoFactorAuth/twoFA'
 
+const Input = styled('input')({
+    display: 'none',
+  });
+  
 const Buttons = styled.div`
     display:flex ;
     flex-direction:column ;
@@ -17,48 +22,52 @@ const Buttons = styled.div`
 `;
 
 function ProfileSettings() {
+    const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
+      const imageHandler = (e) => {
+        const reader = new FileReader();
+        reader.onload = () =>{
+          if(reader.readyState === 2){
+            setImage(reader.result)
+          }
+        };
+        reader.readAsDataURL(e.target.files[0])
+    }
   return (
-    <body  style={{backgroundColor:"#101522"}} class="Login">
-
-        <Container size="90vh" wide="70vw">
-
-        <h1 style={{marginBottom:"64px", marginTop:"24px"}}>Change your Profile Settings.</h1>
+    <body  style={{backgroundColor:"#101522"}} className="Login">
+        <Slide in="true" direction='left'>
         <div class="container">
+            <div class="row  justify-content-center container">
+            <div class="col-4">
+                
+                </div>
+              <div class="col-6">
+              <div className="img-holder">
+						<img src={profileimage} alt="" id="img" className="img" />
+					</div>
+              <label htmlFor="contained-button-file">
+                <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={imageHandler}/>
+                <Button variant="contained" component="span">
+                Upload
+                </Button>
+                </label>
+                
+              </div>
+              <div class="col-6">
+                </div>
+            </div>
+            <ProfileInput input_label="Username" type="Text" placeholder="Change Username"></ProfileInput>
             
+            <ProfileInput input_label="Email"  type="Text" placeholder="Change Email"></ProfileInput>
             
-            <Input input_label="Username" type="Text" placeholder="Change Username"></Input>
+            <ProfileInput input_label="Password" type="Password" placeholder="Change Password"></ProfileInput>
             
-            <Input input_label="Email"  type="Text" placeholder="Change Email"></Input>
-            
-            <Input input_label="Password" type="Password" placeholder="Password"></Input>
-            
-            <Input input_label="Number" type="Number" placeholder="Add PhoneNumber"></Input>
-        
-            <Buttons>
-                <div class="container">
-     <div class="row">
-    <div class="col-md-1">
+            <ProfileInput input_label="Number" type="Number" placeholder="Add PhoneNumber"></ProfileInput>
+          
+            <TwoFA></TwoFA>
         </div>
-    <div class="col-md-10">
-    <Button  nameButton='Change Password'></Button>
-     </div>
-    <div class="col-md-1">
-    </div>
-     </div>
-     <div class="row">
-    <div class="col-md-1">
-        </div>
-    <div class="col-md-10">
-    <Button  nameButton='Confirm Changes'></Button>
-     </div>
-    <div class="col-md-1">
-    </div>
-     </div>
-        </div>
-            </Buttons>
-            
-        </div>
-        </Container>
+        </Slide>
+    
+
     </body>
   
   )
