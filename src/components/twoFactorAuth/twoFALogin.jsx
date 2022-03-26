@@ -37,9 +37,8 @@ width: 100% ;
 let TwoFALogin=()=>  {
 
     const [input, setInput] = useState({
-      recovery_code:'',
      code:'',
-     EN_r_code:false
+
   })
 
   const [error, setError] = useState("")
@@ -47,11 +46,12 @@ let TwoFALogin=()=>  {
 
   let data={}
 let codeFAReq =()=> {
- 
-   input.EN_r_code?data.recovery_code=input.recovery_code:data.code=input.code
-   console.log(data)
-console.log(input)   
+  let regix=new RegExp('^(\\d{6})$')
+  regix.test(input.code)?data.code=input.code:data.recovery_code=input.code
+  data.device_name='andriod'
+
     axios().post("/api/two-factor-challenge",data).then(response=> {
+      localStorage.setItem('token',response.data.token)
       setNavigate(true)
   
   })
@@ -66,7 +66,7 @@ console.log(input)
         let changed=(event,inputId)=>{
              
             let Sinput={...input}
-            inputId==='EN_r_code' ?Sinput[inputId]=!Sinput[inputId]:Sinput[inputId]=event.target.value
+          Sinput[inputId]=event.target.value
              
 
              console.log(Sinput[inputId])
@@ -85,11 +85,9 @@ console.log(input)
            Please Enter your 2FA code
        </Title>
        <InputText>
-       <Input onChange={(event)=>changed(event,input.EN_r_code?'recovery_code':'code')} type="text" placeholder="the code" />
-       <label style={{cursor:'pointer'}}>{error}</label>
+       <Input onChange={(event)=>changed(event,'code')} type="text" placeholder="the code" />
+       <label >{error}</label>
        <div class="form-check form-switch">
-  <input class="form-check-input" onChange={(event)=>changed(event,'EN_r_code')} type="checkbox" id="flexSwitchCheckDefault" />
-  <label class="form-check-label" for="flexSwitchCheckDefault">use recovery code</label>
 </div>
        </InputText>
        <Buttons>

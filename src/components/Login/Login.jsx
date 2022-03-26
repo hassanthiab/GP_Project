@@ -5,7 +5,7 @@ import FancyInput from "./Input"
 import FancyButton from "./Button"
 import axios from '../axios/axios';
 import { Component } from 'react/cjs/react.production.min';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate, useRoutes } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 import {useState} from 'react'
@@ -58,7 +58,15 @@ let Login=()=>{
         });
         const [message, setMessage] = useState("");
         const [navigate, setNavigate] = useState(false);
-   
+        
+        const queryParams = new URLSearchParams(window.location.search)
+    
+         const EVURL = queryParams.has('URL')?queryParams.get('URL'):false
+         const sig = queryParams.has('signature')?queryParams.get('signature'):false
+        
+         const URL=  EVURL && sig?`${EVURL}&signature=${sig}`:false
+        
+
         let loginReq = () => {
             
    
@@ -66,14 +74,18 @@ let Login=()=>{
                 axios().post("/api/login",{    
                     "email":input['email'],
                     "password":input['password'],  
-           
+                    "device_name":'android'
             }).then(response=> {
            
                if(response.status==200)
-               {
+               {  
                 console.log(response.data.two_factor)
                response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
                 a=<Navigate to={'/twoFA'}/>
+                localStorage.setItem('token',response.data.token)
+               if(URL){
+                axios().get(URL).then(response=>{response.status==204?"":""}).catch(error=>{})
+            }
                 console.log(a.props)
                    setInput(
                         {

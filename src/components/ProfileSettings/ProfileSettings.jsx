@@ -4,7 +4,6 @@ import "./Bottom.css"
 import { Button, ButtonBase, Slide } from '@material-ui/core'
 import styled from 'styled-components'
 import ProfileInput from './ProfileInput'
-import TwoFALogin from '../twoFactorAuth/twoFALogin'
 import TwoFA from '../twoFactorAuth/twoFA'
 
 const Input = styled('input')({

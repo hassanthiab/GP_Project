@@ -2,8 +2,8 @@ import {Img} from "../../Images/LoginBackground.jpg"
 export const data = [
     {
       id: 1,
-      name: "Dummy-name",
-      coordinator: "Hassan",
+      name: "nizar banat",
+      coordinator: "Nablus Equistrian CLub",
       email: "chair0@friendfeed.com",
       size: 9,
       location: "Nablus",
@@ -11,7 +11,13 @@ export const data = [
       date: "2021-07-18T01:03:25Z",
       image: require("../../Images/LoginBackground.jpg"),
       Likes: 10,
+      private:false,
+
+      
     },
+
+   
+    
     {
         id: 2,
         name: "Garbage",
