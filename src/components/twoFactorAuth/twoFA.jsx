@@ -73,7 +73,7 @@ let Rcodes=[]
     
 
     }).catch((error)=>{
-    
+     
       if(error.response.data.message=="Password confirmation required."){
        axios().get("/api/user/confirmed-password-status").then(response=>{
         if(response.data.confirmed){

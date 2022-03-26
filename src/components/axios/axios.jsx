@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 
-let api=({token=null}={})=>{
+let api=()=>{
   const api=axios.create({
     baseURL:'http://localhost:8000',
     withCredentials:true
   })
-
-if(token){
-  api.defaults.headers.common['Authorization']=`Bearer ${token}`
+  api.get("/sanctum/csrf-cookie").then().catch()
+if(localStorage.getItem('token')){
+  api.defaults.headers.common['Authorization']=`Bearer ${localStorage.getItem('token')}`
 }
 
 return api

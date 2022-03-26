@@ -65,10 +65,11 @@ let Signup=()=>{
             "email":input['email'],
             "password":input['password'],
            "password_confirmation":input['password_confirmation'],
+           "device_name":'android',
         
         }).then(response=> {
             if(response.status==201){
-
+                localStorage.setItem('token',response.data.token)
                 setInput({
                     name:"",
                     email:"",

@@ -26,7 +26,10 @@ useEffect(()=>{
 window.addEventListener('resize', showButton)
 
     let logoutReq=()=>{
-        axios().post("/api/logout").then().catch()
+        if(localStorage.getItem('token'))
+     { axios(localStorage.getItem('token')).delete("/api/loagout").then().catch()
+        localStorage.removeItem('token')}
+       
     }
 
   return (
