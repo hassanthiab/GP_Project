@@ -1,34 +1,33 @@
 import React,{useState, useEffect} from "react";
-import { Component, Fragment } from "react/cjs/react.production.min";
-import { Navigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import axios from '../axios/axios';
 
 let Verify =()=>{
-  let a=""
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState("");
-  const [navigate, setNavigate] = useState(false);
-
-  const queryParams = new URLSearchParams(window.location.search)
-    
-  const EVURL = queryParams.get('email_verify_url')
-  const sig = queryParams.get('signature')
-
-  const URL=`${EVURL}&signature=${sig}`
-
+  const navigate=useNavigate()
   useEffect(() => {
 
-    console.log(URL)
+    const queryParams = new URLSearchParams(window.location.search)
+  
+    const EVURL = queryParams.get('email_verify_url')
+    const sig = queryParams.get('signature')
+  
+    const URL=`${EVURL}&signature=${sig}`
+
         axios().get(URL).
         then(response=>{response.status==204?setVerified(true):setVerified(false)}).
         catch(error=>{
-     
+
+          if(!error.response) return
+
           if(error.response.status==401){
-    
-            setNavigate(true)
+
+            navigate('/Login?URL='+URL)
+
             setVerified(false)
             setMessage(error.response.data.message)
-      
+            
           }
           
         })
@@ -38,7 +37,6 @@ let Verify =()=>{
 
 
 return (
-navigate?<Navigate to={'/Login?URL='+URL}/>:
   <div>
   <div class="container">
            <div class="row" style={{marginTop:40}}>

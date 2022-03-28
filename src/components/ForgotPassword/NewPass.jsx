@@ -4,13 +4,10 @@ import Input from '../Login/Input'
 import '../Login/LoginStyle.css';
 import styled from 'styled-components';
 import Button from '../Login/Button';
-import { useRoutes } from 'react-router-dom';
-import { Component } from 'react/cjs/react.production.min';
+import { useNavigate } from 'react-router-dom';
 import axios from '../axios/axios';
-import { useParams } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+
 import { Slide } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -38,6 +35,7 @@ width: 100% ;
 
 let NewPass=()=> {
 
+  const navigate=useNavigate()
   const [input, setInput] = useState({
     email:"",
     password:"",
@@ -68,10 +66,18 @@ const [success, setSuccess] = useState("");
                 "password_confirmation":input['password_confirmation'],
                 "token":token,
                
-        }).then(response=> {
+        }).then(response=> { 
+           
+          if(response.status==200 && response.data.message=="Your password has been reset!"){
+            navigate('/Login')
+          }  
          setSuccess(response.data.message)
+        
           })
           .catch(error=> {
+
+            if(!error.response) return
+
             setSuccess("")
               let StateError={...errors}
               StateError['password']=error.response.data.errors['password']

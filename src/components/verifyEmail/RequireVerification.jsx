@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { Component, Fragment } from "react/cjs/react.production.min";
+import { Fragment } from "react/cjs/react.production.min";
 import axios from '../axios/axios';
 let Verify=()=>{
 
@@ -20,6 +20,7 @@ let Verify=()=>{
     }
       ).
     catch(error=>{ 
+      if(!error.response) return
       setVSent(false)
       setMessage(error.response.data.message)
 
@@ -29,11 +30,8 @@ let Verify=()=>{
 return (
 
   <Fragment>
-  <div class="container">
-           <div class="row" style={{marginTop:40}}>
-           <div class="col-sm-3">
-           </div>
-         {vSent?   <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="col-sm-6 success card shadow  border-success">
+
+         {vSent?   <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="success card shadow  border-success">
         <div class="card-body" style={{textAlign:"center"}} >
        
         <strong ><span className={verified?'text-success':'text-danger'} style={{fontSize:19,fontWeight:'bold'}}> {verified?'Your email is already verified ':" the email has been sent "}
@@ -43,21 +41,19 @@ return (
       </div> 
       </div>
          :
-           <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="col-sm-6 success card shadow  border-success">
+           <div style={{backgroundColor:'#222222', color:'#FFAA00'}} class="success card shadow  border-success">
         <div class="card-body" style={{textAlign:"center"}} >
        
-        <strong ><span className={verified?'text-success':'text-danger'} style={{fontSize:19,fontWeight:'bold'}}> {verified?'Your email is already verified  ':" Your email address is not verified. click the link to request an email verification "}
+        <strong ><span className={verified?'text-success':'text-danger'} style={{fontSize:19,fontWeight:'bold'}}> {verified?'Your email is already verified  ':" Your email address is not verified. please, click the link to request an email verification. "}
 </span></strong>
 {verified?"":
 <a onClick={sendEmailV} style={{fontSize:19,fontWeight:'bold'}} href="#">send email</a>}  
     </div> 
       </div>
       }
-      <div class="col-sm-3">
+     
+ 
 
-      </div>
- </div>
- </div>
  </Fragment>
 
 )

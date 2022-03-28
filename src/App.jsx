@@ -26,7 +26,7 @@ function App()
       <Route  path="/Login" element={<Login />} />
       <Route  path="/Signup"   element={<Signup></Signup>} />
       <Route  path="/reset-password"   element={<NewPass />} />
-      <Route path="/Profile" element={<ProfileSettings></ProfileSettings>} />
+      <Route path="/Profile" element={<ProfileSettings/>} />
       <Route  path="/twoFA"   element={<TwoFA />} />
       <Route  path="/FAcode"   element={<TwoFALogin />} />
       <Route path="/hello" element={<Tournament></Tournament>} />
