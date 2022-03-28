@@ -1,25 +1,26 @@
 import React,{useState} from "react";
-import { Component, Fragment } from "react/cjs/react.production.min";
-import FancyInput from "../../components/Login/Input"
+import { Fragment } from "react/cjs/react.production.min";
 import axios from '../axios/axios';
-import  { Navigate } from 'react-router-dom'
-import { fontWeight } from "@mui/system";
-import { SvgIcon } from "@material-ui/core";
+import { useEffect } from "react";
+import EmailV from '../verifyEmail/RequireVerification';
 
-let TwoFA=()=>{
-
-
-  const [twoFA, setTwoFA] = useState(false);
+let TwoFA=(props)=>{
+ const  [reveal, setReveal] = useState(false);
+  const [twoFA, setTwoFA] = useState(props.twoFA);
   const [twoFAPop, setTwoFAPop] = useState(false);
   const [input, setInput] = useState({
     password:""
 });
+
+
+
   const [errors, setErrors] = useState({
     password:""
   });
 
   const [qr, setQr] = useState("");
   const [codes, setCodes] = useState([]);
+  const [verified, setVerified] = useState(true);
 
 
 
@@ -38,9 +39,29 @@ let Rcodes=[]
     }).then(response=> {
     
       setQr(response.data)
-  
-    }).catch(error=>{
+     
 
+    }).catch(error=>{
+      if(error.response.data.message=="Your email address is not verified."){
+        setVerified(false)
+      }
+      else if(error.response.data.message=="Password confirmation required."){
+     
+        setVerified(true)
+         axios().get("/api/user/confirmed-password-status").then(response=>{
+       if(response.data.confirmed){
+         hideModal2FA()
+         qr2FA()
+         codes2FA()
+         setTwoFA(true)
+      }
+       else
+       showModal2FA();
+
+    
+
+     }).catch(error=>{})
+   }
      
      }) 
   }
@@ -49,16 +70,42 @@ let Rcodes=[]
     }).then(response=> {
     
       setCodes(response.data)
-      
+    
    
     }).catch(error=>{
+      if(error.response.data.message=="Your email address is not verified."){
+        setVerified(false)
+      }
+      else if(error.response.data.message=="Password confirmation required."){
+     
+        setVerified(true)
+         axios().get("/api/user/confirmed-password-status").then(response=>{
+       if(response.data.confirmed){
+         hideModal2FA()
+         qr2FA()
+         codes2FA()
+         setTwoFA(true)
+      }
+       else
+       showModal2FA();
 
+    
+
+     }).catch(error=>{})
+   }
      
      }) 
 
   }
+  const codesQr=()=>{
+    setVerified(true)
+    codes2FA()
+    qr2FA()
+    setReveal(true)
+  }
+
   const enable2FA=()=>{
-    
+    setReveal(false)
         axios().post("/api/user/two-factor-authentication",{ 
     }).then(response=> {
       if(response.status==200)
@@ -73,9 +120,15 @@ let Rcodes=[]
     
 
     }).catch((error)=>{
-     
+      if(!error.response) return
+      if(error.response.data.message=="Your email address is not verified."){
+        setVerified(false)
+      }
+      else
       if(error.response.data.message=="Password confirmation required."){
-       axios().get("/api/user/confirmed-password-status").then(response=>{
+     
+         setVerified(true)
+          axios().get("/api/user/confirmed-password-status").then(response=>{
         if(response.data.confirmed){
           hideModal2FA()
           qr2FA()
@@ -98,18 +151,18 @@ let Rcodes=[]
   const confirm2FA=()=>{
     axios().post("/api/user/confirm-password",{ password:input['password']
     }).then(response=> {
-
+      
       hideModal2FA()
-      enable2FA()
- 
+      reveal?"": twoFA? disable2FA() :  enable2FA()
+      setReveal(false)
     console.log(codes)
     }).catch((error)=>{
-      console.log(error)
+      if(!error.response) return
       let StateError={...errors}
               StateError['password']=error.response.data.errors['password']
               setErrors(StateError)
    
-              console.log(errors['password'][0])
+             
     
      })
 
@@ -122,11 +175,11 @@ let Rcodes=[]
    
   }
   const hideModal2FA=()=>{
-    console.log("d")
+   
     setTwoFAPop(false)
   }
   const disable2FA=()=>{
-    console.log("d")
+    setReveal(false)
     axios().delete("/api/user/two-factor-authentication",{ 
     }).then(
       response=>{
@@ -135,7 +188,23 @@ let Rcodes=[]
          
         }}
      ).catch(error=>{
+      if(error.response.data.message=="Password confirmation required."){
+     
+        setVerified(true)
+         axios().get("/api/user/confirmed-password-status").then(response=>{
+       if(response.data.confirmed){
+         hideModal2FA()
+         qr2FA()
+         codes2FA()
+        
+      }
+       else
+       showModal2FA();
 
+    
+
+     }).catch(error=>{})
+   }
    
       
       })
@@ -156,8 +225,9 @@ let Rcodes=[]
 
   return(
   <Fragment>
+   
    <div class="container">
-            <div class="row" style={{marginTop:30}}>
+            <div class="row" style={{marginTop:50}}>
             <div class="col-sm-1">
             </div>
           
@@ -165,7 +235,7 @@ let Rcodes=[]
          <div class="card-body" style={{justifyContent:"space-between",display:"flex",alignItems:"center"}} >
         
          <strong>Your two Factor Auth is <span className={twoFA?"text-success":"text-danger"} style={{fontSize:19,fontWeight:'bold'}}>{twoFA?"Enabled":"Disabled"}</span></strong>
-        
+       
 
          <button onClick={twoFA?disable2FA:enable2FA} type="button" class={twoFA?" btn btn-danger":"btn btn-success "}>
          {twoFA?"Disable":"Enable"}
@@ -210,7 +280,7 @@ let Rcodes=[]
             </div>
             <div class="col-sm-5">
             <p>
-            <button onClick={codes2FA} class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button onClick={codesQr} class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               Reveal the codes
             </button>
             </p>
@@ -228,8 +298,21 @@ let Rcodes=[]
               </div>
             </div>
                 <div class="col-sm-6">
+ 
             </div>
+
                 </div>
+
+                <div class="row" style={{marginTop:30}}>
+            <div class="col-sm-1">
+          
+            </div>
+            <div class="col-sm-5">
+            {verified?"":<EmailV/>}
+            </div>
+            <div class="col-sm-6">
+            </div>
+            </div>
             </div>
     
     

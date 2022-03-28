@@ -6,7 +6,7 @@ let api=()=>{
     baseURL:'http://localhost:8000',
     withCredentials:true
   })
-  api.get("/sanctum/csrf-cookie").then().catch()
+  api.get("/sanctum/csrf-cookie").then().catch(error=>{console.log(error)})
 if(localStorage.getItem('token')){
   api.defaults.headers.common['Authorization']=`Bearer ${localStorage.getItem('token')}`
 }

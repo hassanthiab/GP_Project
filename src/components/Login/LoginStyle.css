@@ -1,12 +1,12 @@
 .Login {
 
-    background-position: -0px -90px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     background-size: cover;
-    height: 100vh;
-    width: 100vw;
+    height:100%;
+   
     background-color: #101522;
 }
     

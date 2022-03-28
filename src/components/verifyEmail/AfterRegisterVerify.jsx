@@ -6,7 +6,7 @@ let Verify=()=> {
 
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState("");
-  const [vSent, setVSent] = useState(false);
+
   
 
   let sendEmailV=()=>{
@@ -14,16 +14,15 @@ let Verify=()=> {
    
     axios().post('/api/email/verification-notification').
     then(response=>{
-      if(response.status==202)
-      setVSent(true)
-      else if(response.status==204)
+     if(response.status==204)
       setVerified(true)
   
     }
  
       ).
     catch(error=>{ 
-      setVSent(false)
+      if(!error.response) return
+   
       setMessage(error.response.data.message)
   
 })

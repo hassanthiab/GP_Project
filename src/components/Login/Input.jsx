@@ -5,22 +5,12 @@ import { borderColor } from "@mui/system";
 export default function Input(props)
 {
     return(
-        <div class="container ">
-<div class="row">
-          <div style={{marginTop:"12px", fontSize:"12px"}}class="col-md-1">
+        <div class="container " >
+
             <label style={{color:"white"}}>{props.input_label}</label>
-    </div>
-
-  <div class="col-md-10">
-        <div class="input-group mb-3">
         <StyInput class="form-control" style={{borderColor:props.bordercolor}} onChange={props.onChange} type={props.type} value={props.value} name={props.name} placeholder={props.placeholder}></StyInput>
-      </div>
-</div>
+   
 
-<div class="col-md-1">
-  
-  </div>
-  </div>
       </div>
     );
 

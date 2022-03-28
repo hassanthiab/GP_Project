@@ -4,9 +4,8 @@ import '../Login/LoginStyle.css';
 import FancyInput from "../Login/Input"
 import FancyButton from "../Login/Button"
 import axios from '../axios/axios';
-import { Component } from 'react/cjs/react.production.min';
 import { Slide } from '@material-ui/core';
-import { BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Container from '../Login/ContainerBox';
 
 const Title = styled.h2`
@@ -37,7 +36,8 @@ const Buttons = styled.div`
 `;
 
 let Signup=()=>{
-
+    
+     const navigate =useNavigate();
     const [input, setInput] = useState({
         name:"",
         email:"",
@@ -51,11 +51,11 @@ let Signup=()=>{
             email:"",
             password:"",
         });
-
-        const [navigate, setNavigate] = useState(false);
+        
+       
    
   
-         console.log(navigate)
+       
                 
         let registerReq=()=>{
      
@@ -83,14 +83,15 @@ let Signup=()=>{
                         email:"",
                         password:"", 
                     })
-
-                    setNavigate(true)
+                    navigate('/verification')
+                 
                 
             }
 
           })
           .catch(error=> {
-           
+
+            if(!error.response) return
             let Reserrors=error.response.data.errors
             
            
@@ -123,7 +124,7 @@ let Signup=()=>{
       
         
     return (
-        navigate?<Navigate to="/verification"/>:
+    
         <body className="Login">
             <Slide direction='up' in="true">
             <Container size="80vh"  wide="40vw">   

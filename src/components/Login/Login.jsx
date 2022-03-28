@@ -4,8 +4,7 @@ import './LoginStyle.css';
 import FancyInput from "./Input"
 import FancyButton from "./Button"
 import axios from '../axios/axios';
-import { Component } from 'react/cjs/react.production.min';
-import { Link, Navigate, useLocation, useNavigate, useRoutes } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Container from './ContainerBox';
 import { Slide } from '@material-ui/core';
 import {useState} from 'react'
@@ -46,6 +45,7 @@ const Buttons = styled.div`
 
 let Login=()=>{
 
+    const navigate =useNavigate();
     const [input, setInput] = useState({
         email:"",
         password:"",
@@ -57,7 +57,7 @@ let Login=()=>{
             password:"",
         });
         const [message, setMessage] = useState("");
-        const [navigate, setNavigate] = useState(false);
+   
         
         const queryParams = new URLSearchParams(window.location.search)
     
@@ -80,8 +80,8 @@ let Login=()=>{
                if(response.status==200)
                {  
                 console.log(response.data.two_factor)
-               response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
-                a=<Navigate to={'/twoFA'}/>
+               if(response.data.two_factor) navigate('/FAcode')
+               else{
                 localStorage.setItem('token',response.data.token)
                if(URL){
                 axios().get(URL).then(response=>{response.status==204?"":""}).catch(error=>{})
@@ -101,78 +101,17 @@ let Login=()=>{
                 
                        
                         setMessage("")
-
-                        setNavigate(true)
+                        navigate('/profile')
+                    
+                    }
                   
                
                 }
 
               })
               .catch(error=> {
+                if(!error.response) return
              
-                if(error.response.data.message=='These credentials do not match our records.')
-                {
-                  
-                      axios().post("api/admin/login",{    
-                            "email":input['email'],
-                            "password":input['password'],  
-                   
-                    }).then(response=> {
-           
-                        if(response.status==200)
-                        {
-                         console.log(response.data.two_factor)
-                        response.data.two_factor? a=<Navigate to={'/FAcode'}/>:
-                         a=<Navigate to={'/twoFA'}/>
-                         console.log(a.props)
-                         setInput(
-                            {
-                            email:"",
-                            password:"",
-                            }
-                            )
-    
-                            setErrors({
-                                email:"",
-                                password:"",
-                            }) 
-                    
-                           
-                            setMessage("")
-    
-                            setNavigate(true)
-                           
-                            
-                        
-                         }
-                       }).catch(error=>{
-                        let resErrors=error.response.data.errors
-            
-              
-                        let stateErrrors={...errors}
-                        if(resErrors){
-                        
-                        stateErrrors['email']=resErrors.email
-                        stateErrrors['password']=""
-                   
-                        setErrors(stateErrrors) 
-                         setMessage("")
-                        
-                     }
-                        else
-                        {
-                            setErrors({
-                                email:"",
-                                password:"",
-                            })
-                            setMessage(error.response.data.message)
-                         
-                        }
-                        
-                       })
-                    
-                }
-else{
                 let resErrors=error.response.data.errors
             
 
@@ -201,11 +140,11 @@ else{
                 
                 }
                 
-            }
+            
               })
               
            
-           )
+           ).catch(error=>{})
         }
 
         let changed=(event,inputId)=>{
@@ -220,7 +159,6 @@ else{
 
     return (
        
-   navigate?a:
     <body className="Login">
 <Slide direction='up' in="true">
 <Container size="80vh" wide="40vw">   

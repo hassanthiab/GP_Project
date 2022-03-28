@@ -53,6 +53,7 @@ console.log(input['email'])
     setMessage(response.data.message)
   })
   .catch(error=> {
+    if(!error.response) return
       setMessage("")
  setError(error.response.data.message)
 

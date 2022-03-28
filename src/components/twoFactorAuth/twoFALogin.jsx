@@ -5,9 +5,8 @@ import '../Login/LoginStyle.css';
 import styled from 'styled-components';
 import Button from '../Login/Button';
 import axios from '../axios/axios';
-import { Component } from 'react/cjs/react.production.min';
-import { Checkbox, Slide } from '@material-ui/core';
-import { Navigate } from 'react-router-dom';
+import { Slide } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 const Title = styled.h2`
 margin: 3rem 0 2rem 0 ;
@@ -36,13 +35,14 @@ width: 100% ;
 
 let TwoFALogin=()=>  {
 
+    const navigate =useNavigate();
     const [input, setInput] = useState({
      code:'',
 
   })
 
   const [error, setError] = useState("")
-  const [navigate, setNavigate] = useState(false);
+
 
   let data={}
 let codeFAReq =()=> {
@@ -51,11 +51,15 @@ let codeFAReq =()=> {
   data.device_name='andriod'
 
     axios().post("/api/two-factor-challenge",data).then(response=> {
+      if(response.status==200){
+        
       localStorage.setItem('token',response.data.token)
-      setNavigate(true)
+      navigate('/profile')
+    }
   
   })
   .catch(error=> {
+    if(!error.response) return
     setError(error.response.data.message)
 
   })
@@ -77,7 +81,7 @@ let codeFAReq =()=> {
 
 
   return (
-    navigate?<Navigate to="/twoFA"/>:
+
       <body class="Login">
           <Slide direction='up' in="true">
    <Container size="30vh">
