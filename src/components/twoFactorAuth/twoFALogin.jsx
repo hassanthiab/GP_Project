@@ -34,7 +34,7 @@ width: 100% ;
 
 
 let TwoFALogin=()=>  {
-
+    const a=localStorage.getItem('type')
     const navigate =useNavigate();
     const [input, setInput] = useState({
      code:'',
@@ -50,10 +50,11 @@ let codeFAReq =()=> {
   regix.test(input.code)?data.code=input.code:data.recovery_code=input.code
   data.device_name='andriod'
 
-    axios().post("/api/two-factor-challenge",data).then(response=> {
+    axios().post("/api/"+a+"two-factor-challenge",data).then(response=> {
       if(response.status==200){
         
       localStorage.setItem('token',response.data.token)
+      localStorage.setItem('type',response.data.type)
       navigate('/profile')
     }
   
@@ -82,7 +83,7 @@ let codeFAReq =()=> {
 
   return (
 
-      <body class="Login">
+      <div class="Login">
           <Slide direction='up' in="true">
    <Container size="30vh">
        <Title>
@@ -112,7 +113,7 @@ let codeFAReq =()=> {
    </Container>
 
    </Slide>
-      </body>
+      </div>
 
   )
   

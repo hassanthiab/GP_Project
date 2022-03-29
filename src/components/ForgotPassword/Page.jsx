@@ -54,8 +54,36 @@ console.log(input['email'])
   })
   .catch(error=> {
     if(!error.response) return
-      setMessage("")
- setError(error.response.data.message)
+ 
+    if(error.response.data.message=="We can't find a user with that email address."){
+    axios().post("/api/trainer/forgot-password",{    
+        "email":input['email'],
+
+}).then(response=>{
+    setError("")
+    setMessage(response.data.message)
+})  .catch(error=> {
+    if(!error.response) return
+    if(error.response.data.message=="We can't find a user with that email address."){
+        axios().post("/api/admin/forgot-password",{    
+            "email":input['email'],
+    
+    }).then(response=>{
+        setError("")
+        setMessage(response.data.message)
+    })  .catch(error=> {
+        if(!error.response) return
+        setMessage("")
+        setError(error.response.data.message)
+    })
+}
+    else{
+    setMessage("")
+    setError(error.response.data.message)}
+})
+}else{
+setMessage("")
+setError(error.response.data.message)}
 
   })
 
@@ -72,9 +100,9 @@ console.log(input['email'])
 
 
   return (
-      <body class="Login" >
+      <div class="Login" >
           <Slide direction='up' in="true">
-   <Container size="30vh" wide="30vw">
+   <Container size="30vh" width="30vw">
        <Title>
            Forgot Password
        </Title>
@@ -101,7 +129,7 @@ console.log(input['email'])
    </Container>
 
    </Slide>
-      </body>
+      </div>
 
   )
   

@@ -79,10 +79,14 @@ let Login=()=>{
            
                if(response.status==200)
                {  
-                console.log(response.data.two_factor)
-               if(response.data.two_factor) navigate('/FAcode')
+               
+               if(response.data.two_factor) {
+               localStorage.setItem('type',response.data.type)
+               navigate('/FAcode')
+            }
                else{
                 localStorage.setItem('token',response.data.token)
+                localStorage.setItem('type',response.data.type)
                if(URL){
                 axios().get(URL).then(response=>{response.status==204?"":""}).catch(error=>{})
             }
@@ -159,9 +163,9 @@ let Login=()=>{
 
     return (
        
-    <body className="Login">
+<div className='Login'>
 <Slide direction='up' in="true">
-<Container size="80vh" wide="40vw">   
+<Container size="80%" width="40%">   
         <Title>Welcome</Title>
         <InputText>
         <FancyInput bordercolor={errors['email']? '#960000':'white'} onChange={(event)=>changed(event,"email")}type="email" placeholder='Email'>{input['email']}</FancyInput>
@@ -211,7 +215,7 @@ let Login=()=>{
     </Container>
 
     </Slide>
-    </body>
+</div>
 
      );
     

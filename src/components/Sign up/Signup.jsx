@@ -40,16 +40,21 @@ let Signup=()=>{
      const navigate =useNavigate();
     const [input, setInput] = useState({
         name:"",
+        username:"",
+        phone:"",
         email:"",
         password:"",
         password_confirmation:"",
-        
+   
         });
 
         const [errors, setErrors] = useState({
             name:"",
+            username:"",
+            phone:"",
             email:"",
             password:"",
+         
         });
         
        
@@ -63,6 +68,8 @@ let Signup=()=>{
             axios().post("/api/register",{
                 "name":input['name'],
             "email":input['email'],
+            "username":input['username'],
+            "phone":input['phone'],
             "password":input['password'],
            "password_confirmation":input['password_confirmation'],
            "device_name":'android',
@@ -70,9 +77,12 @@ let Signup=()=>{
         }).then(response=> {
             if(response.status==201){
                 localStorage.setItem('token',response.data.token)
+                localStorage.setItem('type',"")
                 setInput({
                     name:"",
                     email:"",
+                    username:"",
+                    phone:"",
                     password:"",
                     password_confirmation:"",
                     
@@ -81,6 +91,8 @@ let Signup=()=>{
                     setErrors({
                         name:"",
                         email:"",
+                        username:"",
+                        phone:"",
                         password:"", 
                     })
                     navigate('/verification')
@@ -125,39 +137,97 @@ let Signup=()=>{
         
     return (
     
-        <body className="Login">
+        <div className="Login">
+        
             <Slide direction='up' in="true">
-            <Container size="80vh"  wide="40vw">   
-            <Title>Signup</Title>
-            <InputText>
-            <FancyInput bordercolor={errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{input['name']}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['name'][0]}</label>
-            <FancyInput bordercolor={errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{input['email']}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['email'][0]}</label>
-            <FancyInput bordercolor={errors['password']? '#960000':'white'}   onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{input['password']}</FancyInput>
-            <FancyInput bordercolor={errors['password']=="The password confirmation does not match."? '#960000':'white'} onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{input['password_confirmation']}</FancyInput>
-            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['password'][0]}</label>
-            </InputText>
-            <Buttons>
-                <div class="container">
-     <div class="row">
-    <div class="col-md-1">
-        </div>
-    <div class="col-md-10">
-    <FancyButton onClick={registerReq} nameButton='Sign up'></FancyButton>
-     </div>
-    <div class="col-md-1">
-    </div>
-     </div>
-        </div>
-            </Buttons>
             
+            <Container size="100%"  width="40%"> 
+            <div className='container'>
+                <div className='row'>
+             
+                <div className='col-md-4'>
+
+                </div>  
+                <div className='col-md-4'> 
+                <Title  style={{marginLeft:'25%'}}>Signup</Title>
+                 </div>  
+                 <div className='col-md-4'>
+              
+                 </div>     
+            </div> 
+            <InputText>
+            <div className='row'>
+                <div className='col-md-6'>
+                <FancyInput  bordercolor={errors['name']? '#960000':'white'}  onChange={(event)=>changed(event,"name")} type="text" name="name" placeholder='Name'>{input['name']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['name'][0]}</label>
+                </div>  
+                <div className='col-md-6'> 
+                 
+            <FancyInput bordercolor={errors['username']? '#960000':'white'}  onChange={(event)=>changed(event,"username")} type="text" name="username" placeholder='Username'>{input['username']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['username'][0]}</label>
+                 </div>  
+                
+            </div> 
+    
+            <div className='row'>
+             
+             <div className='col-md-6'>
+             <FancyInput bordercolor={errors['phone']? '#960000':'white'}  onChange={(event)=>changed(event,"phone")} type="text" name="phone" placeholder='phone_number'>{input['phone']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['phone'][0]}</label>
+             </div>  
+
+             <div className='col-md-6'> 
+             <FancyInput bordercolor={errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} type="email" placeholder='Email'>{input['email']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['email'][0]}</label>
+              </div>  
+              
+         </div> 
+         
+            
+         <div className='row'>
+             
+             <div className='col-md-6'>
+             <FancyInput bordercolor={errors['password']? '#960000':'white'}   onChange={(event)=>changed(event,"password")} type="password" name="password" placeholder='Password'>{input['password']}</FancyInput>
+
+             </div>  
+
+             <div className='col-md-6'> 
+        
+             <FancyInput bordercolor={errors['password']=="The password confirmation does not match."? '#960000':'white'} onChange={(event)=>changed(event,"password_confirmation")} type="password" name="password_confirmation" placeholder='Confirm Password'>{input['password_confirmation']}</FancyInput>
+            <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['password'][0]}</label>
+              </div>  
+              
+         </div> 
+       
+            </InputText>
+
+         
+       <div className='row'>
+             
+             <div className='col-md-4'>
+
+             </div>  
+
+             <div className='col-md-4'> 
+             <Buttons>
+             <FancyButton onClick={registerReq} nameButton='Sign up'></FancyButton>
+      
+      </Buttons>
+              </div>  
+              <div className='col-md-4'> 
+     
+     </div> 
+         </div> 
+  
+      
+        </div> {/* Container */}
+     
         </Container>
         
 
             </Slide>
  
-        </body>
+        </div>
     
          );
 

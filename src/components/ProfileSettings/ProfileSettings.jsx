@@ -27,13 +27,15 @@ const Buttons = styled.div`
 
    
 let ProfileSettings=()=>{
-
+  const a=localStorage.getItem('type')
+  const [successPass,setSuccessPass] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [twoFA, setTwoFA] = useState(false);
   const [input, setInput] = useState({
     name:"",
     email:"",
     username:"",
-    PhoneNumber:"",
+    phone:"",
     current_password:"",
     password:"",
     password_confirmation:"",
@@ -44,7 +46,7 @@ let ProfileSettings=()=>{
       name:"",
       email:"",
       username:"",
-      PhoneNumber:"",
+      phone:"",
       current_password:"",
       password:"",
       password_confirmation:"",
@@ -58,11 +60,12 @@ let ProfileSettings=()=>{
         navigate('/Login')
       }
     
-      axios().get("/api/user").then(response=> {
+      axios().get("/api/"+a+"user").then(response=> {
        let stateInput={...input}
        stateInput['name']=response.data['name']
        stateInput['email']=response.data['email']
-      
+       stateInput['username']=response.data['username']
+       stateInput['phone']=response.data['phone']
        response.data['two_factor_secret']? setTwoFA(true):setTwoFA(false)
 
        console.log( response.data['two_factor_secret'])
@@ -78,18 +81,20 @@ let ProfileSettings=()=>{
     const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
    
     let updateUserInfo=()=>{
-      axios().put("/api/user/profile-information",{
+      axios().put("/api/"+a+"user/profile-information",{
         "name":input['name'],
         "email":input['email'],
-  
+        "username":input['username'],
+        "phone":input['phone'],
   }).then(response=> {
     if(response.status==200){
-
+      setSuccessPass(false)
+        setSuccess(true)
         setErrors({
           name:"",
           email:"",
           username:"",
-          PhoneNumber:"",
+          phone:"",
           current_password:"",
           password:"",
           password_confirmation:"",
@@ -102,7 +107,8 @@ let ProfileSettings=()=>{
   
   })
   .catch(error=> {   
-    
+    setSuccessPass(false)
+    setSuccess(false)
     if(!error.response) return
     let Reserrors=error.response.data.errors
     
@@ -126,20 +132,22 @@ let ProfileSettings=()=>{
 
     let updateUserPass=()=>{
       
-      axios().put("/api/user/password",{
+      axios().put("/api/"+a+"user/password",{
         "current_password":input['current_password'],
         "password":input['password'],
         "password_confirmation": input['password_confirmation'],
   
   }).then(response=> {
     if(response.status==200){
-   
-
+      setSuccess(false)
+      setSuccessPass(true)
+      console.log('pass')
+    
         setErrors({
           name:"",
           email:"",
           username:"",
-          PhoneNumber:"",
+          phone:"",
           current_password:"",
           password:"",
           password_confirmation:"",
@@ -152,7 +160,7 @@ let ProfileSettings=()=>{
   
   })
   .catch(error=> {   
-    
+    setSuccessPass(false)
     if(!error.response) return
     let Reserrors=error.response.data.errors
     
@@ -194,53 +202,75 @@ let ProfileSettings=()=>{
     }
 
   return (
-    <body  style={{backgroundColor:"#101522"}}  >
+   
         <Slide in="true" direction='left'>
         <div class="container">
-            <div class="row  justify-content-center "  >
+            <div class="row  "  >
             <div class="col-md-4 ">
                 
                 </div>
               <div class="col-md-4" >
-              <div className="img-holder" style={{marginTop:30,marginLeft:'38%'}}>
+              <div className="img-holder" style={{marginTop:30,marginLeft:'40%'}}>
 						<img src={profileimage} alt="" id="img" className="img" />
-					</div>
-              <label style={{marginTop:12,marginLeft:'38%'}} htmlFor="contained-button-file">
+            </div>
+              <label style={{marginTop:12,marginLeft:'40%'}} htmlFor="contained-button-file">
                 <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={imageHandler}/>
                 <Button  variant="contained" component="span">
                 Upload
                 </Button>
                 </label>
                 
-              </div>
+                </div>
               <div class="col-md-4">
     
           
                 </div>
 
-                <div class="row justify-content-center " style={{marginTop:50}}>
+                </div>         
+             
+                <div class="row  " style={{marginTop:50}}>
+                <div class="col-md-4">
+            
+            </div>
+            <div class="col-md-4">
+
+            {errors['username']||errors['email']||success||successPass?    <div class={success||successPass?"alert alert-success":"alert alert-danger"}role="alert">
+                <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['username'][0]}</label>
+                  <label style={{color:'#960000' ,fontWeight:'bold'}}>{errors['email'][0]}</label>
+                 {success? <label style={{fontWeight:'bold'}}>your Profile has been changed</label>:""}
+                 {successPass? <label style={{fontWeight:'bold'}}>your Password has been changed</label>:""}
+                  </div>  :""}
+    
+      
+                  <div class="col-md-4">
+            
+                  </div>
+          </div>
+                  </div>
+
+                <div class="row  " style={{marginTop:50}}>
                   
                    <div class="col-md-6">
                    <InputP onChange={(event)=>changed(event,"name")}  input_label="name" type="Text" placeholder="Change name" value={input['name']}/>
                    </div>  
                    <div class="col-md-6">
-                   <InputP onChange={(event)=>changed(event,"username")}   input_label="username"  type="Text" placeholder="Change username"/>
+                   <InputP bordercolor={errors['username']? '#960000':'white'} onChange={(event)=>changed(event,"username")}   input_label="username"  type="Text" placeholder="Change username" value={input['username']}/>
                    </div>
 
                    </div>
 
-                <div class="row justify-content-center ">
+                <div class="row ">
                   
                   <div class="col-md-6">
-                  <InputP onChange={(event)=>changed(event,"email")} input_label="email" type="email" placeholder="Change email" value={input['email']}/>
+                  <InputP bordercolor={errors['email']? '#960000':'white'}  onChange={(event)=>changed(event,"email")} input_label="email" type="email" placeholder="Change email" value={input['email']}/>
                   </div>  
                   <div class="col-md-6">
-                  <InputP onChange={(event)=>changed(event,"PhoneNumber")} input_label="Number" type="Number" placeholder="Add PhoneNumber"/>
+                  <InputP onChange={(event)=>changed(event,"phone")} input_label="Number" type="Number" placeholder="Add PhoneNumber" value={input['phone']}/>
                   </div>  
 
                   </div>
 
-        <div class="row justify-content-center ">
+        <div class="row  ">
                   
                   <div class="col-md-6">
                   </div>  
@@ -250,7 +280,7 @@ let ProfileSettings=()=>{
                   
                   </div>
 
-                       <div class="row justify-content-center " style={{marginTop:30}}>
+                       <div class="row " style={{marginTop:30}}>
                   
                    <div class="col-md-6">
                    <InputP onChange={(event)=>changed(event,"current_password")} input_label="current password" type="Password" placeholder="current password"/>
@@ -261,7 +291,7 @@ let ProfileSettings=()=>{
                      
                       </div>
 
-                      <div class="row justify-content-center ">
+                      <div class="row  ">
                   
                   <div class="col-md-6">
                   <InputP onChange={(event)=>changed(event,"password_confirmation")}  input_label="Confirm New Password" type="Password" placeholder="Confirm New Password"/>
@@ -275,16 +305,15 @@ let ProfileSettings=()=>{
                
                   <label  style={{color:' #960000 ' ,fontWeight:'bold'}}>{errors['current_password']?errors['current_password'][0]:errors['password']?errors['password'][0]:""}</label>
 
-                
+                  <TwoFA key={twoFA} twoFA={twoFA}></TwoFA>
              
             </div>
-            <TwoFA key={twoFA} twoFA={twoFA}></TwoFA>
+          
        
-        </div>
         </Slide>
     
 
-    </body>
+  
 
   )
 }

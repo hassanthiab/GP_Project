@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import EmailV from '../verifyEmail/RequireVerification';
 
 let TwoFA=(props)=>{
+  const a=localStorage.getItem('type')
  const  [reveal, setReveal] = useState(false);
   const [twoFA, setTwoFA] = useState(props.twoFA);
   const [twoFAPop, setTwoFAPop] = useState(false);
@@ -35,7 +36,7 @@ let Rcodes=[]
          
 
   const qr2FA=()=>{
-     axios().get("/api/user/two-factor-qr-code",{ 
+     axios().get("/api/"+a+"user/two-factor-qr-code",{ 
     }).then(response=> {
     
       setQr(response.data)
@@ -48,7 +49,7 @@ let Rcodes=[]
       else if(error.response.data.message=="Password confirmation required."){
      
         setVerified(true)
-         axios().get("/api/user/confirmed-password-status").then(response=>{
+         axios().get("/api/"+a+"user/confirmed-password-status").then(response=>{
        if(response.data.confirmed){
          hideModal2FA()
          qr2FA()
@@ -66,7 +67,7 @@ let Rcodes=[]
      }) 
   }
   const codes2FA=()=>{
-    axios().get("/api/user/two-factor-recovery-codes",{ 
+    axios().get("/api/"+a+"user/two-factor-recovery-codes",{ 
     }).then(response=> {
     
       setCodes(response.data)
@@ -79,7 +80,7 @@ let Rcodes=[]
       else if(error.response.data.message=="Password confirmation required."){
      
         setVerified(true)
-         axios().get("/api/user/confirmed-password-status").then(response=>{
+         axios().get("/api/"+a+"user/confirmed-password-status").then(response=>{
        if(response.data.confirmed){
          hideModal2FA()
          qr2FA()
@@ -106,7 +107,7 @@ let Rcodes=[]
 
   const enable2FA=()=>{
     setReveal(false)
-        axios().post("/api/user/two-factor-authentication",{ 
+        axios().post("/api/"+a+"user/two-factor-authentication",{ 
     }).then(response=> {
       if(response.status==200)
      {hideModal2FA()
@@ -128,7 +129,7 @@ let Rcodes=[]
       if(error.response.data.message=="Password confirmation required."){
      
          setVerified(true)
-          axios().get("/api/user/confirmed-password-status").then(response=>{
+          axios().get("/api/"+a+"user/confirmed-password-status").then(response=>{
         if(response.data.confirmed){
           hideModal2FA()
           qr2FA()
@@ -149,7 +150,7 @@ let Rcodes=[]
    
   }
   const confirm2FA=()=>{
-    axios().post("/api/user/confirm-password",{ password:input['password']
+    axios().post("/api/"+a+"user/confirm-password",{ password:input['password']
     }).then(response=> {
       
       hideModal2FA()
@@ -180,7 +181,7 @@ let Rcodes=[]
   }
   const disable2FA=()=>{
     setReveal(false)
-    axios().delete("/api/user/two-factor-authentication",{ 
+    axios().delete("/api/"+a+"user/two-factor-authentication",{ 
     }).then(
       response=>{
         if(response.status==200){
@@ -191,7 +192,7 @@ let Rcodes=[]
       if(error.response.data.message=="Password confirmation required."){
      
         setVerified(true)
-         axios().get("/api/user/confirmed-password-status").then(response=>{
+         axios().get("/api/"+a+"user/confirmed-password-status").then(response=>{
        if(response.data.confirmed){
          hideModal2FA()
          qr2FA()

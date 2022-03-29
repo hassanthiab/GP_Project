@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import React from "react";
 import { Fragment } from "react/cjs/react.production.min";
-import { borderColor } from "@mui/system";
+
 export default function Input(props)
 {
     return(
-        <div class="container " >
-
+       
+<Fragment>
             <label style={{color:"white"}}>{props.input_label}</label>
         <StyInput class="form-control" style={{borderColor:props.bordercolor}} onChange={props.onChange} type={props.type} value={props.value} name={props.name} placeholder={props.placeholder}></StyInput>
    
-
-      </div>
+</Fragment>
+   
     );
 
 
