@@ -57,7 +57,7 @@ const [success, setSuccess] = useState("");
        const email = queryParams.get('email')
        const token = queryParams.get('t')
        
-  
+      
     
 
             axios().post("/api/reset-password",{    
@@ -77,13 +77,60 @@ const [success, setSuccess] = useState("");
           .catch(error=> {
 
             if(!error.response) return
+            if(error.response.data.message=="We can't find a user with that email address."){
+              console.log(error.response.data.message)
+              axios().post("/api/trainer/reset-password",{    
+                "email":email,
+                "password":input['password'],
+                "password_confirmation":input['password_confirmation'],
+                "token":token,
+          
+          }).then(response=>{
+            if(response.status==200 && response.data.message=="Your password has been reset!"){
+              navigate('/Login')
+            }  
+           setSuccess(response.data.message)
+          })  .catch(error=> {
 
+            if(error.response.data.message=="We can't find a user with that email address."){
+              axios().post("/api/admin/reset-password",{    
+                "email":email,
+                "password":input['password'],
+                "password_confirmation":input['password_confirmation'],
+                "token":token,
+          
+          }).then(response=>{
+            if(response.status==200 && response.data.message=="Your password has been reset!"){
+              navigate('/Login')
+            }  
+           setSuccess(response.data.message)
+          })  .catch(error=> {
             setSuccess("")
-              let StateError={...errors}
-              StateError['password']=error.response.data.errors['password']
-        setErrors(StateError)
-        if(error.response.data.message)
-        setMessage('the password reset link is invalid')
+            let StateError={...errors}
+            StateError['password']=error.response.data.errors['password']
+      setErrors(StateError)
+      if(error.response.data.message)
+      setMessage('the password reset link is invalid')
+          });
+        }
+        else{
+            setSuccess("")
+            let StateError={...errors}
+            StateError['password']=error.response.data.errors['password']
+      setErrors(StateError)
+      if(error.response.data.message)
+      setMessage('the password reset link is invalid')
+        }
+          })
+      }
+         else{
+          setSuccess("")
+          let StateError={...errors}
+          StateError['password']=error.response.data.errors['password']
+    setErrors(StateError)
+    if(error.response.data.message)
+    setMessage('the password reset link is invalid')
+         }
      
            
           })
@@ -101,13 +148,13 @@ const [success, setSuccess] = useState("");
                  }
    
   return (
-    <body class="Login">
+    <div class="Login">
       <Slide direction='up' in="true">
 
 
-   <Container size="30vh" wide="30vw">
+   <Container size="30vh" width="30vw">
        <Title>
-           Forgot Password
+           New Password
        </Title>
        <InputText>
        <Input onChange={(event)=>changed(event,"password")} type="password" placeholder="New Password" />
@@ -132,7 +179,7 @@ const [success, setSuccess] = useState("");
 
    </Container>
    </Slide>
-      </body>
+      </div>
   )
 }
 
