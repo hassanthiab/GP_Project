@@ -1,17 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap");
 
-*
-{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body
-{
+body {
   background-color: #101522;
-    font-family: 'Open Sans', sans-serif;
-    height:91.7vh ;
-    width: 100%;
-    background-size: 100%;
+  font-family: "Open Sans", sans-serif;
+  height: 91.7vh;
+  width: 100%;
+  background-size: 100%;
 }

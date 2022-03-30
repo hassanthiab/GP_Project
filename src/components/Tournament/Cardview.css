@@ -4,7 +4,8 @@
   box-sizing: border-box;
   margin: 0;
 }
-html, body {
+html,
+body {
   margin: 0;
   background: white;
   font-family: "Montserrat", helvetica, arial, sans-serif;

@@ -1,31 +1,26 @@
-
 .Login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
- 
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.img-holder{
-    width: 80px;
-    height: 80px;
+.img-holder {
+  width: 80px;
+  height: 80px;
 
-    @media screen and (max-width: 768px) {
-        width: 50% ;
-        height: 50% ;
-
-    }
-    @media screen and (max-height: 768px) {
-        width: 30px ;
-        height: 30px ;
-
-    }
+  @media screen and (max-width: 768px) {
+    width: 50%;
+    height: 50%;
   }
-  .img{
-    border: 3px;
-    border-radius: 50%;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+  @media screen and (max-height: 768px) {
+    width: 30px;
+    height: 30px;
   }
+}
+.img {
+  border: 3px;
+  border-radius: 50%;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
