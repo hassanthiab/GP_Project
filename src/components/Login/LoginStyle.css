@@ -1,14 +1,12 @@
 .Login {
-
-    margin-top: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-    
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
