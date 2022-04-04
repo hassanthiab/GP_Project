@@ -5,7 +5,7 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Sign up/Signup";
 import Page from "./components/ForgotPassword/Page";
 import NewPass from "./components/ForgotPassword/NewPass";
-
+import "./index.css"
 import TwoFA from "./components/twoFactorAuth/twoFA";
 import TwoFALogin from "./components/twoFactorAuth/twoFALogin";
 import Home from "./components/Homepage/Home";
@@ -32,7 +32,6 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-
         <Route path="/newTrainer" element={<AddTrainer />} />
         <Route path="/test" element={<Test />} />
         <Route path="/" element={<Home></Home>} />

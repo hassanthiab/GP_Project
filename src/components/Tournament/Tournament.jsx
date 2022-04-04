@@ -12,13 +12,19 @@ dayjs.extend(isSameOrAfter);
 
 function Tournament() {
   const [allData, setData] = useState(data);
-
+  const [filters, setFilter] = useState({
+    size: "",
+    coordinator: "",
+    location: "",
+    before:"",
+    after:"",
+  });
   const generatesizeDataForDropdown = () => {
     return [...new Set(data.map((item) => item.size))];
   };
 
   const handleFilterName = (name) => {
-    const filteredData = data.filter((item) => {
+    const filteredData = allData.filter((item) => {
       const fullName = `${item.name} ${item.coordinator}`;
       if (fullName.toLowerCase().includes(name.toLowerCase())) {
         return item;
@@ -29,8 +35,11 @@ function Tournament() {
   };
 
   const handleFilterLocation = (location) => {
+    let Sfilter = { ...filters };
+    Sfilter["location"] = location;
+    setFilter(Sfilter);
     const filteredData = data.filter((item) => {
-      if (item.location.toLowerCase().includes(location.toLowerCase())) {
+      if (item.location.toLowerCase().includes(filters["location"].toLowerCase()) && item.size == filters["size"]) {
         return item;
       }
     });
@@ -39,8 +48,12 @@ function Tournament() {
   };
 
   const handleFilterSize = (size) => {
+    let Sfilter = { ...filters };
+    Sfilter["size"] = size;
+    setFilter(Sfilter);
     const filteredData = data.filter((item) => {
-      if (item.size == size) {
+      if (item.size == filters["size"]) {
+        setData
         return item;
       }
     });
@@ -49,7 +62,7 @@ function Tournament() {
   };
 
   const handleFilterDate = (date, field) => {
-    const filteredData = data.filter((item) => {
+    const filteredData = allData.filter((item) => {
       if (field === "from" && dayjs(item.date).isSameOrAfter(dayjs(date))) {
         return item;
       }

@@ -76,12 +76,11 @@ const FilterBar = ({
           id="size"
           onChange={handleInput("size")}
         >
-          <option value="">Select</option>
-          {sizes.map((size) => (
-            <option value={size} key={size}>
-              {size}
-            </option>
-          ))}
+          <option value="All">Select</option>
+          <option value="Small">Small</option>
+          <option value="Medium">Medium</option>
+          <option value="Large">Large</option>
+          
         </select>
       </div>
 
