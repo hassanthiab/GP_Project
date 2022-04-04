@@ -7,7 +7,6 @@ import axios from "../axios/axios";
 import { Slide } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import Container from "../Login/ContainerBox";
-
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -53,15 +52,17 @@ let Signup = (props) => {
   });
 
   let registerReq = () => {
+  
+  
     axios()
-      .post(props.role!='trainer'?"/api/register":"/api/trainer/register", {
+      .post(props.role!='trainer'?"/api/register":"/api/admin/register", {
         name: input["name"],
         email: input["email"],
         username: input["username"],
         phone: input["phone"],
         password: input["password"],
         password_confirmation: input["password_confirmation"],
-        device_name: "android",
+     
       })
       .then((response) => {
         if (response.status == 201) {
@@ -99,7 +100,7 @@ let Signup = (props) => {
         let Reserrors = error.response.data.errors;
 
         let stateErrrors = { ...errors };
-
+      if(!Reserrors) return;
         Object.keys(errors).forEach((element) => {
           if (Object.keys(Reserrors).includes(element)) {
             stateErrrors[element] = Reserrors[element];
