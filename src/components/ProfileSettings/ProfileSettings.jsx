@@ -56,28 +56,28 @@ let ProfileSettings=()=>{
     const navigate=useNavigate()
 
 
-    // useEffect(() => {
-    //   if(!localStorage.getItem('token')){
-    //     navigate('/Login')
-    //   }
+    useEffect(() => {
+      if(!localStorage.getItem('token')){
+        navigate('/Login')
+      }
     
-    //   axios().get("/api/"+a+"user").then(response=> {
-    //    let stateInput={...input}
-    //    stateInput['name']=response.data['name']
-    //    stateInput['email']=response.data['email']
-    //    stateInput['username']=response.data['username']
-    //    stateInput['phone']=response.data['phone']
-    //    response.data['two_factor_secret']? setTwoFA(true):setTwoFA(false)
+      axios().get("/api/"+a+"user").then(response=> {
+       let stateInput={...input}
+       stateInput['name']=response.data['name']
+       stateInput['email']=response.data['email']
+       stateInput['username']=response.data['username']
+       stateInput['phone']=response.data['phone']
+       response.data['two_factor_secret']? setTwoFA(true):setTwoFA(false)
 
-    //    console.log( response.data['two_factor_secret'])
-    //     console.log(twoFA)
+       console.log( response.data['two_factor_secret'])
+        console.log(twoFA)
 
-    //     setInput(stateInput)
-    //   }).catch(error=>{})
+        setInput(stateInput)
+      }).catch(error=>{})
     
 
       
-    //  }, []);
+     }, []);
 
     const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
    
