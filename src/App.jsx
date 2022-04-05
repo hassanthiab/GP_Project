@@ -16,6 +16,11 @@ import RequireVerification from "./components/verifyEmail/RequireVerification";
 import AfterRegisterVerify from "./components/verifyEmail/AfterRegisterVerify";
 import Test from "./components/test/test";
 import AddTrainer from './components/TrainerRegister/SignupTrainer'
+import Dashboard from "./components/Dashboard/Dashboard";
+import Tournamentlist from './components/Dashboard/Tournamentlist'
+
+import NewUser from './components/Dashboard/newUser';
+import NewTournament from './components/Dashboard/newTournament'
 function App() {
   return (
     <Router>
@@ -28,13 +33,16 @@ function App() {
         <Route path="/Profile" element={<ProfileSettings />} />
         <Route path="/twoFA" element={<TwoFA />} />
         <Route path="/FAcode" element={<TwoFALogin />} />
-        <Route path="/hello" element={<Tournament></Tournament>} />
+        <Route path="/hello" element={<Dashboard></Dashboard>} />
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
         <Route path="/newTrainer" element={<AddTrainer />} />
         <Route path="/test" element={<Test />} />
         <Route path="/" element={<Home></Home>} />
+        <Route path="/Trainers/AddUser" element={<NewUser />} />
+        <Route path="/addTournament" element={<NewTournament />} />
+       <Route path="/Signup" element={<Tournamentlist></Tournamentlist>} />
       </Routes>
     </Router>
   );
