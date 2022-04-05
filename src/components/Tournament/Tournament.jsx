@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { data } from "./garbage_data";
 import FilterBar from "./Searchbar";
 import Cardview from "./Cardview";
+import Pagetop from "../Homepage/Pagetop";
 
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
 const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
@@ -52,7 +53,7 @@ function Tournament() {
     Sfilter["size"] = size;
     setFilter(Sfilter);
     const filteredData = data.filter((item) => {
-      if (item.size == filters["size"]) {
+      if (filters) {
         setData
         return item;
       }
@@ -71,6 +72,9 @@ function Tournament() {
     setData(filteredData);
   };
   return (
+    <React.Fragment>
+      <Pagetop></Pagetop>
+ 
     <div className="container">
       <div className="row">
         <div className="col-sm-3">
@@ -91,6 +95,7 @@ function Tournament() {
         </div>
       </div>
     </div>
+    </React.Fragment>
   );
 }
 

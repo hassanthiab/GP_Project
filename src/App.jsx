@@ -19,7 +19,7 @@ import AddTrainer from './components/TrainerRegister/SignupTrainer'
 function App() {
   return (
     <Router>
-      <Pagetop />
+
       <Routes>
         <Route path="/Login/ForgotPassword" element={<Page />} />
         <Route path="/Login" element={<Login />} />

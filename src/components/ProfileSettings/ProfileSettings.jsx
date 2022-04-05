@@ -8,6 +8,7 @@ import ButtonP from './Button'
 import TwoFA from '../twoFactorAuth/twoFA'
 import { useNavigate} from 'react-router-dom'
 import axios from '../axios/axios';
+import Pagetop from '../Homepage/Pagetop'
 
 const Input = styled('input')({
     display: 'none',
@@ -202,9 +203,11 @@ let ProfileSettings=()=>{
     }
 
   return (
+   <React.Fragment>
+     <Pagetop></Pagetop>
    
         <Slide in="true" direction='left'>
-        <div class="container">
+        <div class="container divcont">
             <div class="row  "  >
             <div class="col-md-4 ">
                 
@@ -312,7 +315,7 @@ let ProfileSettings=()=>{
        
         </Slide>
     
-
+        </React.Fragment>
   
 
   )

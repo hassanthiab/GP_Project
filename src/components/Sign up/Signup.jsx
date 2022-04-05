@@ -7,6 +7,7 @@ import axios from "../axios/axios";
 import { Slide } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import Container from "../Login/ContainerBox";
+import Pagetop from "../Homepage/Pagetop";
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -120,6 +121,9 @@ let Signup = (props) => {
   };
 
   return (
+    <React.Fragment>
+
+<Pagetop></Pagetop>
     <div className="Login">
       <Slide direction="up" in="true">
         <Container size="100%" width="40%">
@@ -286,6 +290,7 @@ let Signup = (props) => {
         </Container>
       </Slide>
     </div>
+    </React.Fragment>
   );
 };
 
