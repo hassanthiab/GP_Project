@@ -63,7 +63,7 @@ function Tournamentlist() {
     return (
       <div>
         <Navbar></Navbar>
-      <div classname="divcont" style={{   marginLeft: "10rem", height: 400, width: '90%' }}>
+      <div classname="divcont container" style={{ height: 400, width: '90%' }}>
       <DataGrid
         rows={data}
         columns={columns}
