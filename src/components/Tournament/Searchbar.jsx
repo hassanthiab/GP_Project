@@ -15,6 +15,7 @@ const FilterBar = ({
     to: "",
   });
 
+  
   const handleInput = (field) => (event) => {
     const { value } = event.target;
 
@@ -25,16 +26,16 @@ const FilterBar = ({
 
     switch (field) {
       case "name":
-        onNameFilter(value);
+       
         break;
       case "location":
-        onlocationFilter(value);
+        
         break;
       case "size":
-        onsizeFilter(value);
+       
         break;
       case "from":
-        onDateFilter(value, "from");
+      
         break;
       case "to":
         break;
@@ -77,11 +78,15 @@ const FilterBar = ({
           onChange={handleInput("size")}
         >
           <option value="">Select</option>
-          {sizes.map((size) => (
-            <option value={size} key={size}>
-              {size}
+          <option value='Small' key='Small'>
+              Small
             </option>
-          ))}
+            <option value='Medium' key='Medium'>
+             Medium
+            </option>
+            <option value='Large' key='Large'>
+             Large
+            </option>
         </select>
       </div>
 
