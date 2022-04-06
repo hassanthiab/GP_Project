@@ -1,19 +1,20 @@
-import React from 'react'
+import React,{useState}  from 'react'
 import Button from '../Login/Button';
 import Input from '../Login/Input';
 import "./newUser.css";
-import Sidebar from './Sidebar'
+import Navbar from './Sidebar'
 export default function NewUser() {
+  const [inactive, setInactive] = useState(false);
   return (
       <React.Fragment>
-                 <Sidebar></Sidebar> 
+
+          <Navbar
+
+        />
   
     <div className="newUser divcont container">
-        <div class="container">
-
-
+        <div>
     <div class="row">
-        <div class="col-2" />
         <div class="col-12">
         <h1 className="newUserTitle">New User</h1>
     <form className="newUserForm">
@@ -56,7 +57,6 @@ export default function NewUser() {
               
               </div>
               </div>
-  
   </div>
   </React.Fragment>
   )

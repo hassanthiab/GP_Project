@@ -5,6 +5,7 @@ import { data } from "./garbage_data";
 import FilterBar from "./Searchbar";
 import Cardview from "./Cardview";
 import Pagetop from "../Homepage/Pagetop";
+import SimpleAccordion from "./Sidebar";
 
 const isSameOrAfter = require("dayjs/plugin/isSameOrAfter");
 const isSameOrBefore = require("dayjs/plugin/isSameOrBefore");
@@ -78,13 +79,9 @@ function Tournament() {
     <div className="container">
       <div className="row">
         <div className="col-sm-3">
-          <FilterBar
-            sizes={generatesizeDataForDropdown()}
-            onNameFilter={handleFilterName}
-            onlocationFilter={handleFilterLocation}
-            onsizeFilter={handleFilterSize}
-            onDateFilter={handleFilterDate}
-          />
+        <SimpleAccordion>
+          
+        </SimpleAccordion>
         </div>
         <div className="col-sm-9">
           <div className="row mt-5">

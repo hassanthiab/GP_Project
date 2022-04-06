@@ -1,10 +1,12 @@
 import React from 'react'
 import "./productList.css";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { productRows } from "./dummy-data";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Navbar from './Sidebar';
+import "./newUser.css"
 function Tournamentlist() {
     const [data, setData] = useState(productRows);
 
@@ -59,15 +61,19 @@ function Tournamentlist() {
     ];
   
     return (
-      <div className="productList">
-        <DataGrid
-          rows={data}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={8}
-          checkboxSelection
-        />
-      </div>
+      <div>
+        <Navbar></Navbar>
+      <div classname="divcont" style={{   marginLeft: "10rem", height: 400, width: '90%' }}>
+      <DataGrid
+        rows={data}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        disableSelectionOnClick
+      />
+    </div>
+     </div>
     );
 }
 

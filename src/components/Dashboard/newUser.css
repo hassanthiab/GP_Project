@@ -1,6 +1,4 @@
-.newUser {
-    flex: 4;
-  }
+
   
   .newUserForm {
     display: flex;
@@ -52,6 +50,7 @@
 
   .divcont
 {
+  margin-right: 2rem;
   display: flex;
   margin-top: 2rem;
   flex-direction: column;

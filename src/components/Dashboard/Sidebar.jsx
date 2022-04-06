@@ -1,106 +1,46 @@
-import React, { useState, useEffect } from "react";
-import {
-  Nav,
-  NavLink,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
-  BarsDiv,
-  NavItem,
-} from "../Homepage/Homepage.jsx";
-import { FaBars, FaTimes } from "react-icons/fa";
-import axios from "../axios/axios";
-function Pagetop() {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
+import React, { useState } from 'react';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { SidebarData } from './navbar.js';
+import './Sidebar.css';
+import { IconContext } from 'react-icons';
 
-  const [buttonShow, setButton] = useState(false);
+function Navbar() {
+  const [sidebar, setSidebar] = useState(false);
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) setButton(true);
-    else setButton(false);
-  };
-
-  useEffect(() => {
-    showButton();
-  }, []);
-
-  window.addEventListener("resize", showButton);
-
-  let logoutReq = () => {
-    if (localStorage.getItem("token")) {
-      axios(localStorage.getItem("token"))
-        .delete("/api/loagout")
-        .then()
-        .catch((error) => {
-          if (!error.response) return;
-        });
-      localStorage.clear();
-    }
-  };
+  const showSidebar = () => setSidebar(!sidebar);
 
   return (
-    <div>
-      <Nav>
-        <NavLink to="/">
-          <h1>Logo</h1>
-        </NavLink>
-        <BarsDiv onClick={handleClick}>
-          {click ? <FaTimes /> : <FaBars />}
-        </BarsDiv>
-
-        <NavMenu onClick={handleClick} click={click}>
-          <NavItem button="true">
-            <NavLink to="/Dashboard" activestyle="True">
-              Dashboard
-            </NavLink>
-          </NavItem>
-
-          <NavItem button="true">
-            <NavLink to="/Trainers">Trainers</NavLink>
-          </NavItem>
-
-          <NavItem button="true">
-            <NavLink to="/Tournaments" activestyle="True">
-              Tournaments
-            </NavLink>
-          </NavItem>
-
-          <NavItem button="true">
-            <NavLink to="/chat" activestyle="True">
-              Chat
-            </NavLink>
-          </NavItem>
-
-          <NavItem button={buttonShow}>
-            <NavLink to="/Login" activestyle="True">
-              Login
-            </NavLink>
-          </NavItem>
-
-          <NavItem button={buttonShow}>
-            <NavLink to="/Signup" activestyle="True">
-              Signup
-            </NavLink>
-          </NavItem>
-
-          <NavItem button={buttonShow}>
-            <NavLink onClick={logoutReq} to="/" activestyle="True">
-              Logout
-            </NavLink>
-          </NavItem>
-        </NavMenu>
-
-        <NavBtn>
-          <NavBtnLink to="/Signup">Sign up</NavBtnLink>
-          <NavBtnLink to="/Login">Log in</NavBtnLink>
-          <NavBtnLink onClick={logoutReq} to="/">
-            Log out
-          </NavBtnLink>
-        </NavBtn>
-      </Nav>
-    </div>
+    <React.Fragment>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <div className='navbar'>
+          <Link to='#' className='menu-bars'>
+            <FaIcons.FaBars onClick={showSidebar} />
+          </Link>
+        </div>
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu-items' onClick={showSidebar}>
+            <li className='navbar-toggle'>
+              <Link to='#' className='menu-bars'>
+                <AiIcons.AiOutlineClose />
+              </Link>
+            </li>
+            {SidebarData.map((item, index) => {
+              return (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </IconContext.Provider>
+    </React.Fragment>
   );
 }
 
-export default Pagetop;
+export default Navbar;

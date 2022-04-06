@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Sidebar from './Sidebar'
+import SideBar from './Sidebar'
 import { FormControl, FormLabel, RadioGroup, FormControlLabel,Radio,Checkbox,FormGroup} from '@mui/material'
 import FancyInput from '../Login/Input'
 import FancyButton from '../Login/Button' 
@@ -12,6 +12,7 @@ const Input = styled('input')({
   });
   
 function NewTournament() {
+
     const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     const imageHandler = (e) => {
         const reader = new FileReader();
@@ -25,7 +26,9 @@ function NewTournament() {
   return (
     <div>
       <React.Fragment>
-                 <Sidebar></Sidebar> 
+      <SideBar
+
+        />
   
     <div className="newUser divcont container">
         <div class="container">
