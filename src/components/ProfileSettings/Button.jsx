@@ -7,7 +7,7 @@ let ButtonP = (props) => {
       id={props.id}
       onClick={props.onClick}
       style={{
-        marginLeft: "50px",
+      
         maxWidth: "110px",
         maxHeight: "40px",
         minWidth: "110px",

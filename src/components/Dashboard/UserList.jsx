@@ -2,43 +2,67 @@ import "./userList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "./dummy-data";
-import { Link } from "react-router-dom";
-import React,{  useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import React,{  useState,useEffect } from "react";
 import Navbar from "./Sidebar";
 import "./newUser.css"
+import axios from "../axios/axios";
 export default function UserList() {
-  const [data, setData] = useState(userRows);
-
+  const [data, setData] = useState();
+  const a = localStorage.getItem("type");
+    const navigate = useNavigate();
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    axios()
+    .delete("/api/"+a+"trainers/"+id)
+    .then((response) => {
+      if(response.status==200){
+        setData(data.filter((item) => item.id !== id));
+      }
+      
+    })
+    .catch((error) => {
+      if(!error.response)
+    return});
+
   };
-  
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/Login");
+    }
+
+    axios()
+      .get("/api/admin/trainers")
+      .then((response) => {
+        console.log(response.data.data)
+        setData(response.data)
+        
+      })
+      .catch((error) => {
+        if(!error.response)
+      return});
+
+    
+
+  }, []);
+
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "user",
-      headerName: "User",
+      field: "username",
+      headerName: "username",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
+            <img className="userListImg" src={`http://localhost:8000/storage/${params.row.profile_picture}`} alt="" />
             {params.row.username}
           </div>
         );
       },
     },
+  
     { field: "email", headerName: "Email", width: 200 },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "transaction",
-      headerName: "Transaction Volume",
-      width: 160,
-    },
+    { field: "phone", headerName: "Phone", width: 200 },  
     {
       field: "action",
       headerName: "Action",
@@ -62,13 +86,12 @@ export default function UserList() {
   return (
     <div>
       <Navbar></Navbar>
- <div classname="divcont" style={{  marginLeft: "10rem", height: 400, width: '80%' }}>
+ <div classname="divcont" style={{  marginLeft: "70px", height: 400, width: '80%' }}>
       <DataGrid
         rows={data}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
         disableSelectionOnClick
       />
     </div>
