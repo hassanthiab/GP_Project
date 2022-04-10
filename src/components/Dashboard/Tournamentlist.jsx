@@ -54,7 +54,7 @@ function Tournamentlist() {
         renderCell: (params) => {
           return (
             <div className="productListItem">
-              <img className="productListImg" src={`http://localhost:8000/storage/${params.row.image}`} alt="" />
+              <img className="productListImg" src={params.row.image?`http://localhost:8000/storage/${params.row.image}`:""} alt="" />
               {params.row.name}
             </div>
           );
@@ -82,7 +82,7 @@ function Tournamentlist() {
         renderCell: (params) => {
           return (
             <React.Fragment>
-              <Link to={"/product/" + params.row.id}>
+              <Link to={"/Tournament/" + params.row.id}>
                 <button className="productListEdit">Edit</button>
               </Link>
               <DeleteOutline

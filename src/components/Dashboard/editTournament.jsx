@@ -4,19 +4,22 @@ import { FormControlLabel,Checkbox,FormGroup} from '@mui/material'
 import FancyInput from '../Login/Input'
 import FancyButton from '../Login/Button' 
 import { blue } from '@mui/material/colors'
-import React,{ useState } from 'react'
+import React,{ useState ,useEffect} from 'react'
 import { Button} from '@material-ui/core'
 import axios from "../axios/axios";
+import {useParams,useNavigate} from "react-router-dom";
 
 const Input = styled('input')({
     display: 'none',
   });
   
 function NewTournament() {
-
-
+  let { id } = useParams();
   const a = localStorage.getItem("type");
   const [cat, setCat] = useState([]);
+  const [guicat, setGuicat] = useState([60,80,90,100,110,120,150]);
+  const [edited, setEdited] = useState(false);
+
   const [profilePic, setPic] = useState("");
 
   const [input, setInput] = useState({
@@ -29,7 +32,6 @@ function NewTournament() {
     date:"",
     image:"",
     private:false,
-
   });
 
   const [errors, setErrors] = useState({
@@ -47,6 +49,42 @@ function NewTournament() {
   });
 
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/Login");
+    }
+
+    axios()
+      .get("/api/tournaments/"+id)
+      .then((response) => {
+        console.log(response.data["categories"][0].category)
+        let stateInput = { ...input };
+        stateInput["name"] = response.data["name"];
+        stateInput["club"] = response.data["club"];
+        stateInput["email"] = response.data["email"];
+        stateInput["size"] = response.data["size"];
+        stateInput["location"] = response.data["location"];
+        stateInput["description"] = response.data["description"];
+        stateInput["date"] = response.data["date"];
+        stateInput["image"] = response.data["image"];
+        stateInput["private"] = response.data["private"];
+       let c= response.data["categories"]
+       let a=[]
+        for(let i=0;i<c.length;i++)
+        a.push(c[i].category+"")
+        setCat(a);
+        setImage(response.data['image']?`http://localhost:8000/storage/${response.data['image']}`:"")
+        setInput(stateInput);
+       
+
+
+      })
+      .catch((error) => {});
+      
+
+  }, []);
 
   let add=()=>{
     const formData = new FormData();
@@ -64,9 +102,10 @@ function NewTournament() {
 
 
     axios()
-    .post("/api/addTournament",formData)
+    .post("/api/editTournaments/"+id,formData)
     .then((response) => {
       if(response.status==200){
+        setEdited(true)
         setErrors({
           name:"",
           club:"",
@@ -79,10 +118,12 @@ function NewTournament() {
           private:"",
           category:"",
         });
+   
       }
       
     })
     .catch((error) => {
+      setEdited(false)
       if (!error.response) return;
       let Reserrors = error.response.data.errors;
 
@@ -101,14 +142,15 @@ function NewTournament() {
   });
   }
   let changed = (event, inputId) => {
-
+   
     if(inputId=="category"){
-      
       let Newcat=[...cat]
       Newcat.includes(event.target.value)?
-      Newcat=Newcat.filter((item) => item != event.target.value):
+      Newcat=Newcat.filter((item) => item !=event.target.value):
       Newcat.push(event.target.value)
       setCat(Newcat)
+      console.log(Newcat)
+  
     }
     else if(inputId=="private"){
       let Sinput = { ...input };
@@ -121,9 +163,22 @@ function NewTournament() {
     Sinput[inputId] = event.target.value;
     setInput(Sinput);
     console.log(event.target.value)
-
   }
   };
+
+  let checkboxes=[]
+
+
+guicat.forEach((e,index)=>{
+
+ checkboxes.push( <FormControlLabel key={index}   control={<Checkbox value={e}  onChange={(event) => changed(event,"category")} key={index} checked={cat.includes(e+"")?true:false}     sx={{
+   color: blue[1200],
+   '&.Mui-checked': {
+     color: blue[600],
+   },
+ }}/>}  label={e}  />)
+
+})
     const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     const imageHandler = (e) => {
       setPic(e.target.files[0])
@@ -149,47 +204,71 @@ function NewTournament() {
     <div class="row">
         <div class="col-2" />
         <div class="col-12">
-        <h1 className="newUserTitle">New Tournament</h1>
-    
+        <h1 className="newUserTitle">Edit Tournament</h1>
+        <div className="row">
+              <div className="col-md-4"></div>
+
+
+
+              <div class="col-md-4"> {edited ? ( <div class="alert alert-success"  role="alert" >
+            
+                  <label style={{ fontWeight: "bold" }}>
+                  Tournament has been Updated
+                  </label>
+                
+              
+              </div>
+            ) : (
+              ""
+            )}
+
+            
+          </div>
+                
+              <div className="col-md-4"></div>
+          
+          
+          
+            </div>
     <form className="newUserForm">
       <div className="newUserItem">
         <label>Tournament Name</label>
-        <FancyInput  onChange={(event) => changed(event,"name")} type="text" placeholder="Name"   bordercolor={errors["name"] ? "#960000" : "white"}/>
+        <FancyInput value={input["name"]}  onChange={(event) => changed(event,"name")} type="text" placeholder="Name"   bordercolor={errors["name"] ? "#960000" : "white"}/>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["name"][0]}
                   </label>
       </div>
       <div className="newUserItem">
         <label>Club</label>
-        <FancyInput onChange={(event) => changed(event,"club")} type="text" placeholder="Club"  bordercolor={errors["club"] ? "#960000" : "white"} />
+        <FancyInput value={input["club"]}  onChange={(event) => changed(event,"club")} type="text" placeholder="Club"  bordercolor={errors["club"] ? "#960000" : "white"} />
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["club"][0]}
                   </label>
       </div>
       <div className="newUserItem">
         <label>Email</label>
-        <FancyInput onChange={(event) => changed(event,"email")} type="text" placeholder="Email"  bordercolor={errors["email"] ? "#960000" : "white"}/>
+        <FancyInput value={input["email"]}  onChange={(event) => changed(event,"email")} type="text" placeholder="Email"  bordercolor={errors["email"] ? "#960000" : "white"}/>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["email"][0]}
                   </label>
       </div>
       <div className="newUserItem">
         <label>Size</label>
-        <FancyInput onChange={(event) => changed(event,"size")} type="text" placeholder="Size"  bordercolor={errors["size"] ? "#960000" : "white"}/>
+        <FancyInput value={input["size"]}  onChange={(event) => changed(event,"size")} type="text" placeholder="Size"  bordercolor={errors["size"] ? "#960000" : "white"}/>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["size"][0]}
                   </label>
       </div>
       <div className="newUserItem">
         <label>Location</label>
-        <FancyInput onChange={(event) => changed(event,"location")} type="text" placeholder="Location"  bordercolor={errors["location"] ? "#960000" : "white"}/>
+        <FancyInput value={input["location"]} onChange={(event) => changed(event,"location")} type="text" placeholder="Location"  bordercolor={errors["location"] ? "#960000" : "white"}/>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["location"][0]}
                   </label>
       </div>
       <div className="newUserItem">
         <label>Description</label>
-        <FancyInput onChange={(event) => changed(event,"description")} type="text" placeholder="Description" bordercolor={errors["description"] ? "#960000" : "white"}/>
+        <FancyInput value={input["description"]} onChange={(event) => changed(event,"description")} type="text" placeholder="Description" bordercolor={errors["description"] ? "#960000" : "white"}/>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["description"][0]}
                   </label>
@@ -198,6 +277,7 @@ function NewTournament() {
       <div className="newUserItem">
         <label htmlFor="startDate">Date</label>
         <input
+        value={input["date"]}
           type="date"
           className="form-control"
           id="startDate"
@@ -210,12 +290,16 @@ function NewTournament() {
       </div>
       <div className="newUserItem">
       <label>Private</label>
-      <FormControlLabel value={'true'} onChange={(event) => changed(event,"private")}  control={<Checkbox     sx={{
+      <FormControlLabel  value={'true'} onChange={(event) => changed(event,"private")}  control={<Checkbox checked={input["private"]?true:false}   sx={{
           color: blue[1200],
           '&.Mui-checked': {
             color: blue[600],
+            
           },
-        }}/>} label="Private" />
+         
+        }}
+     
+        />} label="Private" />
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["private"][0]}
                   </label>
@@ -224,48 +308,9 @@ function NewTournament() {
       <div className="newUserItem">
         <label>Categoary</label>
         <FormGroup row>
-        <FormControlLabel value={'60'} onChange={(event) => changed(event,"category")}  control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="60" />
-        <FormControlLabel value={'80'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="80" />
-          <FormControlLabel value={'90'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="90" />
-        <FormControlLabel value={'100'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="100" />
-          <FormControlLabel value={'110'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="110" />
-          <FormControlLabel value={'120'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="120" />
-          <FormControlLabel value={'150'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="150" />
+      
+ 
+        {checkboxes}
         </FormGroup>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["category"][0]}

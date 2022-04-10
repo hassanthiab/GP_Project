@@ -3,7 +3,7 @@ import React,{useState} from 'react'
 import SideMenu from './Sidebar'
 import Tournamentlist from './Tournamentlist'
 import UserList from './UserList'
-import NewUser from './newUser'
+import NewUser from './newTrainer'
 import NewTournament from './newTournament'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function Dashboard() {

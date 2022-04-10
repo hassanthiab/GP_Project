@@ -54,7 +54,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            <img className="userListImg" src={`http://localhost:8000/storage/${params.row.profile_picture}`} alt="" />
+            <img className="userListImg" src={params.row.profile_picture?`http://localhost:8000/storage/${params.row.profile_picture}`:""} alt="" />
             {params.row.username}
           </div>
         );
@@ -70,7 +70,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div>
-        <Link to={"/user/" + params.row.id}>
+        <Link to={"/Trainer/" + params.row.id}>
               <button className="userListEdit">Edit</button>
             </Link>    
             <DeleteOutline
