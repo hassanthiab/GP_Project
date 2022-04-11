@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import SideBar from './Sidebar'
+import Navbar from './Sidebar'
 import { FormControl, FormLabel, RadioGroup, FormControlLabel,Radio,Checkbox,FormGroup} from '@mui/material'
 import FancyInput from '../Login/Input'
 import FancyButton from '../Login/Button' 
@@ -26,8 +26,7 @@ function NewTournament() {
   return (
     <div>
       <React.Fragment>
-      <SideBar
-
+      <Navbar
         />
   
     <div className="newUser divcont container">

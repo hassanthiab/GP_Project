@@ -7,10 +7,10 @@ import {
   NavBtnLink,
   BarsDiv,
   NavItem,
-} from "./Homepage";
+} from "../Homepage/Homepage";
 import { FaBars, FaTimes } from "react-icons/fa";
 import axios from "../axios/axios";
-function Pagetop() {
+function Trainerbar() {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
@@ -65,14 +65,11 @@ function Pagetop() {
               Feed
             </NavLink>
           </NavItem>
-
-          
           <NavItem button="true">
-            <NavLink to="/ScheduleUser" activestyle="True">
+            <NavLink to="/Schedule" activestyle="True">
               Schedule
             </NavLink>
           </NavItem>
-
           <NavItem button="true">
             <NavLink to="/chat" activestyle="True">
               Chat
@@ -110,4 +107,4 @@ function Pagetop() {
   );
 }
 
-export default Pagetop;
+export default Trainerbar;

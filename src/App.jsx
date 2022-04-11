@@ -22,6 +22,9 @@ import Tournamentlist from './components/Dashboard/Tournamentlist'
 import NewUser from './components/Dashboard/newUser';
 import NewTournament from './components/Dashboard/newTournament'
 import UserList from "./components/Dashboard/UserList";
+import { MultiStepForm } from "./components/createCourse/MultiStep";
+import Demo from "./components/createCourse/CourseScheduler";
+import UserSchedule from "./components/createCourse/CourseScheduler";
 function App() {
   return (
     <Router>
@@ -40,7 +43,9 @@ function App() {
         <Route path="/require-verification" element={<RequireVerification />} />
         <Route path="/newTrainer" element={<AddTrainer />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/" element={<Home/>} />
+        <Route path="/Schedule" element={<Demo></Demo>} />
+        <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
+        <Route path="/" element={<Home></Home>} />
         <Route path="/Trainers/AddUser" element={<NewUser />} />
         <Route path="/addTournament" element={<NewTournament />} />
        <Route path="/Tournaments" element={<Tournamentlist></Tournamentlist>} />
