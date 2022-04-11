@@ -17,14 +17,21 @@ import AfterRegisterVerify from "./components/verifyEmail/AfterRegisterVerify";
 import Test from "./components/test/test";
 import AddTrainer from './components/TrainerRegister/SignupTrainer'
 import Dashboard from "./components/Dashboard/Dashboard";
-import Tournamentlist from './components/Dashboard/Tournamentlist'
 
-import NewUser from './components/Dashboard/newUser';
 import NewTournament from './components/Dashboard/newTournament'
+
 import UserList from "./components/Dashboard/UserList";
 import { MultiStepForm } from "./components/createCourse/MultiStep";
 import Demo from "./components/createCourse/CourseScheduler";
 import UserSchedule from "./components/createCourse/CourseScheduler";
+
+import Tournamentlist from './components/Dashboard/Tournamentlist'
+import EditTournament from './components/Dashboard/editTournament'
+
+import NewTrainer from './components/Dashboard/newTrainer';
+import TrainersList from "./components/Dashboard/UserList";
+import EditTrainer from "./components/Dashboard/editTrainer";
+
 function App() {
   return (
     <Router>
@@ -41,15 +48,21 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/newTrainer" element={<AddTrainer />} />
         <Route path="/test" element={<Test />} />
+
         <Route path="/Schedule" element={<Demo></Demo>} />
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
         <Route path="/" element={<Home></Home>} />
         <Route path="/Trainers/AddUser" element={<NewUser />} />
+
+        <Route path="/" element={<Home/>} />
+
         <Route path="/addTournament" element={<NewTournament />} />
        <Route path="/Tournaments" element={<Tournamentlist></Tournamentlist>} />
-       <Route path="/Trainers" element={<UserList></UserList>} />
+       <Route path="/Tournament/:id" element={<EditTournament></EditTournament>} />
+       <Route path="/addTrainer" element={<NewTrainer />} />
+       <Route path="/Trainers" element={<TrainersList></TrainersList>} />
+       <Route path="/Trainer/:id" element={<EditTrainer></EditTrainer>} />
       </Routes>
     </Router>
   );
