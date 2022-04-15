@@ -8,15 +8,14 @@ import axios from "../axios/axios";
 
 
 
-
 function Tournament() {
   const [allData, setData] = useState("");
   useEffect(() => {
     axios()
       .get("/api/tournaments")
       .then((response) => {
-        console.log(response.data.data)
-        setData(response.data.data);
+        console.log(response.data)
+        setData(response.data);
       })
       .catch((error) => {
         if(!error.response)

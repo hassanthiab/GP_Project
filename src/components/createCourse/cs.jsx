@@ -36,9 +36,7 @@ import CalendarToday from '@mui/icons-material/CalendarToday';
 import Create from '@mui/icons-material/Create';
 import axios from "../axios/axios";
 import { appointments } from './dummy-data';
-import "../Login/LoginStyle.css";
-import Pagetop from '../Homepage/Pagetop.jsx';
-import Trainerbar from './TrainerBar.jsx';
+import Pagetop from "../Homepage/Pagetop.jsx";
 
 const PREFIX = 'Demo';
 // #FOLD_BLOCK
@@ -299,7 +297,7 @@ export default class Demo extends React.PureComponent {
     super(props);
     var today = new Date();
     this.state = {
-      data: [],
+      data: appointments,
       currentDate: today,
       confirmationVisible: false,
       editingFormVisible: false,
@@ -442,40 +440,14 @@ export default class Demo extends React.PureComponent {
         });
     
       }
-
-
       if (changed) {
-        let id=""
-        this.state.data.map(appointment => {
-          if(changed[appointment.id]){id =appointment.id }
-     });
-     axios()
-     .put("api/trainer/editCourse/"+id,changed[id])
-     .then((response) => {
-       if (response.status == 200) {
         this.setState((state) => {
-          let { data,Error } = state;
-          Error="";
+          let { data } = state;
         data = data.map(appointment => (
-          changed[appointment.id] ? 
-          { ...appointment, ...changed[appointment.id] } 
-          :
-           appointment));
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
           return { data, addedAppointment: {} };
         });
-       }
-     })
-     .catch((error) => {
-       if (!error.response) return;
-       this.setState({setOpen:true})
-       error.response.data.errors.startDate?
-       this.setState({Error:error.response.data.errors.startDate[0]})
-       : this.setState({Error:error.response.data.errors.endDate[0]})
-     });
-     
       }
-
-
       if (deleted !== undefined) {
     
           this.setState((state) => {
@@ -532,8 +504,8 @@ export default class Demo extends React.PureComponent {
     };
     return (
       <React.Fragment>
-            <Trainerbar></Trainerbar>
-      <Paper  className="Login">
+      <Pagetop></Pagetop>
+      <Paper className="Login">
         <Scheduler
           data={data}
           height={660}
@@ -556,16 +528,14 @@ export default class Demo extends React.PureComponent {
           <EditRecurrenceMenu />
           <Appointments />
           <AppointmentTooltip
-            showOpenButton
-            showCloseButton
-            showDeleteButton
+           showCloseButton
+       
           />
           <Toolbar />
           <ViewSwitcher />
           <AppointmentForm
-            overlayComponent={this.appointmentForm}
-            visible={editingFormVisible}
-            onVisibilityChange={this.toggleEditingFormVisibility}
+            visible={false}
+            readOnly={true}
           />
           <DragDropProvider />
         </Scheduler>
@@ -592,42 +562,9 @@ export default class Demo extends React.PureComponent {
           </DialogActions>
         </Dialog>
 
-        <StyledFab
-          color="secondary"
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(startDayHour),
-              endDate: new Date(currentDate).setHours(startDayHour + 1),
-            });
-          }}
-        >
-          <AddIcon />
-
-          <Dialog
-        open={this.state.setOpen}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Error in Inputs!"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText style={{color:"red"}} id="alert-dialog-description">
-          {this.state.Error}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Got it.</Button>
-        </DialogActions>
-      </Dialog>
-
-        </StyledFab>
+       
       </Paper>
-     </React.Fragment>
+      </React.Fragment>
     );
   }
 }

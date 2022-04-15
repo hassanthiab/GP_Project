@@ -6,6 +6,8 @@ import { Link,useNavigate } from "react-router-dom";
 import React,{  useState,useEffect } from "react";
 import Navbar from "./Sidebar";
 import "./newUser.css"
+import Pagetop from '../Homepage/Pagetop.jsx';
+
 import axios from "../axios/axios";
 export default function UserList() {
   const [data, setData] = useState();
@@ -52,7 +54,9 @@ export default function UserList() {
       headerName: "username",
       width: 200,
       renderCell: (params) => {
+        console.log(params.row)
         return (
+        
           <div className="userListUser">
             <img className="userListImg" src={params.row.profile_picture?`http://localhost:8000/storage/${params.row.profile_picture}`:""} alt="" />
             {params.row.username}
@@ -85,6 +89,7 @@ export default function UserList() {
 
   return (
     <div>
+      <Pagetop></Pagetop>
       <Navbar></Navbar>
  <div classname="divcont" style={{  marginLeft: "70px", height: 400, width: '80%' }}>
       <DataGrid
