@@ -23,7 +23,8 @@ function NewTournament() {
   const a = localStorage.getItem("type");
   const [cat, setCat] = useState([]);
   const [profilePic, setPic] = useState("");
-
+  const [guicat, setGuicat] = useState([60,80,90,100,110,120,150]);
+  const [added, setAdded] = useState(false);
   const [input, setInput] = useState({
     name:"",
     club:"",
@@ -72,6 +73,7 @@ function NewTournament() {
     .post("/api/addTournament",formData)
     .then((response) => {
       if(response.status==200){
+        setAdded(true)
         setErrors({
           name:"",
           club:"",
@@ -88,6 +90,7 @@ function NewTournament() {
       
     })
     .catch((error) => {
+      setAdded(false)
       if (!error.response) return;
       let Reserrors = error.response.data.errors;
 
@@ -128,7 +131,23 @@ function NewTournament() {
     console.log(event.target.value)
 
   }
+
   };
+
+  let checkboxes=[]
+
+
+  guicat.forEach((e,index)=>{
+  
+   checkboxes.push( <FormControlLabel key={index}   control={<Checkbox value={e}  onChange={(event) => changed(event,"category")} key={index} checked={cat.includes(e+"")?true:false}     sx={{
+     color: blue[1200],
+     '&.Mui-checked': {
+       color: blue[600],
+     },
+   }}/>}  label={e}  />)
+  
+  })
+
     const [profileimage, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     const imageHandler = (e) => {
       setPic(e.target.files[0])
@@ -155,7 +174,32 @@ function NewTournament() {
         <div class="col-2" />
         <div class="col-12">
         <h1 className="newUserTitle">New Tournament</h1>
-    
+        <div className="row">
+              <div className="col-md-4"></div>
+
+
+
+              <div class="col-md-4"> {added ? ( <div class="alert alert-success"  role="alert" >
+            
+                  <label style={{ fontWeight: "bold" }}>
+                  Tournament has been Added
+                  </label>
+                
+              
+              </div>
+            ) : (
+              ""
+            )}
+
+            
+          </div>
+                
+              <div className="col-md-4"></div>
+          
+          
+          
+            </div>
+            
     <form className="newUserForm">
       <div className="newUserItem">
         <label>Tournament Name</label>
@@ -229,48 +273,7 @@ function NewTournament() {
       <div className="newUserItem">
         <label>Categoary</label>
         <FormGroup row>
-        <FormControlLabel value={'60'} onChange={(event) => changed(event,"category")}  control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="60" />
-        <FormControlLabel value={'80'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="80" />
-          <FormControlLabel value={'90'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="90" />
-        <FormControlLabel value={'100'} onChange={(event) => changed(event,"category")} control={<Checkbox      sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="100" />
-          <FormControlLabel value={'110'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="110" />
-          <FormControlLabel value={'120'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="120" />
-          <FormControlLabel value={'150'} onChange={(event) => changed(event,"category")} control={<Checkbox     sx={{
-          color: blue[1200],
-          '&.Mui-checked': {
-            color: blue[600],
-          },
-        }}/>} label="150" />
+        {checkboxes}
         </FormGroup>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["category"][0]}
@@ -310,22 +313,27 @@ function NewTournament() {
 
                 </div>        
                 </div>
-      <div className='col-4'>
+    
+    </form>
+        </div>
+              
+              </div>
+
+              <div class="row  "  >
+               <div className='col-4'>
 
       </div>
 
-      <div className='col-5'>
-      <Button onClick={add} variant="contained" component="span" name="Confirm">Confirm</Button>
-      {/* <FancyButton onClick={add} nameButton="Confirm">dsf</FancyButton> */}
+      <div className='col-4'>
+      {/* <Button onClick={add} variant="contained" component="span" name="Confirm">Confirm</Button> */}
+            <FancyButton onClick={add} nameButton="Confirm"></FancyButton>
+
           </div>
 
       <div className='col-4'>
           
           </div>
-    </form>
-        </div>
-              
-              </div>
+          </div>
               </div>
   
   </div>

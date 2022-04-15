@@ -309,8 +309,6 @@ guicat.forEach((e,index)=>{
       <div className="newUserItem">
         <label>Categoary</label>
         <FormGroup row>
-      
- 
         {checkboxes}
         </FormGroup>
         <label style={{ color: "#960000", fontWeight: "bold" }}>
@@ -351,25 +349,32 @@ guicat.forEach((e,index)=>{
 
                 </div>        
                 </div>
-      <div className='col-4'>
+             
+    
+    </form>
+        </div>
+              
+              </div>
+              <div class="row  "  >
+               <div className='col-4'>
 
       </div>
 
-      <div className='col-5'>
-      <Button onClick={add} variant="contained" component="span" name="Confirm">Confirm</Button>
-      {/* <FancyButton onClick={add} nameButton="Confirm">dsf</FancyButton> */}
+      <div className='col-4'>
+      {/* <Button onClick={add} variant="contained" component="span" name="Confirm">Confirm</Button> */}
+            <FancyButton onClick={add} nameButton="Confirm"></FancyButton>
+
           </div>
 
       <div className='col-4'>
           
           </div>
-    </form>
-        </div>
-              
+          </div>
               </div>
-              </div>
+
   
   </div>
+
   </React.Fragment>
     </div>
   )

@@ -28,11 +28,10 @@ import TrainerSchedule from "./components/Trainer/courseScheduler";
 
 import Tournamentlist from './components/Dashboard/Tournamentlist'
 import EditTournament from './components/Dashboard/editTournament'
-//import NavTop from "./components/Homepage/NavTop";
+
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
-
 
 function App() {
   return (
@@ -53,17 +52,21 @@ function App() {
         <Route path="/test" element={<Test />} />
 
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
+        {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
-      
-        {/* <Route path="/" element={<Home></Home>} /> */}
 
-        <Route path="/" element={<Home/>} />
-      <Route path="/addTournament" element={<NewTournament />} />
+        <Route path="/addTournament" element={<NewTournament />} />
        <Route path="/Tournaments" element={<Tournamentlist></Tournamentlist>} />
        <Route path="/Tournament/:id" element={<EditTournament></EditTournament>} />
+
        <Route path="/addTrainer" element={<NewTrainer />} />
        <Route path="/Trainers" element={<TrainersList></TrainersList>} />
        <Route path="/Trainer/:id" element={<EditTrainer></EditTrainer>} />
+
+       <Route path="/" element={<Home></Home>} />
+        {/* <Route path="/Trainers/AddUser" element={<NewUser />} /> */}
+        <Route path="/" element={<Home/>} />
+        
       </Routes>
     </Router>
   );
