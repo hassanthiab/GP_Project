@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import SideBar from './Sidebar'
+
 import { FormControlLabel,Checkbox,FormGroup} from '@mui/material'
 import FancyInput from '../Login/Input'
 import FancyButton from '../Login/Button' 
@@ -8,6 +8,8 @@ import React,{ useState ,useEffect} from 'react'
 import { Button} from '@material-ui/core'
 import axios from "../axios/axios";
 import {useParams,useNavigate} from "react-router-dom";
+import Pagetop from '../Homepage/Pagetop.jsx';
+import Navbar from './Sidebar';
 
 const Input = styled('input')({
     display: 'none',
@@ -193,9 +195,8 @@ guicat.forEach((e,index)=>{
   return (
     <div>
       <React.Fragment>
-      <SideBar
-
-        />
+      <Pagetop></Pagetop>
+      <Navbar/>
   
     <div className="newUser divcont container">
         <div class="container">

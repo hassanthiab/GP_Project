@@ -60,6 +60,7 @@ function Pagetop() {
             <NavLink to="/hello">Tournaments</NavLink>
           </NavItem>
 
+
           <NavItem button="true">
             <NavLink to="/home" activestyle="True">
               Feed
@@ -68,7 +69,7 @@ function Pagetop() {
 
           
           <NavItem button="true">
-            <NavLink to="/ScheduleUser" activestyle="True">
+            <NavLink to={localStorage.getItem("type")=="trainer/"?"/Schedule":"/ScheduleUser"} activestyle="True">
               Schedule
             </NavLink>
           </NavItem>

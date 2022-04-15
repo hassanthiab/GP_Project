@@ -8,6 +8,8 @@ import { Slide } from "@material-ui/core";
 import { useNavigate,useParams } from "react-router-dom";
 import Container from "../Login/ContainerBox";
 import Pagetop from "../Homepage/Pagetop";
+import Navbar from './Sidebar';
+
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -128,8 +130,10 @@ let Signup = (props) => {
 
   return (
     <React.Fragment>
-
 <Pagetop></Pagetop>
+      <Navbar
+        />
+
     <div className="Login">
       <Slide direction="up" in="true">
         <Container size="100%" width="40%">
