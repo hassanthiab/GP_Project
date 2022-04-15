@@ -606,8 +606,9 @@ export default class Demo extends React.PureComponent {
           }}
         >
           <AddIcon />
+        </StyledFab>
 
-          <Dialog
+        <Dialog
         open={this.state.setOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -628,8 +629,6 @@ export default class Demo extends React.PureComponent {
 
         </DialogActions>
       </Dialog>
-
-        </StyledFab>
       </Paper>
      </React.Fragment>
     );
