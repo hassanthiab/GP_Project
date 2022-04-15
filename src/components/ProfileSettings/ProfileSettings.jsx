@@ -73,7 +73,7 @@ let ProfileSettings = () => {
         stateInput["phone"] = response.data["phone"];
         response.data["two_factor_secret"] ? setTwoFA(true) : setTwoFA(false);
      
-        setImage(  `http://localhost:8000/storage/${response.data['profile_picture']}`);
+        setImage(response.data['profile_picture']?`http://localhost:8000/storage/${response.data['profile_picture']}`:"");
         setInput(stateInput);
       })
       .catch((error) => {});
@@ -242,8 +242,8 @@ let ProfileSettings = () => {
 
   return (
     <React.Fragment>
-      <Pagetop></Pagetop>
-      <Sidebar></Sidebar>
+      {localStorage.getItem("type")!="admin/"?<Pagetop></Pagetop>:""}
+      {localStorage.getItem("type")=="admin/"?<Sidebar></Sidebar>:""}
       <Slide in="true" direction="left">
         <div class="container divcont">
           <div class="row  ">

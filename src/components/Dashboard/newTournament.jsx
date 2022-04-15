@@ -4,7 +4,7 @@ import Navbar from './Sidebar'
 import { FormControl, FormLabel, RadioGroup, FormControlLabel,Radio,Checkbox,FormGroup} from '@mui/material'
 
 import SideBar from './Sidebar'
-import { FormControlLabel,Checkbox,FormGroup} from '@mui/material'
+import Pagetop from '../Homepage/Pagetop.jsx';
 
 import FancyInput from '../Login/Input'
 import FancyButton from '../Login/Button' 
@@ -143,6 +143,7 @@ function NewTournament() {
   return (
     <div>
       <React.Fragment>
+      <Pagetop></Pagetop>
       <Navbar
         />
   

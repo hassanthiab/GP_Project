@@ -6,6 +6,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { useState ,useEffect} from "react";
 import Navbar from './Sidebar';
 import axios from "../axios/axios";
+import Pagetop from '../Homepage/Pagetop.jsx';
 
 import "./newUser.css"
 function Tournamentlist() {
@@ -52,6 +53,7 @@ function Tournamentlist() {
         headerName: "name",
         width: 200,
         renderCell: (params) => {
+          console.log(params.row)
           return (
             <div className="productListItem">
               <img className="productListImg" src={params.row.image?`http://localhost:8000/storage/${params.row.image}`:""} alt="" />
@@ -97,6 +99,7 @@ function Tournamentlist() {
   
     return (
       <div>
+        <Pagetop></Pagetop>
         <Navbar></Navbar>
       <div classname="divcont container" style={{  marginLeft: "70px", height: 400, width: '80%' }}>
       <DataGrid
