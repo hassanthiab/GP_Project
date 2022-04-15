@@ -54,18 +54,19 @@ function App() {
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
-      
-        <Route path="/" element={<Home></Home>} />
-        {/* <Route path="/Trainers/AddUser" element={<NewUser />} /> */}
-
-        <Route path="/" element={<Home/>} />
 
         <Route path="/addTournament" element={<NewTournament />} />
        <Route path="/Tournaments" element={<Tournamentlist></Tournamentlist>} />
        <Route path="/Tournament/:id" element={<EditTournament></EditTournament>} />
+
        <Route path="/addTrainer" element={<NewTrainer />} />
        <Route path="/Trainers" element={<TrainersList></TrainersList>} />
        <Route path="/Trainer/:id" element={<EditTrainer></EditTrainer>} />
+
+       <Route path="/" element={<Home></Home>} />
+        {/* <Route path="/Trainers/AddUser" element={<NewUser />} /> */}
+        <Route path="/" element={<Home/>} />
+        
       </Routes>
     </Router>
   );
