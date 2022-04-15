@@ -169,7 +169,7 @@ export default class UserSchedule extends React.PureComponent {
             <Appointments />
             <AppointmentTooltip showCloseButton showOpenButton showDeleteButton />
             <AppointmentForm
-            // readOnly={true}
+             readOnly={true}
             />
           
           </Scheduler>

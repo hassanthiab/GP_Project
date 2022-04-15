@@ -39,6 +39,7 @@ import { appointments } from './dummy-data';
 import "../Login/LoginStyle.css";
 import Pagetop from '../Homepage/Pagetop.jsx';
 import Trainerbar from './TrainerBar.jsx';
+import { Link } from 'react-router-dom'
 
 const PREFIX = 'Demo';
 // #FOLD_BLOCK
@@ -532,7 +533,7 @@ export default class Demo extends React.PureComponent {
     };
     return (
       <React.Fragment>
-            <Trainerbar></Trainerbar>
+            <Pagetop></Pagetop>
       <Paper  className="Login">
         <Scheduler
           data={data}
@@ -621,7 +622,10 @@ export default class Demo extends React.PureComponent {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <Link to="/Schedule">
           <Button onClick={handleClose}>Got it.</Button>
+          </Link>
+
         </DialogActions>
       </Dialog>
 
