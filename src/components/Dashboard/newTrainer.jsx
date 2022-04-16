@@ -1,7 +1,7 @@
 import React from 'react'
 import { Fragment } from 'react/cjs/react.production.min'
 import Signup from '../Sign up/Signup.jsx'
-import Pagetop from '../Homepage/Pagetop.jsx';
+import Navbar from './Sidebar';
 
 let Tsignup=()=>{
 
@@ -9,7 +9,7 @@ let Tsignup=()=>{
 
 return(
   <Fragment>
-  <Pagetop></Pagetop>
+  <Navbar></Navbar>
 <Signup role='trainer'/>
 </Fragment>
 )

@@ -162,7 +162,6 @@ function NewTournament() {
   return (
     <div>
       <React.Fragment>
-      <Pagetop></Pagetop>
       <Navbar
         />
   

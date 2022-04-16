@@ -195,7 +195,6 @@ guicat.forEach((e,index)=>{
   return (
     <div>
       <React.Fragment>
-      <Pagetop></Pagetop>
       <Navbar/>
   
     <div className="newUser divcont container">

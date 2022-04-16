@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import FilterBar from "./Searchbar";
 import Cardview from "./Cardview";
-import Pagetop from "../Homepage/Pagetop";
+import NavTop from "../Homepage/NavTop";
 import SimpleAccordion from "./Sidebar";
 import axios from "../axios/axios";
 
@@ -25,7 +25,7 @@ function Tournament() {
 
   return (
     <React.Fragment>
-      <Pagetop></Pagetop>
+      <NavTop page="Tournaments"></NavTop>
  
     <div className="container">
       <div className="row">

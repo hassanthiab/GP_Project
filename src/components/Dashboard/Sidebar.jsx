@@ -5,12 +5,23 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './navbar.js';
 import './Sidebar.css';
 import { IconContext } from 'react-icons';
+import axios from "../axios/axios";
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
-
+  let logoutReq = () => {
+    if (localStorage.getItem("token")) {
+      axios(localStorage.getItem("token"))
+        .delete("/api/loagout")
+        .then()
+        .catch((error) => {
+          if (!error.response) return;
+        });
+      localStorage.clear();
+    }
+  };
   return (
     <React.Fragment>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -34,8 +45,15 @@ function Navbar() {
                     <span>{item.title}</span>
                   </Link>
                 </li>
+          
               );
             })}
+                     <li  className="nav-text">
+                  <Link onClick={logoutReq} to="/">
+                    
+                    <span>LogOut</span>
+                  </Link>
+                </li>
           </ul>
         </nav>
       </IconContext.Provider>
