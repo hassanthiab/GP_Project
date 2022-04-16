@@ -537,7 +537,6 @@ export default class Demo extends React.PureComponent {
             visible={false}
             readOnly={true}
           />
-          <DragDropProvider />
         </Scheduler>
 
         <Dialog
