@@ -8,7 +8,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import Container from "./ContainerBox";
 import { Slide } from "@material-ui/core";
 import { useState } from "react";
-import Pagetop from "../Homepage/Pagetop";
+import NavTop from "../Homepage/NavTop";
 
 let a = "";
 const Title = styled.h2`
@@ -144,9 +144,9 @@ let Login = () => {
   return (
     <React.Fragment>
     
-    <Pagetop>
+    <NavTop>
 
-    </Pagetop>
+    </NavTop>
     <div className="Login">
       
       <Slide direction="up" in="true">

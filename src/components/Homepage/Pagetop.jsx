@@ -49,13 +49,18 @@ function Pagetop() {
           {click ? <FaTimes /> : <FaBars />}
         </BarsDiv>
 
+      
         <NavMenu onClick={handleClick} click={click}>
-          <NavItem button="true">
+        {!localStorage.getItem("token")?   
+         <NavItem button="true">
             <NavLink to="/" activestyle="True">
               Home
             </NavLink>
-          </NavItem>
-
+          </NavItem>: ""
+       
+          }
+    
+        
           <NavItem button="true">
             <NavLink to="/hello">Tournaments</NavLink>
           </NavItem>
@@ -67,12 +72,14 @@ function Pagetop() {
             </NavLink>
           </NavItem>
 
-          
-          <NavItem button="true">
+          {localStorage.getItem("token")? <NavItem button="true">
             <NavLink to={localStorage.getItem("type")=="trainer/"?"/Schedule":"/ScheduleUser"} activestyle="True">
               Schedule
             </NavLink>
-          </NavItem>
+          </NavItem>:""
+         
+          }
+          
 
           <NavItem button="true">
             <NavLink to="/chat" activestyle="True">
@@ -80,31 +87,36 @@ function Pagetop() {
             </NavLink>
           </NavItem>
 
+          {!localStorage.getItem("token")?
           <NavItem button={buttonShow}>
             <NavLink to="/Login" activestyle="True">
               Login
             </NavLink>
-          </NavItem>
+          </NavItem>:""}
 
+          {!localStorage.getItem("token")?
           <NavItem button={buttonShow}>
             <NavLink to="/Signup" activestyle="True">
               Signup
             </NavLink>
-          </NavItem>
+          </NavItem>:""}
 
-          <NavItem button={buttonShow}>
+          {localStorage.getItem("token")?<NavItem button={buttonShow}>
             <NavLink onClick={logoutReq} to="/" activestyle="True">
               Logout
             </NavLink>
           </NavItem>
-        </NavMenu>
+      
+          :""}
+      </NavMenu>
 
         <NavBtn>
-          <NavBtnLink to="/Signup">Sign up</NavBtnLink>
-          <NavBtnLink to="/Login">Log in</NavBtnLink>
-          <NavBtnLink onClick={logoutReq} to="/">
+        {!localStorage.getItem("token")?<NavBtnLink to="/Signup">Sign up</NavBtnLink>:""}
+        {!localStorage.getItem("token")? <NavBtnLink to="/Login">Log in</NavBtnLink>:""}
+          {localStorage.getItem("token")?<NavBtnLink onClick={logoutReq} to="/">
             Log out
-          </NavBtnLink>
+          </NavBtnLink>:""}
+       
         </NavBtn>
       </Nav>
     </div>

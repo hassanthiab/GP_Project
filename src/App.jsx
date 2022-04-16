@@ -22,13 +22,12 @@ import NewTournament from './components/Dashboard/newTournament'
 
 import UserList from "./components/Dashboard/UserList";
 import { MultiStepForm } from "./components/createCourse/MultiStep";
-import Demo from "./components/createCourse/CourseScheduler";
 import UserSchedule from "./components/createCourse/cs";
 import TrainerSchedule from "./components/Trainer/courseScheduler";
 
 import Tournamentlist from './components/Dashboard/Tournamentlist'
 import EditTournament from './components/Dashboard/editTournament'
-
+import NavTop from "./components/Homepage/NavTop"
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
@@ -45,11 +44,11 @@ function App() {
         <Route path="/Profile" element={<ProfileSettings />} />
         <Route path="/twoFA" element={<TwoFA />} />
         <Route path="/FAcode" element={<TwoFALogin />} />
-        <Route path="/hello" element={<Tournament></Tournament>} />
+        <Route path="/UserTournament" element={<Tournament></Tournament>} />
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/test" element={<NavTop />} />
 
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
@@ -63,10 +62,9 @@ function App() {
        <Route path="/Trainers" element={<TrainersList></TrainersList>} />
        <Route path="/Trainer/:id" element={<EditTrainer></EditTrainer>} />
 
-       <Route path="/" element={<Home></Home>} />
         {/* <Route path="/Trainers/AddUser" element={<NewUser />} /> */}
         <Route path="/" element={<Home/>} />
-        
+
       </Routes>
     </Router>
   );

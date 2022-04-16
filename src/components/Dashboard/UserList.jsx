@@ -89,9 +89,8 @@ export default function UserList() {
 
   return (
     <div>
-      <Pagetop></Pagetop>
       <Navbar></Navbar>
- <div classname="divcont" style={{  marginLeft: "70px", height: 400, width: '80%' }}>
+ <div  classname="divcont container" style={{  marginLeft: "25%", height: 400, width: '65%' }}>
       <DataGrid
         rows={data}
         columns={columns}

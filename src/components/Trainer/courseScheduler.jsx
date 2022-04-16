@@ -37,7 +37,7 @@ import Create from '@mui/icons-material/Create';
 import axios from "../axios/axios";
 import { appointments } from './dummy-data';
 import "../Login/LoginStyle.css";
-import Pagetop from '../Homepage/Pagetop.jsx';
+import NavTop from '../Homepage/NavTop.jsx';
 import Trainerbar from './TrainerBar.jsx';
 
 const PREFIX = 'Demo';
@@ -532,7 +532,7 @@ export default class Demo extends React.PureComponent {
     };
     return (
       <React.Fragment>
-            <Trainerbar></Trainerbar>
+            <NavTop page="Schedule"></NavTop>
       <Paper  className="Login">
         <Scheduler
           data={data}
