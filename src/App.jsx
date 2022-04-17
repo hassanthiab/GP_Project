@@ -22,7 +22,7 @@ import NewTournament from './components/Dashboard/newTournament'
 
 import UserList from "./components/Dashboard/UserList";
 import { MultiStepForm } from "./components/createCourse/MultiStep";
-import Demo from "./components/createCourse/CourseScheduler";
+
 import UserSchedule from "./components/createCourse/cs";
 import TrainerSchedule from "./components/Trainer/courseScheduler";
 
@@ -32,6 +32,7 @@ import EditTournament from './components/Dashboard/editTournament'
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
+import NavTop from "./components/Homepage/NavTop";
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/test" element={<NavTop></NavTop>} />
 
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
