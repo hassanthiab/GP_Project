@@ -37,7 +37,7 @@ import Create from '@mui/icons-material/Create';
 import axios from "../axios/axios";
 import { appointments } from './dummy-data';
 import "../Login/LoginStyle.css";
-import Pagetop from '../Homepage/Pagetop.jsx';
+import NavTop from '../Homepage/NavTop.jsx';
 import Trainerbar from './TrainerBar.jsx';
 import { Link } from 'react-router-dom'
 
@@ -533,7 +533,8 @@ export default class Demo extends React.PureComponent {
     };
     return (
       <React.Fragment>
-            <Pagetop></Pagetop>
+
+            <NavTop page="Schedule"></NavTop>
       <Paper  className="Login">
         <Scheduler
           data={data}

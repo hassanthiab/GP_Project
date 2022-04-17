@@ -1,30 +1,33 @@
-
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React  from 'react'
+import {Link} from 'react-router-dom'
 import axios from "../axios/axios";
+import logo from "./logo.png"
+import "./Top.css"
+export default function NavTop(props){
 
-function NavTop() {
-    let logoutReq = () => {
-        if (localStorage.getItem("token")) {
-          axios(localStorage.getItem("token"))
-            .delete("/api/loagout")
-            .then()
-            .catch((error) => {
-              if (!error.response) return;
-            });
-          localStorage.clear();
-        }
-      };
-  return (
-<nav class="navbar-toggler navbar navbar-expand-lg navbar-light bg-light">
+  let logoutReq = () => {
+    if (localStorage.getItem("token")) {
+      axios(localStorage.getItem("token"))
+        .delete("/api/loagout")
+        .then()
+        .catch((error) => {
+          if (!error.response) return;
+        });
+      localStorage.clear();
+    }
+  };
+
+
+return(
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
   <div class="container-fluid">
- 
+
     <button
       class="navbar-toggler"
       type="button"
       data-mdb-toggle="collapse"
-      data-mdb-target="navbarSupportedContent"
+      data-mdb-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent"
       aria-expanded="false"
       aria-label="Toggle navigation"
@@ -32,43 +35,91 @@ function NavTop() {
       <i class="fas fa-bars"></i>
     </button>
 
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+      <Link class="navbar-brand mt-2 mt-lg-0" to="/">
         <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height="15"
-          alt="MDB Logo"
+          src={logo}
+          height="60"
+          alt="CLub Logo"
           loading="lazy"
         />
-      </a>
+      </Link>
+ 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
+
+      {!localStorage.getItem("token")?
+      <Link to="/">
+      <li class={props.page=="home"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none ">Home</a>
+      </li>
+      </Link>:""}
+
+      <Link to="/UserTournament">
+      <li class={props.page=="Tournaments"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none">Tournaments</a>
+      </li>
+      </Link>
+      
+      {localStorage.getItem("token")?localStorage.getItem("type")==""?
+      <Link to="/Courses">
+      <li class={props.page=="Courses"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none">Courses</a>
+      </li>
+      </Link>
+      :""
+      :""}
+      
+
+      {localStorage.getItem("token")?
+       <Link to={localStorage.getItem("type")=="trainer/"?"/Schedule":"/ScheduleUser"}>
+      <li class={props.page=="Schedule"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none">Schedule</a>
+      </li>
+      </Link>:""}
+     
+
+
+    
+      <Link to="/Chat">
+      <li class={props.page=="Chat"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none">Chat</a>
+      </li>
+      </Link>
+
+      <Link to="/Feed">
+      <li class={props.page=="Feed"?"nav-item active":"nav-item"}>
+        <a class="nav-link user-select-none">Feed</a>
+      </li>
+      </Link>
+       
       </ul>
 
     </div>
-  
+
+
     <div class="d-flex align-items-center">
+    {!localStorage.getItem("token")?
+    <Link to="/Login">
     <button type="button" class="btn btn-link px-3 me-2">
           Login
         </button>
-        <button type="button" class="btn btn-primary me-3">
-          Sign up for free
-        </button>
+    </Link>:""}
 
+    {!localStorage.getItem("token")?
+    <Link to="/Signup">
+    <button type="button" class="btn btn-link px-3 me-2">
+    Signup
+        </button>
+    </Link>:""}
+
+    {localStorage.getItem("token")?
       <a class="text-reset me-3" href="#">
         <i class="fas fa-shopping-cart"></i>
-      </a>
+      </a>:""}
 
-
+      {localStorage.getItem("token")?
       <div class="dropdown">
         <a
           class="text-reset me-3 dropdown-toggle hidden-arrow"
@@ -86,16 +137,18 @@ function NavTop() {
           aria-labelledby="navbarDropdownMenuLink"
         >
           <li>
-            <a class="dropdown-item" href="#">Some news</a>
+            <a class="dropdown-item user-select-none" href="#">Some news</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Another news</a>
+            <a class="dropdown-item user-select-none" href="#">Another news</a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item user-select-none" href="#">Something else here</a>
           </li>
         </ul>
-      </div>
+      </div>:""}
+    
+      {localStorage.getItem("token")?
       <div class="dropdown">
         <a
           class="dropdown-toggle d-flex align-items-center hidden-arrow"
@@ -113,27 +166,29 @@ function NavTop() {
             loading="lazy"
           />
         </a>
+
+      
         <ul
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdownMenuAvatar"
         >
           <li>
-            <a class="dropdown-item" href="#">My profile</a>
+          <Link to="/Profile" class="dropdown-item user-select-none">My profile</Link>
           </li>
+      
           <li>
-            <a class="dropdown-item" href="#">Settings</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Logout</a>
+          <Link to="/" class="dropdown-item user-select-none"  onClick={logoutReq}>Logout</Link>
           </li>
         </ul>
-      </div>
+
+    
+
+      </div>:""}
     </div>
 
   </div>
 
 </nav>
-  )
-}
 
-export default NavTop
+)
+}

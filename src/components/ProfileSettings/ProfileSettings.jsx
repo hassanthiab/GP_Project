@@ -8,7 +8,7 @@ import ButtonP from "./Button";
 import TwoFA from "../twoFactorAuth/twoFA";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
-import Pagetop from "../Homepage/Pagetop";
+import NavTop from "../Homepage/NavTop";
 import Sidebar from "../Dashboard/Sidebar";
 const Input = styled("input")({
   display: "none",
@@ -73,7 +73,7 @@ let ProfileSettings = () => {
         stateInput["phone"] = response.data["phone"];
         response.data["two_factor_secret"] ? setTwoFA(true) : setTwoFA(false);
      
-        setImage(response.data['profile_picture']?`http://localhost:8000/storage/${response.data['profile_picture']}`:"");
+        setImage(response.data['profile_picture']?`http://localhost:8000/storage/${response.data['profile_picture']}`:"http://localhost:8000/storage/bpp.webp");
         setInput(stateInput);
       })
       .catch((error) => {});
@@ -242,7 +242,7 @@ let ProfileSettings = () => {
 
   return (
     <React.Fragment>
-      {localStorage.getItem("type")!="admin/"?<Pagetop></Pagetop>:""}
+      {localStorage.getItem("type")!="admin/"?<NavTop></NavTop>:""}
       {localStorage.getItem("type")=="admin/"?<Sidebar></Sidebar>:""}
       <Slide in="true" direction="left">
         <div class="container divcont">

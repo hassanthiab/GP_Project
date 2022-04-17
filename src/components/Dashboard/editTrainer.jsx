@@ -130,7 +130,7 @@ let Signup = (props) => {
 
   return (
     <React.Fragment>
-<Pagetop></Pagetop>
+
       <Navbar
         />
 

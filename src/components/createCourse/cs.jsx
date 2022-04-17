@@ -36,7 +36,7 @@ import CalendarToday from '@mui/icons-material/CalendarToday';
 import Create from '@mui/icons-material/Create';
 import axios from "../axios/axios";
 import { appointments } from './dummy-data';
-import Pagetop from "../Homepage/Pagetop.jsx";
+import NavTop from "../Homepage/NavTop.jsx";
 
 const PREFIX = 'Demo';
 // #FOLD_BLOCK
@@ -504,7 +504,7 @@ export default class Demo extends React.PureComponent {
     };
     return (
       <React.Fragment>
-      <Pagetop></Pagetop>
+         <NavTop page="Schedule"></NavTop>
       <Paper className="Login">
         <Scheduler
           data={data}
@@ -537,7 +537,6 @@ export default class Demo extends React.PureComponent {
             visible={false}
             readOnly={true}
           />
-          <DragDropProvider />
         </Scheduler>
 
         <Dialog

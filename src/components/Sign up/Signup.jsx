@@ -7,7 +7,7 @@ import axios from "../axios/axios";
 import { Slide } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import Container from "../Login/ContainerBox";
-import Pagetop from "../Homepage/Pagetop";
+import NavTop from "../Homepage/NavTop";
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -122,8 +122,7 @@ let Signup = (props) => {
 
   return (
     <React.Fragment>
-
-<Pagetop></Pagetop>
+    {props.role!='trainer'?<NavTop></NavTop>:""}
     <div className="Login">
       <Slide direction="up" in="true">
         <Container size="100%" width="40%">
@@ -136,7 +135,7 @@ let Signup = (props) => {
                     marginLeft: props.role != "trainer" ? "25%" : "10%",
                   }}
                 >
-                  {props.role == "trainer" ? "new trainer" : "Sign up"}
+                  {props.role == "trainer" ? "New Trainer" : "Sign up"}
                 </Title>
               </div>
               <div className="col-md-4"></div>
@@ -277,7 +276,7 @@ let Signup = (props) => {
                     onClick={registerReq}
                     nameButton={
                       props.role == "trainer"
-                        ? "Sign up new trainer"
+                        ? "New Trainer"
                         : "Sign up"
                     }
                   ></FancyButton>

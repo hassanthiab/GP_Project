@@ -9,6 +9,7 @@ import axios from "../axios/axios";
 import Pagetop from '../Homepage/Pagetop.jsx';
 
 import "./newUser.css"
+import "../Login/LoginStyle.css"
 function Tournamentlist() {
     const [data, setData] = useState();
     const a = localStorage.getItem("type");
@@ -99,9 +100,9 @@ function Tournamentlist() {
   
     return (
       <div>
-        <Pagetop></Pagetop>
+
         <Navbar></Navbar>
-      <div classname="divcont container" style={{  marginLeft: "70px", height: 400, width: '80%' }}>
+      <div classname="divcont container" style={{  marginLeft: "25%", height: 400, width: '65%' }}>
       <DataGrid
         rows={data}
         columns={columns}
