@@ -91,6 +91,22 @@ export default function UserList() {
     <div>
       <Navbar></Navbar>
  <div  classname="divcont container" style={{  marginLeft: "25%", height: 400, width: '65%' }}>
+ <div className='row'>
+        <div className='col-8'>
+
+        </div>
+        <div className='col2'>
+        <Link to="/addTrainer">
+        <button class="bn54">
+    <span class="bn54span">New Trainer</span>
+  </button>
+        </Link>
+        </div>
+
+        <div className='col-2'>
+
+        </div>
+      </div>
       <DataGrid
         rows={data}
         columns={columns}

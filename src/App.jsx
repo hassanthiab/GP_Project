@@ -31,7 +31,6 @@ import NavTop from "./components/Homepage/NavTop"
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
-import NavTop from "./components/Homepage/NavTop";
 
 function App() {
   return (
