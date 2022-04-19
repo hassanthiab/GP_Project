@@ -31,6 +31,8 @@ import NavTop from "./components/Homepage/NavTop"
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
+import TrainerCard from "./components/Courses/TrainerCard";
+import Trainers from "./components/Courses/Trainers";
 
 function App() {
   return (
@@ -48,7 +50,8 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/test" element={<NavTop></NavTop>} />
+        <Route path="/test" element={<Trainers></Trainers>} />
+        <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
 
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}

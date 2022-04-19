@@ -90,7 +90,7 @@ export default function UserList() {
   return (
     <div>
       <Navbar></Navbar>
- <div  classname="divcont container" style={{  marginLeft: "25%", height: 400, width: '65%' }}>
+ <div  classname="divcont container" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)",  marginLeft: "25%", height: 400, width: '65%' }}>
  <div className='row'>
         <div className='col-8'>
 
@@ -110,8 +110,8 @@ export default function UserList() {
       <DataGrid
         rows={data}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         disableSelectionOnClick
       />
     </div>
