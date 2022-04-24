@@ -6,13 +6,10 @@ import TrainerCard from './TrainerCard'
 function Trainers() {
   return (
     <React.Fragment>
-              <NavTop>
+              <NavTop page='Courses'/>
 
-</NavTop>
-
-      <TrainerCard>
-
-      </TrainerCard>
+      <TrainerCard/> 
+          
     </React.Fragment>
   )
 }

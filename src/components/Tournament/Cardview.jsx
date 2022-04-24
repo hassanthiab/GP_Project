@@ -9,10 +9,12 @@ import { Button } from "@material-ui/core";
 const Cardview = ({ items }) => {
   return (
     <React.Fragment>
+    
       <div class="tournament_card" id="bright">
+
         <div class="info_section">
           <div class="tournament_header">
-            <img class="locandina" src={`http://localhost:8000/storage/${items.image}`} />
+            <img class="locandina" src={`http://localhost:8000/storage/${items.image?items.image:'bpp.webp'}`} />
             <h1>{items.name}</h1>
             <h4>{dayjs(items.date).format("DD MMMM YYYY")}</h4>
             <p class="type">
@@ -35,7 +37,7 @@ const Cardview = ({ items }) => {
           </div>
         </div>
         <div
-          style={{ backgroundImage: `url(http://localhost:8000/storage/${items.image})` }}
+          style={{ backgroundImage: `url(http://localhost:8000/storage/${items.image?items.image:''})` }}
           class="blur_back"
         ></div>
       </div>

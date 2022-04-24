@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=cardao:400i|Rubik:400,700&display=swap');
  :root {
 	 --d: 700ms;
 	 --e: cubic-bezier(0.19, 1, 0.22, 1);
@@ -27,7 +27,7 @@
 		 grid-template-columns: repeat(4, 1fr);
 	}
 }
- .card {
+ .carda {
 	 position: relative;
 	 display: flex;
 	 align-items: flex-end;
@@ -40,11 +40,12 @@
 	 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1), 0 4px 4px rgba(0, 0, 0, 0.1), 0 8px 8px rgba(0, 0, 0, 0.1), 0 16px 16px rgba(0, 0, 0, 0.1);
 }
  @media (min-width: 600px) {
-	 .card {
+	 .carda {
 		 height: 350px;
 	}
 }
- .card:before {
+ .carda:before {
+	 
 	 content: '';
 	 position: absolute;
 	 top: 0;
@@ -56,7 +57,7 @@
 	 transition: transform calc(var(--d) * 1.5) var(--e);
 	 pointer-events: none;
 }
- .card:after {
+ .carda:after {
 	 content: '';
 	 display: block;
 	 position: absolute;
@@ -113,7 +114,7 @@
 	 outline-offset: 3px;
 }
  @media (hover: hover) and (min-width: 600px) {
-	 .card:after {
+	 .carda:after {
 		 transform: translateY(0);
 	}
 	 .content {
@@ -124,24 +125,24 @@
 		 transform: translateY(1rem);
 		 transition: transform var(--d) var(--e), opacity var(--d) var(--e);
 	}
-	 .card:hover, .card:focus-within {
+	 .carda:hover, .carda:focus-within {
 		 align-items: center;
 	}
-	 .card:hover:before, .card:focus-within:before {
+	 .carda:hover:before, .carda:focus-within:before {
 		 transform: translateY(-4%);
 	}
-	 .card:hover:after, .card:focus-within:after {
+	 .carda:hover:after, .carda:focus-within:after {
 		 transform: translateY(-50%);
 	}
-	 .card:hover .content, .card:focus-within .content {
+	 .carda:hover .content, .carda:focus-within .content {
 		 transform: translateY(0);
 	}
-	 .card:hover .content > *:not(.title), .card:focus-within .content > *:not(.title) {
+	 .carda:hover .content > *:not(.title), .carda:focus-within .content > *:not(.title) {
 		 opacity: 1;
 		 transform: translateY(0);
 		 transition-delay: calc(var(--d) / 8);
 	}
-	 .card:focus-within:before, .card:focus-within:after, .card:focus-within .content, .card:focus-within .content > *:not(.title) {
+	 .carda:focus-within:before, .carda:focus-within:after, .carda:focus-within .content, .carda:focus-within .content > *:not(.title) {
 		 transition-duration: 0s;
 	}
 }

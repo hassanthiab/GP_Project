@@ -407,6 +407,10 @@ export default class Demo extends React.PureComponent {
     })
     .catch((error) => {
       if (!error.response) return;
+      this.toggleConfirmationVisible();
+      this.setState({setOpen:true})
+      error.response.data.errors.trainer?this.setState({Error:error.response.data.errors.trainer})
+      :"some error happened"
     });
   
   }
@@ -436,6 +440,7 @@ export default class Demo extends React.PureComponent {
         })
         .catch((error) => {
           if (!error.response) return;
+        
           this.setState({setOpen:true})
           error.response.data.errors.startDate?
           this.setState({Error:error.response.data.errors.startDate[0]})
@@ -469,7 +474,9 @@ export default class Demo extends React.PureComponent {
      .catch((error) => {
        if (!error.response) return;
        this.setState({setOpen:true})
-       error.response.data.errors.startDate?
+
+       error.response.data.errors.trainer?this.setState({Error:error.response.data.errors.trainer})
+       :error.response.data.errors.startDate?
        this.setState({Error:error.response.data.errors.startDate[0]})
        : this.setState({Error:error.response.data.errors.endDate[0]})
      });
@@ -569,7 +576,7 @@ export default class Demo extends React.PureComponent {
             visible={editingFormVisible}
             onVisibilityChange={this.toggleEditingFormVisibility}
           />
-          <DragDropProvider />
+          {/* <DragDropProvider /> */}
         </Scheduler>
 
         <Dialog

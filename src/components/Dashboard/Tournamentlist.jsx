@@ -58,7 +58,7 @@ function Tournamentlist() {
           console.log(params.row)
           return (
             <div className="productListItem">
-              <img className="productListImg" src={params.row.image?`http://localhost:8000/storage/${params.row.image}`:""} alt="" />
+              <img className="productListImg" src={`http://localhost:8000/storage/${params.row.image?params.row.image:'bpp.webp'}`} alt="" />
               {params.row.name}
             </div>
           );

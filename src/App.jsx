@@ -17,7 +17,7 @@ import AfterRegisterVerify from "./components/verifyEmail/AfterRegisterVerify";
 import Test from "./components/test/test";
 import AddTrainer from './components/TrainerRegister/SignupTrainer'
 import Dashboard from "./components/Dashboard/Dashboard";
-
+import Courses from "./components/Courses/Trainers"
 import NewTournament from './components/Dashboard/newTournament'
 
 import UserList from "./components/Dashboard/UserList";
@@ -33,7 +33,7 @@ import TrainersList from "./components/Dashboard/UserList";
 import EditTrainer from "./components/Dashboard/editTrainer";
 import TrainerCard from "./components/Courses/TrainerCard";
 import Trainers from "./components/Courses/Trainers";
-
+import CoursesGrid from "./components/Courses/Courses";
 function App() {
   return (
     <Router>
@@ -50,9 +50,9 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/test" element={<Trainers></Trainers>} />
+        <Route path="/Courses/:id" element={<CoursesGrid></CoursesGrid>} />
         <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
-
+        <Route path="/Courses" element={<Courses/>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />

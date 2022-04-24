@@ -5,7 +5,7 @@ import Cardview from "./Cardview";
 import NavTop from "../Homepage/NavTop";
 import SimpleAccordion from "./Sidebar";
 import axios from "../axios/axios";
-
+import Input from "../Login/Input"
 
 
 function Tournament() {
@@ -40,6 +40,7 @@ function Tournament() {
         </div>
         <div className="col-sm-9">
           <div className="row md-5">
+          <Input type="email" placeholder="Search.."></Input>
             {!allData?"":allData.map((item) => (
               <Cardview items={item} key={item.id} />
             ))}

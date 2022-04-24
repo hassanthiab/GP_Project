@@ -463,7 +463,7 @@ export default class Demo extends React.PureComponent {
   }
   componentDidMount() {
     axios()
-      .get("api/getCourses")
+      .get("api/getUserCourses")
       .then((response) => {
         let Rdata = response.data
         let o={}
