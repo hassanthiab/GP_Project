@@ -19,6 +19,7 @@ import AddTrainer from './components/TrainerRegister/SignupTrainer'
 import Dashboard from "./components/Dashboard/Dashboard";
 import Courses from "./components/Courses/Trainers"
 import NewTournament from './components/Dashboard/newTournament'
+import Success from './components/Courses/Success'
 
 import UserList from "./components/Dashboard/UserList";
 import { MultiStepForm } from "./components/createCourse/MultiStep";
@@ -39,6 +40,7 @@ function App() {
     <Router>
 
       <Routes>
+       <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
         <Route path="/Login/ForgotPassword" element={<Page />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup></Signup>} />
@@ -50,9 +52,11 @@ function App() {
         <Route path="/verify-email" element={<Verify />} />
         <Route path="/verification" element={<AfterRegisterVerify />} />
         <Route path="/require-verification" element={<RequireVerification />} />
-        <Route path="/Courses/:id" element={<CoursesGrid></CoursesGrid>} />
-        <Route path="/Dashboard" element={<Dashboard></Dashboard>} />
         <Route path="/Courses" element={<Courses/>} />
+        <Route path="/Courses/:id" element={<CoursesGrid></CoursesGrid>} />
+        <Route path="/return/:id" element={<Success/>} />
+
+ 
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />

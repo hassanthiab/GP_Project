@@ -2,38 +2,65 @@ import React, { useState ,useEffect}from 'react'
 import NavTop from '../Homepage/NavTop'
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useParams } from "react-router-dom";
 import "../Dashboard/btn.css"
 import "../Dashboard/productList.css"
 import { productRows } from "../Dashboard/dummy-data";
+import axios from "../axios/axios";
+
 function Courses() {
-    const [data, setData] = useState(productRows);
+  let { id } = useParams();
+    const [data, setData] = useState();
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    const navigate = useNavigate();
+
+
+
+    useEffect(() => {
+      if (!localStorage.getItem("token")) {
+        navigate("/Login");
+      }
+  
+      axios()
+        .get("/api/getTrainerCourses/"+id)
+        .then((response) => {
+          setData(response.data)
+  
+        })
+        .catch((error) => {
+          if(!error.response)
+          return
+        });
+        
+    }, []);
+ 
+ const enroll = (id) => {
+  axios()
+  .get("/api/courses/"+id+"/payments")
+  .then((response) => {
+   
+   window.location.replace(response.data)
+    
+
+  })
+
+  .catch((error) => {
+    if(!error.response)
+    return
+  });
+
+
   };
-
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "product",
+      field: "title",
       headerName: "Tiltle",
       width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.name}
-          </div>
-        );
-      },
-    },
-    { field: "stock", headerName: "Start Date", width: 200 },
-    {
-      field: "status",
-      headerName: "Etart Date",
-      width: 120,
-    },
+     },
+    { field: "startDate", headerName: "Start Date", width: 200 },
+    { field: "endDate", headerName: "End Date", width: 200 },
+
     {
       field: "price",
       headerName: "price",
@@ -47,7 +74,7 @@ function Courses() {
       renderCell: (params) => {
         return (
           <>
-                       <Link class="bn47" to={"/courses/"+"/id/" + params.row.id}>Enroll</Link>
+             <button onClick={()=>enroll(params.row.id)} class="bn47">Enroll</button>
            
            
           </>
