@@ -35,6 +35,9 @@ import EditTrainer from "./components/Dashboard/editTrainer";
 import TrainerCard from "./components/Courses/TrainerCard";
 import Trainers from "./components/Courses/Trainers";
 import CoursesGrid from "./components/Courses/Courses";
+import AddHorse from "./components/Dashboard/AddHorse";
+import RoomList from "./components/Dashboard/Roomslist";
+import Stable from "./components/Dashboard/Stable";
 function App() {
   return (
     <Router>
@@ -55,8 +58,9 @@ function App() {
         <Route path="/Courses" element={<Courses/>} />
         <Route path="/Courses/:id" element={<CoursesGrid></CoursesGrid>} />
         <Route path="/return/:id" element={<Success/>} />
-
- 
+        <Route path="/Rooms" element={<RoomList></RoomList>} />
+        <Route path="/addHorse" element={<AddHorse></AddHorse>} />
+        <Route path="/addStable" element={<Stable></Stable>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />

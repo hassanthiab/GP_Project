@@ -6,7 +6,6 @@ import { Link,useNavigate } from "react-router-dom";
 import { useState ,useEffect} from "react";
 import Navbar from './Sidebar';
 import axios from "../axios/axios";
-import Pagetop from '../Homepage/Pagetop.jsx';
 
 import "./newUser.css"
 import "./btn.css"

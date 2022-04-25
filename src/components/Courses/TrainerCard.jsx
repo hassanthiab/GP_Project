@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import "./TrainerCard.css"
+//import "./TrainerCard.css"
 import img from "../../Images/LoginBackground.jpg"
 import { Link } from 'react-router-dom'
 import axios from "../axios/axios";
@@ -32,7 +32,7 @@ ddata.forEach((e,i)=>{
   trainers.push(
   <div key={ddata[i].id} class="carda" style={{backgroundImage:ddata[i].profile_picture?'url(http://localhost:8000/storage/'+ddata[i].profile_picture+')': 'url(http://localhost:8000/storage/bpp.webp)',backgroundRepeat: 'no-repeat',backgroundSize:'contain'}}>
 
-  <div class="content">
+  <div class="content1">
   <h2 class="title">{ddata[i].name+'('+ddata[i].email+')'}</h2>
 
 
@@ -44,7 +44,7 @@ ddata.forEach((e,i)=>{
 )
 
   return (
-   error?"": <div class={"page-content"}>
+   error?"": <div class={"page-content1"}>
 
     {trainers}  
      
