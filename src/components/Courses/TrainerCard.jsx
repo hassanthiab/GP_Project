@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-//import "./TrainerCard.css"
+import "./TrainerCard.css"
 import img from "../../Images/LoginBackground.jpg"
 import { Link } from 'react-router-dom'
 import axios from "../axios/axios";
