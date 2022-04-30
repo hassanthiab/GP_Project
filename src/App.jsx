@@ -62,7 +62,7 @@ function App() {
         <Route path="/Rooms" element={<RoomList></RoomList>} />
         <Route path="/addHorse" element={<AddHorse></AddHorse>} />
         <Route path="/addStable" element={<Stable></Stable>} />
-        <Route path="/test" element={<AllNotifications></AllNotifications>} />
+        <Route path="/notifications" element={<AllNotifications></AllNotifications>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />

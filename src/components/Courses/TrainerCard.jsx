@@ -30,8 +30,7 @@ function Trainercard() {
 let trainers=[]
 ddata.forEach((e,i)=>{
   trainers.push(
-  <div key={ddata[i].id} class="carda" style={{backgroundImage:ddata[i].profile_picture?'url(http://localhost:8000/storage/'+ddata[i].profile_picture+')': 'url(http://localhost:8000/storage/bpp.webp)',backgroundRepeat: 'no-repeat',backgroundSize:'contain'}}>
-
+    <div key={ddata[i].id} class="carda" style={{backgroundImage:ddata[i].profile_picture?`url(http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/`+ddata[i].profile_picture+')': `url(http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/bpp.webp)`,backgroundRepeat: 'no-repeat',backgroundSize:'contain'}}>
   <div class="content1">
   <h2 class="title">{ddata[i].name+'('+ddata[i].email+')'}</h2>
 

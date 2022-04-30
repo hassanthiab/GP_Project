@@ -82,6 +82,12 @@ let Login = () => {
               } else {
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("type", response.data.type);
+                axios()
+                .get("api/"+response.data.type+"user")
+                .then((response) => {
+                  localStorage.setItem("pf",response.data.profile_picture)
+                })
+                .catch((error) => {});
                 if (URL) {
                   axios()
                     .get(URL)

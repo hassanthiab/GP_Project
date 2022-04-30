@@ -14,7 +14,7 @@ const Cardview = ({ items }) => {
 
         <div class="info_section">
           <div class="tournament_header">
-            <img class="locandina" src={`http://localhost:8000/storage/${items.image?items.image:'bpp.webp'}`} />
+          <img class="locandina" src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${items.image?items.image:'bpp.webp'}`} />
             <h1>{items.name}</h1>
             <h4>{dayjs(items.date).format("DD MMMM YYYY")}</h4>
             <p class="type">
@@ -37,7 +37,7 @@ const Cardview = ({ items }) => {
           </div>
         </div>
         <div
-          style={{ backgroundImage: `url(http://localhost:8000/storage/${items.image?items.image:''})` }}
+          style={{ backgroundImage: `url(http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${items.image?items.image:''})` }}
           class="blur_back"
         ></div>
       </div>

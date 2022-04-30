@@ -57,9 +57,9 @@ export default function UserList() {
         return (
         
           <div className="userListUser">
-            <img className="userListImg" src={`http://localhost:8000/storage/${params.row.profile_picture?params.row.profile_picture:'bpp.webp'}`} alt="" />
-            {params.row.username}
-          </div>
+          <img className="userListImg" src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${params.row.profile_picture?params.row.profile_picture:'bpp.webp'}`} alt="" />
+          {params.row.username}
+        </div>
         );
       },
     },
@@ -89,7 +89,7 @@ export default function UserList() {
   return (
     <div>
       <Navbar></Navbar>
- <div  classname="divcont container" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)",  marginLeft: "25%", height: 400, width: '65%' }}>
+ <div  classname="divcont container" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)",  marginLeft: "10%", height: 400, width: '80%' }}>
  <div className='row'>
         <div className='col-8'>
 
