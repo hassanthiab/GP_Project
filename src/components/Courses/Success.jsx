@@ -32,7 +32,10 @@ const Success=()=>{
   
 
   return( 
+    <React.Fragment>
+    <NavTop page='Courses'/>
      <h1>Thank you!</h1>
+     </React.Fragment>
      )
 
 

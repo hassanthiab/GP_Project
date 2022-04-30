@@ -77,7 +77,7 @@ function NewTournament() {
         for(let i=0;i<c.length;i++)
         a.push(c[i].category+"")
         setCat(a);
-        setImage(response.data['image']?`http://localhost:8000/storage/${response.data['image']}`:"")
+        setImage(response.data['image']?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${response.data['image']}`:`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/bpp.webp`)
         setInput(stateInput);
        
 

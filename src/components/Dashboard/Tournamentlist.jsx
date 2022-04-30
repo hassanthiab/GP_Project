@@ -57,9 +57,9 @@ function Tournamentlist() {
           console.log(params.row)
           return (
             <div className="productListItem">
-              <img className="productListImg" src={`http://localhost:8000/storage/${params.row.image?params.row.image:'bpp.webp'}`} alt="" />
-              {params.row.name}
-            </div>
+            <img className="productListImg" src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${params.row.image?params.row.image:'bpp.webp'}`} alt="" />
+            {params.row.name}
+          </div>
           );
         },
       },
@@ -103,7 +103,7 @@ function Tournamentlist() {
 
         <Navbar></Navbar>
  
-      <div classname="divcont container" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)", marginLeft: "25%", height: 400, width: '65%' }}>
+      <div classname="divcont container" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)", marginLeft: "10%", height: 400, width: '80%' }}>
       <div className='row'>
         <div className='col-8'>
 

@@ -73,7 +73,7 @@ let ProfileSettings = () => {
         stateInput["phone"] = response.data["phone"];
         response.data["two_factor_secret"] ? setTwoFA(true) : setTwoFA(false);
      
-        setImage(response.data['profile_picture']?`http://localhost:8000/storage/${response.data['profile_picture']}`:"http://localhost:8000/storage/bpp.webp");
+        setImage(response.data['profile_picture']?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${response.data['profile_picture']}`:`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/bpp.webp`);
         setInput(stateInput);
       })
       .catch((error) => {});
