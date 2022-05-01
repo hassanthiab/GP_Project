@@ -70,19 +70,16 @@ let Signup = (props) => {
           if (props.role != "trainer") {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("type", "");
-            setTrainerAdded(false)
+        
           }
           else{
-            setTrainerAdded(true)
+            var myToastEl = document.getElementById('myToastEl1')
+            var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+            var myToastEl = document.getElementById('toast-body')
+            myToastEl.innerHTML="New trainer has been added";
+            myToast.show()
           }
-          setInput({
-            name: "",
-            email: "",
-            username: "",
-            phone: "",
-            password: "",
-            password_confirmation: "",
-          });
+    
 
           setErrors({
             name: "",
@@ -141,31 +138,7 @@ let Signup = (props) => {
               <div className="col-md-4"></div>
             </div>
 
-            <div className="row">
-              <div className="col-md-4"></div>
-
-
-
-              <div class="col-md-4"> {trainerAdded ? ( <div class="alert alert-success"  role="alert" >
-            
-                  <label style={{ fontWeight: "bold" }}>
-                    new trainer has been added
-                  </label>
-                
-              
-              </div>
-            ) : (
-              ""
-            )}
-
-            
-          </div>
-                
-              <div className="col-md-4"></div>
-          
-          
-          
-            </div>
+     
 
             <InputText>
               <div className="row">

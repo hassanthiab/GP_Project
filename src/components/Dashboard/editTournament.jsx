@@ -107,7 +107,11 @@ function NewTournament() {
     .post("/api/editTournaments/"+id,formData)
     .then((response) => {
       if(response.status==200){
-        setEdited(true)
+        var myToastEl = document.getElementById('myToastEl1')
+        var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+        var myToastEl = document.getElementById('toast-body')
+        myToastEl.innerHTML="the Tournament has been updated";
+        myToast.show()
         setErrors({
           name:"",
           club:"",
@@ -125,7 +129,7 @@ function NewTournament() {
       
     })
     .catch((error) => {
-      setEdited(false)
+
       if (!error.response) return;
       let Reserrors = error.response.data.errors;
 
@@ -205,31 +209,7 @@ guicat.forEach((e,index)=>{
         <div class="col-2" />
         <div class="col-12">
         <h1 className="newUserTitle">Edit Tournament</h1>
-        <div className="row">
-              <div className="col-md-4"></div>
-
-
-
-              <div class="col-md-4"> {edited ? ( <div class="alert alert-success"  role="alert" >
-            
-                  <label style={{ fontWeight: "bold" }}>
-                  Tournament has been Updated
-                  </label>
-                
-              
-              </div>
-            ) : (
-              ""
-            )}
-
-            
-          </div>
-                
-              <div className="col-md-4"></div>
-          
-          
-          
-            </div>
+  
     <form className="newUserForm">
       <div className="newUserItem">
         <label>Tournament Name</label>

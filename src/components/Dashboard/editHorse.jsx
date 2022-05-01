@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import NavBar from './Sidebar'
 import axios from "../axios/axios";
+import {useParams,useNavigate} from "react-router-dom";
 
 function AddHorse() {
+  let { id } = useParams();
   const [input, setInput] = useState({
     horseName:"",
     ownerEmail:"",
@@ -22,9 +24,34 @@ function AddHorse() {
   });
   
 let a=localStorage.getItem('type')
+const navigate = useNavigate();
+useEffect(() => {
+  if (!localStorage.getItem("token")) {
+    navigate("/Login");
+  }
+
+  axios()
+    .get("/api/"+a+"horses/"+id)
+    .then((response) => {
+     
+      let stateInput = { ...input };
+      stateInput["horseName"] = response.data["name"];
+      stateInput["ownerEmail"] = response.data.owner["email"];
+      stateInput["birthday"] = response.data["birthday"];
+      stateInput["gender"] = response.data["gender"];
+      stateInput["roomId"] = response.data["roomId"];
+setInput(stateInput)
+     
+
+
+    })
+    .catch((error) => {});
+    
+
+}, []);
   let addhorse=()=>{
     axios()
-    .post("/api/"+a+"addHorse",{
+    .put("/api/"+a+"Horses/"+id,{
       email:input.ownerEmail,
       name:input.horseName,
       birthday:input.birthday,
@@ -35,7 +62,7 @@ let a=localStorage.getItem('type')
       var myToastEl = document.getElementById('myToastEl1')
       var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
       var myToastEl = document.getElementById('toast-body')
-      myToastEl.innerHTML="new horse has been added";
+      myToastEl.innerHTML="the horse has been modified";
       myToast.show()
       setErrors({
         name:"",
@@ -88,14 +115,14 @@ let a=localStorage.getItem('type')
         <div class="col-12 col-lg-9 col-xl-7">
           <div class="card">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2">Add Horse</h3>
+              <h3 class="mb-4 pb-2">modify Horse</h3>
               <form action="">
 
                 <div class="row">
                   <div class="col-md-6 mb-4">
 
                     <div class="form-outline">
-                      <input onChange={(event) => changed(event,"horseName")} type="text" id="firstName" class="form-control" />
+                      <input value={input['horseName']} onChange={(event) => changed(event,"horseName")} type="text" id="firstName" class="form-control active"  />
                       <label class="form-label" for="firstName">Horse Name</label>
                       <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["name"]}
@@ -106,7 +133,7 @@ let a=localStorage.getItem('type')
                   <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                      <input onChange={(event) => changed(event,"ownerEmail")} type="email" id="emailAddress" class="form-control" />
+                      <input value={input['ownerEmail']} onChange={(event) => changed(event,"ownerEmail")} type="email" id="emailAddress" class="form-control active" />
                       <label class="form-label" for="emailAddress">Owner Email</label>
                       <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["email"]}
@@ -122,9 +149,10 @@ let a=localStorage.getItem('type')
 
                     <div class="form-outline datepicker">
                       <input
+                      value={input['birthday']}
                         onChange={(event) => changed(event,"birthday")} 
                         type="date"
-                        class="form-control"
+                        class="form-control active"
                         id="birthdayDate"
                       />
                       <label for="birthdayDate" class="form-label">Birthday</label>
@@ -145,7 +173,8 @@ let a=localStorage.getItem('type')
                         type="radio"
                         name="inlineRadioOptions"
                         id="femaleGender"
-                        value="Female"
+                        value="female"
+                        checked={input['gender']=="female"?true:false}
                       />
                       <label class="form-check-label" for="femaleGender">Female</label>
                     </div>
@@ -157,7 +186,8 @@ let a=localStorage.getItem('type')
                         type="radio"
                         name="inlineRadioOptions"
                         id="maleGender"
-                        value="Male"
+                        value="male"
+                        checked={input['gender']=="male"?true:false}
                       />
                       <label class="form-check-label" for="maleGender">Male</label>
                     </div>
@@ -170,7 +200,7 @@ let a=localStorage.getItem('type')
                   <div class="col-md-6 mb-4">
 
                     <div class="form-outline">
-                      <input type={'text'}  onChange={(event) => changed(event,"roomId")}  id="room" class="form-control" />
+                      <input value={input['roomId']} type={'text'}  onChange={(event) => changed(event,"roomId")}  id="room" class="form-control active" />
                       <label class="form-label" for="room">Room ID</label>
                       <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["roomId"]}

@@ -11,6 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import axios from "../axios/axios";
+import { productRows } from "../Dashboard/dummy-data";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -19,7 +20,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function AllNotifications() {
     const [open, setOpen] = useState(false);
     const [notification, setNotification] = useState();
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(productRows);
     const a = localStorage.getItem("type");
     useEffect(() => {
       axios()

@@ -36,8 +36,8 @@ import TrainerCard from "./components/Courses/TrainerCard";
 import Trainers from "./components/Courses/Trainers";
 import CoursesGrid from "./components/Courses/Courses";
 import AddHorse from "./components/Dashboard/AddHorse";
-import RoomList from "./components/Dashboard/Roomslist";
-import Stable from "./components/Dashboard/Stable";
+import EditHorse from './components/Dashboard/editHorse'
+import HorseList from "./components/Dashboard/Horseslist";
 import AllNotifications from "./components/Notification/AllNotifications";
 function App() {
   return (
@@ -59,9 +59,11 @@ function App() {
         <Route path="/Courses" element={<Courses/>} />
         <Route path="/Courses/:id" element={<CoursesGrid></CoursesGrid>} />
         <Route path="/return/:id" element={<Success/>} />
-        <Route path="/Rooms" element={<RoomList></RoomList>} />
+        <Route path="/Horses" element={<HorseList></HorseList>} />
         <Route path="/addHorse" element={<AddHorse></AddHorse>} />
-        <Route path="/addStable" element={<Stable></Stable>} />
+        <Route path="/Horse/:id" element={<EditHorse></EditHorse>} />
+
+=
         <Route path="/notifications" element={<AllNotifications></AllNotifications>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
