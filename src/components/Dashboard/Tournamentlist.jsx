@@ -87,6 +87,9 @@ function Tournamentlist() {
               <Link to={"/Tournament/" + params.row.id}>
                 <button className="productListEdit">Edit</button>
               </Link>
+              <Link to={"/Attendants"}>
+                <button className="productListEdit">Ranks</button>
+              </Link>
               <DeleteOutline
                 className="productListDelete"
                 onClick={() => handleDelete(params.row.id)}
