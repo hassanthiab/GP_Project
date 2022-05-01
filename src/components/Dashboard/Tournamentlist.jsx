@@ -54,7 +54,6 @@ function Tournamentlist() {
         headerName: "name",
         width: 200,
         renderCell: (params) => {
-          console.log(params.row)
           return (
             <div className="productListItem">
             <img className="productListImg" src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${params.row.image?params.row.image:'bpp.webp'}`} alt="" />

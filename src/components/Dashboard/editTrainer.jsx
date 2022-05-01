@@ -91,7 +91,11 @@ let Signup = (props) => {
       })
       .then((response) => {
         if (response.status == 200) {
-        setTrainerEdited(true)
+          var myToastEl = document.getElementById('myToastEl1')
+          var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+          var myToastEl = document.getElementById('toast-body')
+          myToastEl.innerHTML="the Trainer has been updated";
+          myToast.show()
      
           setErrors({
             name: "",
@@ -104,7 +108,7 @@ let Signup = (props) => {
         }
       })
       .catch((error) => {
-        setTrainerEdited(false)
+     
         if (!error.response) return;
         let Reserrors = error.response.data.errors;
 
@@ -152,31 +156,7 @@ let Signup = (props) => {
               <div className="col-md-4"></div>
             </div>
 
-            <div className="row">
-              <div className="col-md-4"></div>
-
-
-
-              <div class="col-md-4"> {trainerEdited ? ( <div class="alert alert-success"  role="alert" >
-            
-                  <label style={{ fontWeight: "bold" }}>
-                    trainer has been Updated
-                  </label>
-                
-              
-              </div>
-            ) : (
-              ""
-            )}
-
-            
-          </div>
-                
-              <div className="col-md-4"></div>
-          
-          
-          
-            </div>
+       
 
             <InputText>
               <div className="row">

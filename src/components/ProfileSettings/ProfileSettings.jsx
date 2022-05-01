@@ -26,11 +26,7 @@ const Buttons = styled.div`
 
 let ProfileSettings = () => {
   const a = localStorage.getItem("type");
-  
-  console.log(a);
-  const [successPass, setSuccessPass] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [successPic, setSuccessPic] = useState(false);
+
   const [twoFA, setTwoFA] = useState(false);
   const [input, setInput] = useState({
     name: "",
@@ -94,9 +90,12 @@ let ProfileSettings = () => {
       })
       .then((response) => {
         if (response.status == 200) {
-          setSuccessPic(false)
-          setSuccessPass(false);
-          setSuccess(true);
+
+          var myToastEl = document.getElementById('myToastEl1')
+          var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+          var myToastEl = document.getElementById('toast-body')
+          myToastEl.innerHTML="the profile has been modified";
+          myToast.show()
           setErrors({
             name: "",
             email: "",
@@ -110,9 +109,7 @@ let ProfileSettings = () => {
         }
       })
       .catch((error) => {
-        setSuccessPic(false)
-        setSuccessPass(false);
-        setSuccess(false);
+
         if (!error.response) return;
         let Reserrors = error.response.data.errors;
 
@@ -139,9 +136,11 @@ let ProfileSettings = () => {
       })
       .then((response) => {
         if (response.status == 200) {
-          setSuccessPic(false)
-          setSuccess(false);
-          setSuccessPass(true);
+          var myToastEl = document.getElementById('myToastEl1')
+          var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+          var myToastEl = document.getElementById('toast-body')
+          myToastEl.innerHTML="the Password has been changed";
+          myToast.show()
           console.log("pass");
 
           setErrors({
@@ -157,9 +156,7 @@ let ProfileSettings = () => {
         }
       })
       .catch((error) => {
-        setSuccessPic(false)
-        setSuccess(false);
-        setSuccessPass(false);
+
         if (!error.response) return;
         let Reserrors = error.response.data.errors;
 
@@ -184,9 +181,11 @@ let ProfileSettings = () => {
     .post("/api/" + a + "profilePic", formData)
     .then((response) => {
       if (response.status == 200) {
-        setSuccessPic(true)
-        setSuccess(false);
-        setSuccessPass(false);
+        var myToastEl = document.getElementById('myToastEl1')
+        var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+        var myToastEl = document.getElementById('toast-body')
+        myToastEl.innerHTML="the profile picture has been changed";
+        myToast.show()
         setErrors({
           name: "",
           email: "",
@@ -200,9 +199,6 @@ let ProfileSettings = () => {
       }
     })
     .catch((error) => {
-      setSuccessPic(false)
-      setSuccess(false);
-      setSuccessPass(false);
       if (!error.response) return;
       let Reserrors = error.response.data.errors;
 
@@ -288,18 +284,14 @@ let ProfileSettings = () => {
             <div class="col-md-4">
               {errors["username"] ||
               errors["email"] ||
-              errors["image"]||
-              success ||
-              successPass||
-              successPic ? (
+              errors["image"] ? (
                 <div
                   class={
-                    success || successPass||successPic
-                      ? "alert alert-success"
-                      : "alert alert-danger"
+ "alert alert-danger"
                   }
                   role="alert"
-                >  <label style={{ color: "#960000", fontWeight: "bold" }}>
+                > 
+                 <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["image"][0]}
                   </label>
                   <label style={{ color: "#960000", fontWeight: "bold" }}>
@@ -308,31 +300,9 @@ let ProfileSettings = () => {
                   <label style={{ color: "#960000", fontWeight: "bold" }}>
                     {errors["email"][0]}
                   </label>
-                  {success ? (
-                    <label style={{ fontWeight: "bold" }}>
-                      Your Profile has been changed
-                    </label>
-                  ) : (
-                    ""
-                  )}
-                  {successPass ? (
-                    <label style={{ fontWeight: "bold" }}>
-                      Your Password has been changed
-                    </label>
-                  ) : (
-                    ""
-                  )
-                  
-                  }
-                  {successPic ? (
-                    <label style={{ fontWeight: "bold" }}>
-                      Your Picture has been changed
-                    </label>
-                  ) : (
-                    ""
-                  )
-                  
-                  }
+            
+               
+              
                 </div>
               ) : (
                 ""

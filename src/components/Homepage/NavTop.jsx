@@ -322,7 +322,15 @@ return(
         <li>
         <Link to="/Profile" class="dropdown-item user-select-none">My profile</Link>
         </li>
-    
+        <li>
+        <Link to="/Profile" class="dropdown-item user-select-none">My Horsese</Link>
+        </li>
+        <li>
+        <Link to="/Profile" class="dropdown-item user-select-none">My Tournaments</Link>
+        </li>
+        <li>
+        <Link to="/Profile" class="dropdown-item user-select-none">My Sessions</Link>
+        </li>
         <li>
         <Link to="/" class="dropdown-item user-select-none"  onClick={logoutReq}>Logout</Link>
         </li>
