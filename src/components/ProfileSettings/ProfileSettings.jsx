@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
 import NavTop from "../Homepage/NavTop";
 import Sidebar from "../Dashboard/Sidebar";
+import { FcFolder,FcOpenedFolder } from "react-icons/fc";
 const Input = styled("input")({
   display: "none",
 });
@@ -252,6 +253,7 @@ let ProfileSettings = () => {
                 <img src={profileimage} alt="" id="img" className="img" />
               </div>
               <div class="row">
+            
                 <div class="col-md-12">
                   <label
                     style={{ marginTop: 12, marginLeft: "40%" }}
@@ -264,11 +266,13 @@ let ProfileSettings = () => {
                       type="file"
                       onChange={imageHandler}
                     />
-                    <Button variant="contained" component="span">
-                      Upload
-                    </Button>
+                   
+                     {/*  Upload */}
+                     choose file <FcOpenedFolder style={{fontSize:'30px',justifyContent:'center'}}/>
+                  
                   </label>
                 </div>
+              
               </div>
               <div class="row">
                 <div class="col-md-12" style={{ marginTop: 12, marginLeft: "37%" }} >

@@ -1,8 +1,9 @@
-import  * as React from 'react';
+import React, { useState ,useEffect}from 'react'
+import { Link,useNavigate,useParams } from "react-router-dom";
+
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { productRows } from "../Dashboard/dummy-data.js"
-import { useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,10 +12,47 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import NavTop from "../Homepage/NavTop";
+import axios from "../axios/axios";
 export default function ProductList() {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
-    const handleClickOpen = () => {
+
+    useEffect(() => {
+      if (!localStorage.getItem("token")) {
+        navigate("/Login");
+      }
+  
+      axios()
+        .get("/api/trainer/getRCourses")
+        .then((response) => {
+          setData(response.data)
+  
+        })
+        .catch((error) => {
+          if(!error.response)
+          return
+        });
+        
+    }, []);
+
+    const handleClickOpen = (id) => {
+      axios()
+      .get("/api/user/"+id)
+      .then((response) => {
+        var email = document.getElementById('email11')
+        email.value=response.data.email+""
+        var username = document.getElementById('Username11')
+        username.value=response.data.username+""
+        var phone = document.getElementById('phone11')
+        phone.value=response.data.phone+""
+     
+      })
+      .catch((error) => {
+        if(!error.response)
+        return
+      });
+      
       setOpen(true);
     };
   
@@ -30,27 +68,26 @@ export default function ProductList() {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "product",
-      headerName: "Product",
+      field: "",
+      headerName: "User",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.name}
+            <img className="productListImg" src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${params.row.user?params.row.user.profile_picture?params.row.user.profile_picture:'bpp.webp':""}`} alt="" />
+            {params.row.user?params.row.user.name:""}
           </div>
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
+      field: "startDate",
+      headerName: "start date",
+      width: 160,
     },
     {
-      field: "price",
-      headerName: "Price",
+      field: "endDate",
+      headerName: "end date",
       width: 160,
     },
     {
@@ -60,12 +97,8 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-              <Button variant="outlined"  onClick={handleClickOpen}>Profile</Button>
-          
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
+              <Button variant="outlined"  onClick={()=>handleClickOpen(params.row.user?params.row.user.id:"")}>Profile</Button>
+        
           </>
         );
       },
@@ -81,12 +114,11 @@ export default function ProductList() {
         <TextField
             autoFocus
             margin="dense"
-            id="email"
+            id="email11"
             label="Email"
             type="email"
             fullWidth
             variant="standard"
-            defaultValue="aaa@gmail.com"
             InputProps={{
                 readOnly: true,
               }}
@@ -94,12 +126,11 @@ export default function ProductList() {
                 <TextField
             autoFocus
             margin="dense"
-            id="Username"
+            id="Username11"
             label="Username"
             type="text"
             fullWidth
             variant="standard"
-            defaultValue="Hello World"
             InputProps={{
                 readOnly: true,
               }}
@@ -107,12 +138,11 @@ export default function ProductList() {
           <TextField
             autoFocus
             margin="dense"
-            id="phone"
+            id="phone11"
             label="Phone"
-            type="number"
+            type="text"
             fullWidth
             variant="standard"
-            defaultValue="12121"
             InputProps={{
                 readOnly: true,
               }}

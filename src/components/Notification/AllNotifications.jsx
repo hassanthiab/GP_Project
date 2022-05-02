@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import axios from "../axios/axios";
 import { productRows } from "../Dashboard/dummy-data";
+import {IoMailUnread,IoMailOpenOutline } from "react-icons/io5";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -20,7 +21,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function AllNotifications() {
     const [open, setOpen] = useState(false);
     const [notification, setNotification] = useState();
-    const [data, setData] = useState(productRows);
+    const [data, setData] = useState([]);
     const a = localStorage.getItem("type");
     useEffect(() => {
       axios()
@@ -89,7 +90,7 @@ function AllNotifications() {
         renderCell: (params) => {
           return (
             <div style={{margin:'auto'}} className="productListItem">
-              {params.row.read_at?'':<strong style={{fontSize:'17px',color:'red'}}>*</strong>}
+              {<strong style={{fontSize:'20px'}}>{params.row.read_at?(<IoMailOpenOutline/>):(<IoMailUnread/>)}</strong>}
             </div>
           );
         },
@@ -129,17 +130,17 @@ function AllNotifications() {
         renderCell: (params) => {
           let Mindiff=(Math.abs(new Date(params.row.created_at)-Date.now())/1000/60).toFixed()
           let s=" Mins"
-         if(Mindiff>24)
+         if(Mindiff>=24)
        {
         Mindiff = (Mindiff/60).toFixed()
-        s="hrs"
-        if(Mindiff>24)
+        s=" hrs"
+        if(Mindiff>=24)
     {
-      Mindiff = (Mindiff/60).toFixed()
-      s="days"
-      if(Mindiff>30){
+      Mindiff = (Mindiff/24).toFixed()
+      s=" days"
+      if(Mindiff>=30){
         Mindiff = (Mindiff/30).toFixed()
-        s="months"
+        s=" months"
       }
     }
        
@@ -147,7 +148,7 @@ function AllNotifications() {
 
           return (
             <div className="productListItem">
-              {Mindiff<1?"just now":Mindiff+" "+s}
+              {Mindiff<1&&s==" Mins"?"just now":Mindiff+" "+s}
             </div>
     
 

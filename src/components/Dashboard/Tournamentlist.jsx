@@ -80,14 +80,14 @@ function Tournamentlist() {
       {
         field: "action",
         headerName: "Action",
-        width: 150,
+        width: 180,
         renderCell: (params) => {
           return (
             <React.Fragment>
               <Link to={"/Tournament/" + params.row.id}>
                 <button className="productListEdit">Edit</button>
               </Link>
-              <Link to={"/Attendants"}>
+              <Link to={"/Tournaments/" + params.row.id}>
                 <button className="productListEdit">Ranks</button>
               </Link>
               <DeleteOutline

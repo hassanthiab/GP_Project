@@ -37,7 +37,7 @@ import AddHorse from "./components/Dashboard/AddHorse";
 import EditHorse from './components/Dashboard/editHorse'
 import HorseList from "./components/Dashboard/Horseslist";
 import AllNotifications from "./components/Notification/AllNotifications";
-import ProductList from "./components/Courses/CourseUser";
+import RCourses from "./components/Courses/CourseUser";
 import Attendants from "./components/Dashboard/TournamentAttendants";
 function App() {
   return (
@@ -62,8 +62,8 @@ function App() {
         <Route path="/Horses" element={<HorseList></HorseList>} />
         <Route path="/addHorse" element={<AddHorse></AddHorse>} />
         <Route path="/Horse/:id" element={<EditHorse></EditHorse>} />
-        <Route path="/test" element={<ProductList></ProductList>} />
-        <Route path="/Attendants" element={<Attendants></Attendants>} />
+        <Route path="/RCourses" element={<RCourses/>} />
+        <Route path="/Tournaments/:id" element={<Attendants></Attendants>} />
         <Route path="/notifications" element={<AllNotifications></AllNotifications>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
