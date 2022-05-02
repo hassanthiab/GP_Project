@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect }  from 'react'
+import React ,{ useState, useEffect,useLayoutEffect }  from 'react'
 import {Link} from 'react-router-dom'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,6 +10,7 @@ import { Fragment } from 'react/cjs/react.production.min';
 import axios from "../axios/axios";
 import logo from "./logo.png"
 import "./Top.css"
+import { IoChatbox,IoMailUnread,IoMailOpenOutline } from "react-icons/io5";
 export default function NavTop(props){
  const [notifications, setNotifications] = useState();
  const [count, setCount] = useState();
@@ -19,7 +20,27 @@ export default function NavTop(props){
  const [open, setOpen] = useState(false);
 
     const a = localStorage.getItem("type");
-
+    let pusher
+  let diffTime=(date)=>{
+    let Mindiff=(Math.abs(new Date(date)-Date.now())/1000/60).toFixed()
+    let s=" Mins"
+   if(Mindiff>=24)
+ {
+  Mindiff = (Mindiff/60).toFixed()
+  s=" hrs"
+  if(Mindiff>=24)
+{
+Mindiff = (Mindiff/24).toFixed()
+s=" days"
+if(Mindiff>=30){
+  Mindiff = (Mindiff/30).toFixed()
+  s=" months"
+}
+}
+ 
+}
+return Mindiff<1&&s==" Mins"?"just now":Mindiff+" "+s;
+}
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios()
@@ -27,22 +48,16 @@ export default function NavTop(props){
       .then((response) => {
         setPf(response.data.profile_picture)
       // Enable pusher logging - don't include this in production
-     
-
-  Pusher.logToConsole = true;
+      Pusher.logToConsole = true;
   
-  var pusher = new Pusher('e698a4bb48003226df99',
-  {
-    cluster: 'ap2'
-  },
- 
+      pusher = new Pusher('e698a4bb48003226df99',
+      {
+       cluster: 'ap2'
+      });
 
+
+  let channel = pusher.subscribe('my-channel.'+response.data.username);
  
-  );
-  //pusher.signin()
-  pusher.unsubscribe('my-channel.'+response.data.username);
-  var channel = pusher.subscribe('my-channel.'+response.data.username);
-  
   channel.bind('my-event', function(data) {
     var myToastEl = document.getElementById('myToastEl')
     var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
@@ -97,20 +112,28 @@ export default function NavTop(props){
         if(!error.response) return
       });
     }
-
+    return () => {
+      if(pusher)
+      pusher.disconnect();
+    };
   }, []);
 
-  
   let logoutReq = () => {
+
     if (localStorage.getItem("token")) {
+
       axios(localStorage.getItem("token"))
         .delete("/api/loagout")
-        .then()
+        .then((res)=>
+        {    
+          pusher.disconnect();
+        
+        }  
+        )
         .catch((error) => {
           if (!error.response) return;
         });
-      localStorage.clear();
-      window.history('/')
+        localStorage.clear();
     }
   };
   const handleClickOpen = (id) => {
@@ -201,7 +224,12 @@ return(
       <a class="nav-link user-select-none">Courses</a>
     </li>
     </Link>
-    :""
+    :localStorage.getItem("type")=="trainer/"?  
+     <Link to="/RCourses">
+    <li class={props.page=="Courses"?"nav-item active":"nav-item"}>
+      <a class="nav-link user-select-none">Registered Courses</a>
+    </li>
+    </Link>:""
     :""}
     
 
@@ -212,14 +240,6 @@ return(
     </li>
     </Link>:""}
    
-
-
-  
-    <Link to="/Chat">
-    <li class={props.page=="Chat"?"nav-item active":"nav-item"}>
-      <a class="nav-link user-select-none">Chat</a>
-    </li>
-    </Link>
 
     <Link to="/Feed">
     <li class={props.page=="Feed"?"nav-item active":"nav-item"}>
@@ -234,13 +254,14 @@ return(
 
   <div class="d-flex align-items-center">
   {!localStorage.getItem("token")?
-  <Link to="/Login">
+  <Link  to="/Login">
   <button type="button" class="btn btn-link px-3 me-2">
         Login
       </button>
   </Link>:""}
 
   {!localStorage.getItem("token")?
+  
   <Link to="/Signup">
   <button type="button" class="btn btn-link px-3 me-2">
   Signup
@@ -249,10 +270,11 @@ return(
 
 
   {localStorage.getItem("token")?
-    <a class="text-reset me-3  " href="#">
-      <i class="fas fa-shopping-cart"></i>
-    </a>:""}
-
+  <Link style={{color:'#4e4e4e',marginRight:'7px'}} to={'/Chat'}>
+  <IoChatbox />
+  <span class="badge rounded-pill badge-notification bg-danger ">1</span>
+</Link>:""}
+ 
     {localStorage.getItem("token")?
     <div class="dropdown">
       <a
@@ -273,19 +295,35 @@ return(
          {notifications?
           notifications[0]?
         <li>
-          <strong onClick={()=>handleClickOpen(notifications[0].id)} class="dropdown-item user-select-none" ><strong style={{fontSize:'10px',color:'red'}}>{readAt[0]?(''):('* ')}</strong>{notifications[0].data.title}</strong>
+          <strong onClick={()=>handleClickOpen(notifications[0].id)} class="dropdown-item user-select-none" ><strong style={{fontSize:'15px',marginRight:'2px'}}>{readAt[0]?(<IoMailOpenOutline/>):(<IoMailUnread/>)}</strong>{notifications[0].data.title}
+          <br></br>
+          <small>{diffTime(notifications[0].created_at)}</small>          <br></br>
+          <small>ـــــــــــــــــــــــــــــــــــــــــــــ</small></strong>
+          
+        
         </li>
         :"":""}
         {notifications?
           notifications[1]?
         <li>
-          <strong onClick={()=>handleClickOpen(notifications[1].id)} class="dropdown-item user-select-none"><strong style={{fontSize:'10px',color:'red'}}>{readAt[1]?(''):('* ')}</strong>{notifications[1].data.title}</strong>
+          <strong onClick={()=>handleClickOpen(notifications[1].id)} class="dropdown-item user-select-none"><strong style={{fontSize:'15px',marginRight:'2px'}}>{readAt[1]?(<IoMailOpenOutline/>):(<IoMailUnread/>)}</strong>{notifications[1].data.title}
+                  <br></br>
+                  <small>{diffTime(notifications[1].created_at)}</small>
+          <br></br>
+          <small>ـــــــــــــــــــــــــــــــــــــــــــــ</small>
+          </strong>
+      
         </li>
         :"":""}
         {notifications?
           notifications[2]?
         <li>
-        <strong onClick={()=>handleClickOpen(notifications[2].id)} class="dropdown-item user-select-none"><strong style={{fontSize:'10px',color:'red'}}>{readAt[2]?(''):('* ')}</strong>{notifications[2].data.title}</strong>
+        <strong onClick={()=>handleClickOpen(notifications[2].id)} class="dropdown-item user-select-none"><strong style={{fontSize:'15px',marginRight:'2px'}}>{readAt[2]?(<IoMailOpenOutline/>):(<IoMailUnread/>)}</strong>{notifications[2].data.title}
+        <br></br>
+        <small>{diffTime(notifications[2].created_at)}</small>
+          <br></br>
+          <small>ـــــــــــــــــــــــــــــــــــــــــــــ</small></strong>
+      
         </li>
         :"":""}
        
@@ -323,14 +361,23 @@ return(
         <Link to="/Profile" class="dropdown-item user-select-none">My profile</Link>
         </li>
         <li>
-        <Link to="/Profile" class="dropdown-item user-select-none">My Horsese</Link>
+        <Link to="/Profile" class="dropdown-item user-select-none">My Horses</Link>
         </li>
-        <li>
+        {localStorage.getItem('type')==''?
+         <li>
         <Link to="/Profile" class="dropdown-item user-select-none">My Tournaments</Link>
-        </li>
+        </li>:""}
+       
+   
         <li>
-        <Link to="/Profile" class="dropdown-item user-select-none">My Sessions</Link>
+        <Link to="/Profile" class="dropdown-item user-select-none">
+        {localStorage.getItem('type')==''?'My Sessions':
+        localStorage.getItem('type')=='trainer/'?'My Courses':''
+        }
+  
+        </Link>
         </li>
+
         <li>
         <Link to="/" class="dropdown-item user-select-none"  onClick={logoutReq}>Logout</Link>
         </li>
