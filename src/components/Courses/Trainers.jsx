@@ -1,12 +1,14 @@
 import React from 'react'
 import NavTop from '../Homepage/NavTop'
 import TrainerCard from './TrainerCard'
-
+import NavBar from '../Dashboard/Sidebar'
 
 function Trainers() {
   return (
     <React.Fragment>
-              <NavTop page='Courses'/>
+    {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop page='Courses'/>}
+
+         
 
       <TrainerCard/> 
           

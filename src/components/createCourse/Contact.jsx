@@ -2,11 +2,16 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import NavTop from "../Homepage/NavTop";
+
 import "../Login/LoginStyle.css"
+
 export const Contact = ({ formData, setForm, navigation }) => {
   const { phone, email } = formData;
 
   return (
+    <React.Fragment>
+    <NavTop/>
     <Container className="Login" maxWidth="xs">
       <h3>Contact</h3>
       <TextField
@@ -47,5 +52,6 @@ export const Contact = ({ formData, setForm, navigation }) => {
         </Button>
       </div>
     </Container>
+    </React.Fragment>
   );
 };

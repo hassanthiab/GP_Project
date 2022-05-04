@@ -2,11 +2,15 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import NavTop from "../Homepage/NavTop";
+
 import "../Login/LoginStyle.css"
 export const Names = ({ formData, setForm, navigation }) => {
   const { firstName, lastName, nickName } = formData;
 
   return (
+    <React.Fragment>
+    <NavTop/>
     <Container className="Login" maxWidth="xs">
       <h3>Names</h3>
       <TextField
@@ -29,16 +33,6 @@ export const Names = ({ formData, setForm, navigation }) => {
         autoComplete="off"
         fullWidth
       />
-      <TextField
-        label="Nick Name"
-        name="nickName"
-        value={nickName}
-        onChange={setForm}
-        margin="normal"
-        variant="outlined"
-        autoComplete="off"
-        fullWidth
-      />
       <Button
         variant="contained"
         fullWidth
@@ -49,5 +43,6 @@ export const Names = ({ formData, setForm, navigation }) => {
         Next
       </Button>
     </Container>
+    </React.Fragment>
   );
 };

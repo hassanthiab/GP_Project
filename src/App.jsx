@@ -36,6 +36,11 @@ import CoursesGrid from "./components/Courses/Courses";
 import AddHorse from "./components/Dashboard/AddHorse";
 import EditHorse from './components/Dashboard/editHorse'
 import HorseList from "./components/Dashboard/Horseslist";
+import UserHorseList from "./components/horses/Horseslist";
+
+import SessionList from "./components/sessions/Sessionslist";
+import Tournamentslist from "./components/Tournaments/Tournamentlist";
+
 import AllNotifications from "./components/Notification/AllNotifications";
 import RCourses from "./components/Courses/CourseUser";
 import Attendants from "./components/Dashboard/TournamentAttendants";
@@ -62,12 +67,17 @@ function App() {
         <Route path="/Horses" element={<HorseList></HorseList>} />
         <Route path="/addHorse" element={<AddHorse></AddHorse>} />
         <Route path="/Horse/:id" element={<EditHorse></EditHorse>} />
+        <Route path="/UserHorses" element={<UserHorseList/>} />
         <Route path="/RCourses" element={<RCourses/>} />
         <Route path="/Tournaments/:id" element={<Attendants></Attendants>} />
         <Route path="/notifications" element={<AllNotifications></AllNotifications>} />
         <Route path="/Schedule" element={<TrainerSchedule></TrainerSchedule>} />
         {/* <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} /> */}
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
+        <Route path="/UserSessions" element={<SessionList/>} />
+        <Route path="/UserTournaments" element={<Tournamentslist/>} />
+
+        <Route path="/RTournament/:id" element={<MultiStepForm/>} />
 
         <Route path="/addTournament" element={<NewTournament />} />
        <Route path="/Tournaments" element={<Tournamentlist></Tournamentlist>} />

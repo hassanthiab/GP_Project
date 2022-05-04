@@ -25,7 +25,7 @@ export default function Attendants() {
     const [userId, setUserId] = useState();
     const [error, setError] = useState();
     let { id } = useParams();
-    
+
     const navigate = useNavigate();
 
     useEffect(() => {

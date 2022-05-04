@@ -5,23 +5,20 @@ import { Address } from "./Address";
 import { Contact } from "./Contact";
 import { Review } from "./Review";
 import { Submit } from "./Submit";
-import Pagetop from "../Homepage/Pagetop";
+import NavTop from "../Homepage/NavTop";
 
 const defaultData = {
   firstName: "",
   lastName: "",
-  nickName: "",
-  address: "",
-  city: "",
-  state: "",
-  zip: "",
+  category: "",
   phone: "",
   email: "",
+
 };
 
 const steps = [
   { id: "names" },
-  { id: "address" },
+  { id: "category" },
   { id: "contact" },
   { id: "review" },
   { id: "submit" },
@@ -39,7 +36,7 @@ export const MultiStepForm = () => {
   switch (step.id) {
     case "names":
       return <Names  {...props} />;
-    case "address":
+    case "category":
       return <Address {...props} />;
     case "contact":
       return <Contact {...props} />;
@@ -51,7 +48,7 @@ export const MultiStepForm = () => {
 
   return (
     <div>
-   
+    <NavTop/>
       <h1>Multi step form</h1>
     </div>
   );
