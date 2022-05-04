@@ -4,9 +4,24 @@ import dayjs from "dayjs";
 import "./Cardview.css";
 import ShareIcon from "@mui/icons-material/Share";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Link,useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 // import background from "../../Images/LoginBackground.jpg";
+
+
+
 const Cardview = ({ items }) => {
+  const navigate = useNavigate();
+
+  const signUp=(id)=>{
+    if (!localStorage.getItem("token")) {
+      navigate("/Login");
+    }
+else{
+  navigate("/RTournament/"+id);
+
+}
+  }
   return (
     <React.Fragment>
     
@@ -26,12 +41,10 @@ const Cardview = ({ items }) => {
           </div>
           <div class="tournament_social">
             <ul>
-              <li>
-                <ShareIcon></ShareIcon>{" "}
-              </li>
+         
               <li>
                 {" "}
-                <Button varient="outline">Sign up</Button>{" "}
+                <Button onClick={()=>signUp(items.id)} varient="outline">Register</Button>{" "}
               </li>
             </ul>
           </div>

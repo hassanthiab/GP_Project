@@ -73,32 +73,7 @@ function Dashboard() {
 />
 
 <div className='container'> 
-<div className='row'>
 
-  <div className='col-1'>
-
-  </div>
-  <div className='col-10'>
-  <Link to="/addStable">
-        <button class="bn54">
-    <span class="bn54span">New Stable</span>
-  </button>
-        </Link>
- 
-
-</div>
-
-  <div className="productList" style={{boxShadow: "0px 0px 15px -10px rgba(0, 0, 0, 0.75)", marginLeft: "10%", height: 400, width: '95%' }}>
-
-      <DataGrid
-        rows={data}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-      />
-    </div>
-</div>
   <div className='row' style={{marginTop:"10px"}} >
     <div className='col-1'>
       

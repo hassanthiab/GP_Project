@@ -8,6 +8,10 @@ import { Slide } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import Container from "../Login/ContainerBox";
 import NavTop from "../Homepage/NavTop";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';;
+import { width } from "@mui/system";
+
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -51,12 +55,14 @@ let Signup = (props) => {
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false)
   let registerReq = () => {
-  
-  
+  setLoading(true)
+  props.role!='trainer'?
+  console.log(props):"Ssds"
     axios()
       .post(props.role!='trainer'?"/api/register":"/api/admin/register", {
+       device_name: "android",
         name: input["name"],
         email: input["email"],
         username: input["username"],
@@ -66,12 +72,15 @@ let Signup = (props) => {
      
       })
       .then((response) => {
+        setLoading(false)
         if (response.status == 201) {
           if (props.role != "trainer") {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("type", "");
-        
+         
+  
           }
+          
           else{
             var myToastEl = document.getElementById('myToastEl1')
             var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
@@ -79,7 +88,7 @@ let Signup = (props) => {
             myToastEl.innerHTML="New trainer has been added";
             myToast.show()
           }
-    
+        
 
           setErrors({
             name: "",
@@ -94,6 +103,7 @@ let Signup = (props) => {
         }
       })
       .catch((error) => {
+        setLoading(false)
         if (!error.response) return;
         let Reserrors = error.response.data.errors;
 
@@ -119,6 +129,7 @@ let Signup = (props) => {
 
   return (
     <React.Fragment>
+   
     {props.role!='trainer'?<NavTop></NavTop>:""}
     <div className="Login">
       <Slide direction="up" in="true">
@@ -249,8 +260,16 @@ let Signup = (props) => {
                     onClick={registerReq}
                     nameButton={
                       props.role == "trainer"
-                        ? "New Trainer"
-                        : "Sign up"
+                        ? loading?  <Box style={{justifyContent:'center'}} sx={{ display: 'flex' }}>
+      <CircularProgress 
+      size={20}
+      thickness={6} />
+    </Box>:"New Trainer"
+                        : loading?    <Box style={{justifyContent:'center'}} sx={{ display: 'flex' }}>
+      <CircularProgress 
+      size={20}
+      thickness={6} />
+    </Box>:"Sign up"
                     }
                   ></FancyButton>
                 </Buttons>

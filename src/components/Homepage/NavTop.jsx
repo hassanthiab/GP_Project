@@ -361,16 +361,16 @@ return(
         <Link to="/Profile" class="dropdown-item user-select-none">My profile</Link>
         </li>
         <li>
-        <Link to="/Profile" class="dropdown-item user-select-none">My Horses</Link>
+        <Link to="/UserHorses" class="dropdown-item user-select-none">My Horses</Link>
         </li>
         {localStorage.getItem('type')==''?
          <li>
-        <Link to="/Profile" class="dropdown-item user-select-none">My Tournaments</Link>
+        <Link to="/UserTournaments" class="dropdown-item user-select-none">My Tournaments</Link>
         </li>:""}
        
    
         <li>
-        <Link to="/Profile" class="dropdown-item user-select-none">
+        <Link to="/UserSessions" class="dropdown-item user-select-none">
         {localStorage.getItem('type')==''?'My Sessions':
         localStorage.getItem('type')=='trainer/'?'My Courses':''
         }
