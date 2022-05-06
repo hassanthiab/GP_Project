@@ -1,9 +1,11 @@
-import React ,{ useState, useEffect,useLayoutEffect }  from 'react'
+import React ,{ useState, useEffect }  from 'react'
 import {Link} from 'react-router-dom'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import Avatar from '@mui/material/Avatar';
+
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { Fragment } from 'react/cjs/react.production.min';
@@ -343,13 +345,18 @@ return(
         data-mdb-toggle="dropdown"
         aria-expanded="false"
       >
-        <img
+      <Avatar
+  alt="Remy Sharp"
+  src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${pf?pf:'bpp.webp'}`} 
+  sx={{ width: 30, height: 30 }}
+/>
+        {/* <img
           src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${pf?pf:'bpp.webp'}`} 
           class="rounded-circle"
           height="25"
           alt="pf"
           loading="lazy"
-        />
+        /> */}
       </a>
 
     
