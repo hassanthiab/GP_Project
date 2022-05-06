@@ -11,6 +11,8 @@ import axios from "../axios/axios";
 import NavTop from "../Homepage/NavTop";
 import Sidebar from "../Dashboard/Sidebar";
 import { FcFolder,FcOpenedFolder } from "react-icons/fc";
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import IconButton from '@mui/material/IconButton';
 const Input = styled("input")({
   display: "none",
 });
@@ -268,7 +270,12 @@ let ProfileSettings = () => {
                     />
                    
                      {/*  Upload */}
-                     choose file <FcOpenedFolder style={{fontSize:'30px',justifyContent:'center'}}/>
+                     choose file 
+               
+        <IconButton color="primary" style={{fontSize:'30px',justifyContent:'center'}} aria-label="upload picture" component="span">
+          <PhotoCamera />
+        </IconButton>
+
                   
                   </label>
                 </div>

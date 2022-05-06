@@ -61,7 +61,6 @@ function NewTournament() {
     axios()
       .get("/api/tournaments/"+id)
       .then((response) => {
-        console.log(response.data["categories"][0].category)
         let stateInput = { ...input };
         stateInput["name"] = response.data["name"];
         stateInput["club"] = response.data["club"];

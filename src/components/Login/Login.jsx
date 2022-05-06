@@ -108,7 +108,8 @@ let Login = () => {
                 });
 
                 setMessage("");
-                navigate("/profile");
+                localStorage.getItem('type')=='admin/'?navigate("/Dashboard"):navigate("/Feed")
+             
               }
             }
           })

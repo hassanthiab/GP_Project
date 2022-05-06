@@ -1,21 +1,42 @@
+
+import axios from "../axios/axios";
 import {
     LineChart,
     Line,
     XAxis,
+    YAxis,
     CartesianGrid,
     Tooltip,
     ResponsiveContainer,
   } from "recharts";
-  import React from "react"
-  export default function Chart({ title, data, dataKey, grid }) {
-  
+  import React,{useState,useEffect}  from "react"
+
+ export default function Chart({ grid }) {
+   const [data, setData] = useState([]);
+  useEffect(() => {
+    axios().get('/api/admin/tournamentsGhart').then((response)=>{
+      let a=[]
+      for(let i=0;i<12;i++){
+        a[i]=response.data[i]
+      }
+     setData(a)
+    }).catch((error)=>{if(!error.response)return})
+    }, []);
+
     return (
       <div className="chart">
-        <h3 className="chartTitle">{title}</h3>
-        <ResponsiveContainer width="80%" aspect={4 / 2}>
-          <LineChart data={data}>
+        <h3 className="chartTitle">#Tournaments</h3>
+        <ResponsiveContainer width="100%" aspect={4 / 2}>
+          <LineChart data={data}
+           margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}>
             <XAxis dataKey="name" stroke="#5550bd" />
-            <Line type="monotone" dataKey={dataKey} stroke="#5550bd" />
+            {/* <YAxis /> */}
+            <Line type="monotone" dataKey="#Tournaments" stroke="#5550bd" />
             <Tooltip />
             {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />}
           </LineChart>
