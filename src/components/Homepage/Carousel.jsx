@@ -37,37 +37,55 @@ function Carousel() {
           <div class="carousel-item active ">
             <img src={Img} class="d-block w-100" alt="..." />
 
-            <Link to="/Signup">
+     
               <div class="carousel-caption d-none d-md-block">
-                <Container>
-                  <h5>Third slide label</h5>
+              <Container style={{marginBottom:'30%'}}>
+                  <h5><br/>About us</h5>
+              
                   <p>
-                    Some representative placeholder content for the third slide.
+                  <br/><br/>
+      The Nablus Equestrian Club is a private gated equestrian facility with the beautiful treasure coast region of Palestine.
+       Located at Nablus-Rafidia.<br/><br/>
+
+  Equestrian riders enjoy a privileged equestrian lifestyle, and exclusive facility amenities.
+ Including a lighted covered arena, several private lighted sand and grass arenas, 
+ as well as priority access to our private events, unique programs,
+  and horse shows.<br/><br/> 
+
+We currently offer lessons, a children's riding acadamy, boarding and training. 
+
+At Nablus Equestrian Club we live the equestrian lifestyle at its best.<br/><br/>
++970599555566 / Equestrian116@gmail.com
+
                   </p>
                 </Container>
               </div>
-            </Link>
+            
           </div>
           <div class="carousel-item">
             <img src={Img} class="d-block w-100" alt="..." />
 
-            <Link to="/Login">
+           
               <div class="carousel-caption d-none d-md-block">
-                <Container>
-                  <h5>Third slide label</h5>
+                <Container style={{marginBottom:'35%'}}>
+                  <h5><br/> take a tour</h5>
                   <p>
-                    Some representative placeholder content for the third slide.
+                  <br/><br/> 
+                   <Link to={'/UserTournament'} class="btn btn-primary">What's new?</Link>
+                  </p>
+                  <p>
+                  <Link to={'/UserTournament'} class="btn btn-primary">Check out tournaments </Link>
                   </p>
                 </Container>
               </div>
-            </Link>
+         
           </div>
           <div class="carousel-item">
             <img src={Img} class="d-block w-100" alt="..." />
 
             <Link to="/Signup">
               <div class="carousel-caption d-none d-md-block">
-                <Container>
+              <Container style={{marginBottom:'35%'}}>
                   <h5>Third slide label</h5>
                   <p>
                     Some representative placeholder content for the third slide.

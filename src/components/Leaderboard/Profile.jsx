@@ -1,6 +1,10 @@
 import React from 'react'
+import { useState,useEffect } from 'react'
+import axios from "../axios/axios";
 
 function Profile({ Leaderboard }) {
+
+  
   return (
     <div id="profile">
     {Item(Leaderboard)}
@@ -15,15 +19,15 @@ function Item(data){
                 data.map((value, index) => (
                     <div className="flex" key={index}>
                         <div className="item">
-                            <img src={value.img} alt="" />
-            
+                      
+
+                            <img style={{width:'50px',height:'50px'}}   src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${value.profile_picture?value.profile_picture:'bpp.webp'}`} alt="" />
                             <div className="info">
                                 <h3 className='name text-dark'>{value.name}</h3>    
-                                <span>{value.location}</span>
                             </div>                
                         </div>
                         <div className="item">
-                            <span>{value.score}</span>
+                            <span>{value.points}</span>
                         </div>
                     </div>
                     )
