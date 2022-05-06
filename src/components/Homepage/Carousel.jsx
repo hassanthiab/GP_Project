@@ -1,9 +1,18 @@
-import React from "react";
+import React,{useEffect,useState}from "react";
 import { Link } from "react-router-dom";
 import Img from "../../Images/LoginBackground.jpg";
 import styled from "styled-components";
 import Container from "../Login/ContainerBox";
+import axios from "../axios/axios";
+
 function Carousel() {
+const [data, setData] = useState('');
+useEffect(() => {
+  axios().get('/api/posts').then((response)=>{
+    setData(response.data.data[0])
+  }).catch((error)=>{if(!error.response)return})
+}, []);
+
   return (
     <React.Fragment>
       <div
@@ -81,14 +90,15 @@ At Nablus Equestrian Club we live the equestrian lifestyle at its best.<br/><br/
          
           </div>
           <div class="carousel-item">
-            <img src={Img} class="d-block w-100" alt="..." />
+
+            <img src={data.image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data.image}`:Img} class="d-block w-100" alt="..." />
 
             <Link to="/Signup">
               <div class="carousel-caption d-none d-md-block">
               <Container style={{marginBottom:'35%'}}>
-                  <h5>Third slide label</h5>
+                  <h5>{data.title}</h5>
                   <p>
-                    Some representative placeholder content for the third slide.
+                    {data.post}
                   </p>
                 </Container>
               </div>

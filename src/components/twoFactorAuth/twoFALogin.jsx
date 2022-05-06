@@ -53,7 +53,8 @@ let TwoFALogin = () => {
         if (response.status == 200) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("type", response.data.type);
-          navigate("/profile");
+          localStorage.getItem('type')=='admin/'?navigate("/Dashboard"):navigate("/Feed")
+
         }
       })
       .catch((error) => {

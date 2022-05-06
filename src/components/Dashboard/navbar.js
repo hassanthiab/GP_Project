@@ -5,9 +5,21 @@ import * as IoIcons from 'react-icons/io';
 
 export const SidebarData = [
   {
+    title: 'Profile',
+    path: '/Profile',
+    icon: <AiIcons.AiFillHome />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Dashboard',
     path: '/Dashboard',
     icon: <AiIcons.AiFillHome />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Feed',
+    path: '/Feed',
+    icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text'
   },
   {
@@ -40,16 +52,6 @@ export const SidebarData = [
     icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text'
   },
-  {
-    title: 'Club',
-    path: '/Club',
-    icon: <IoIcons.IoIosPaper />,
-    cName: 'nav-text'
-  },
-  {
-    title: 'ClubHorses',
-    path: '/ClubHorses',
-    icon: <IoIcons.IoIosPaper />,
-    cName: 'nav-text'
-  },
+ 
+
 ];

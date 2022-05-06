@@ -28,6 +28,7 @@ import TrainerSchedule from "./components/Trainer/courseScheduler";
 
 import Tournamentlist from './components/Dashboard/Tournamentlist'
 import EditTournament from './components/Dashboard/editTournament'
+import Feed from "./components/Dashboard/Feed";
 
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
@@ -38,12 +39,16 @@ import EditHorse from './components/Dashboard/editHorse'
 import HorseList from "./components/Dashboard/Horseslist";
 import UserHorseList from "./components/horses/Horseslist";
 
+
 import SessionList from "./components/sessions/Sessionslist";
 import Tournamentslist from "./components/Tournaments/Tournamentlist";
 
 import AllNotifications from "./components/Notification/AllNotifications";
 import RCourses from "./components/Courses/CourseUser";
 import Attendants from "./components/Dashboard/TournamentAttendants";
+
+
+
 function App() {
   return (
     <Router>
@@ -76,6 +81,8 @@ function App() {
         <Route path="/ScheduleUser" element={<UserSchedule></UserSchedule>} />
         <Route path="/UserSessions" element={<SessionList/>} />
         <Route path="/UserTournaments" element={<Tournamentslist/>} />
+       <Route path="/Feed" element={<Feed/>} />
+      
 
         <Route path="/RTournament/:id" element={<MultiStepForm/>} />
 

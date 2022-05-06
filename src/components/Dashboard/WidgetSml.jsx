@@ -1,26 +1,30 @@
 import "./WidgetSml.css";
 import { Visibility } from "@material-ui/icons";
-import React, {useState} from "react"
+import React, {useState,useEffect} from "react"
 import TablePagination from '@mui/material/TablePagination';
+import axios from "../axios/axios";
+
 export default function WidgetSml() {
+  const [count, setCount] = useState('');
+useEffect(() => {
+axios().get('/api/admin/getCounts').then((response)=>{
+  setCount(response.data)
+}).catch((error)=>{if(!error.response)return})
+}, []);
+
   return (
     <div className="widgetSm">
-      <span className="widgetSmTitle">New Members</span>
+      <span className="widgetSmTitle">Numbers</span>
       <ul className="widgetSmList">
         <li className="widgetSmListItem">
-          <img
-            src="https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&dpr=2&w=500"
-            alt=""
-            className="widgetSmImg"
-          />
+       
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
-            <span className="widgetSmUserTitle">Software Engineer</span>
+            <span className="widgetSmUsername">Number of trainers</span>
+            <span className="widgetSmUserTitle">{count.tc}</span>
+            <span className="widgetSmUsername">Number of users</span>
+            <span className="widgetSmUserTitle">{count.uc}</span>
           </div>
-          <button className="widgetSmButton">
-            <Visibility className="widgetSmIcon" />
-            Display
-          </button>
+     
         </li>
 
       </ul>

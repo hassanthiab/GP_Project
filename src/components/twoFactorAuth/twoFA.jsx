@@ -295,11 +295,11 @@ let TwoFA = (props) => {
               <div class="card card-body">
                 {twoFA ? (
                   <div>
-                    {<span dangerouslySetInnerHTML={{ __html: qr.svg }} />}
-                    <ul>{Rcodes}</ul>
+                    {<span  dangerouslySetInnerHTML={{ __html: qr.svg }} />}
+                    <ul  style={{color:'black'}} >{Rcodes}</ul>
                   </div>
                 ) : (
-                  "your 2FA is Disabled"
+                  <strong style={{color:'#BF0000'}}>your 2FA is Disabled</strong>
                 )}
               </div>
             </div>

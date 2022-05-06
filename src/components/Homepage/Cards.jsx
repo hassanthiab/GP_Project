@@ -26,7 +26,8 @@ const [data, setData] = useState([]);
           <div class="row">
             <div class="col-sm  hover-zoom">
               <div class="card" style={{ width: "18 rem" }}>
-                <img src={img} class="card-img-top" alt="..." />
+              {data[0]?<img src={data[0].img?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[1].img}`:img} class="card-img-top" alt="..." />
+              :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[0]?'Tile : '+data[0].name:''}</h5>
                   <p class="card-text">{data[0]?'Date : '+data[0].date:''}</p>
@@ -37,8 +38,9 @@ const [data, setData] = useState([]);
               </div>
             </div>
             <div class="col-sm  hover-zoom">
-              <div class="card" style={{ width: "18 rem" }}>
-                <img src={img} class="card-img-top" alt="..." />
+              <div class="card" style={{ width: "18 rem" }}>              
+              {data[1]?  <img src={data[1].img?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[1].img}`:img} class="card-img-top" alt="..." />
+              :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[1]?'Tile : '+data[1].name:''}</h5>
                   <p class="card-text">{data[1]?'Date : '+data[1].date:''}</p>
@@ -50,7 +52,9 @@ const [data, setData] = useState([]);
             </div>
             <div class="col-sm  hover-zoom">
               <div class="card" style={{ width: "18 rem" }}>
-                <img src={img} class="card-img-top" alt="..." />
+             
+              {data[2]? <img src={data[2].img?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[1].img}`:img} class="card-img-top" alt="..." />
+              :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[2]?'Tile : '+data[2].name:''}</h5>
                   <p class="card-text">{data[2]?'Date : '+data[2].date:''}</p>
