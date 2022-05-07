@@ -213,12 +213,12 @@ return(
       <a class="nav-link user-select-none ">Home</a>
     </li>
     </Link>:""}
-
+    {localStorage.getItem('type')!='trainer/'?
     <Link to="/UserTournament">
     <li class={props.page=="Tournaments"?"nav-item active":"nav-item"}>
       <a class="nav-link user-select-none">Tournaments</a>
     </li>
-    </Link>
+    </Link>:""}
     
     {localStorage.getItem("token")?localStorage.getItem("type")==""?
     <Link to="/Courses">
@@ -350,13 +350,6 @@ return(
   src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${pf?pf:'bpp.webp'}`} 
   sx={{ width: 30, height: 30 }}
 />
-        {/* <img
-          src={`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${pf?pf:'bpp.webp'}`} 
-          class="rounded-circle"
-          height="25"
-          alt="pf"
-          loading="lazy"
-        /> */}
       </a>
 
     

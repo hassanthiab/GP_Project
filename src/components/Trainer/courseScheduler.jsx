@@ -623,7 +623,7 @@ export default class Demo extends React.PureComponent {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Error in Inputs!"}
+          {"Oops!"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText style={{color:"red"}} id="alert-dialog-description">

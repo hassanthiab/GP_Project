@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Fragment } from "react/cjs/react.production.min";
 import axios from "../axios/axios";
+import NavTop from '../Homepage/NavTop.jsx';
+
 let Verify = () => {
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,6 +22,7 @@ let Verify = () => {
 
   return (
     <Fragment>
+        <NavTop/>
       <div class="container">
         <div class="row" style={{ marginTop: 40 }}>
           <div class="col-sm-3"></div>
@@ -47,7 +50,7 @@ let Verify = () => {
                   style={{ fontSize: 19, fontWeight: "bold" }}
                   href="#"
                 >
-                  resend email
+                  Resend email
                 </a>
               )}
             </div>

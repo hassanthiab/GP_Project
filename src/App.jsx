@@ -20,8 +20,9 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Courses from "./components/Courses/Trainers"
 import NewTournament from './components/Dashboard/newTournament'
 import Success from './components/Courses/Success'
-
+import Rcodes from './components/twoFactorAuth/Rcodes'
 import UserList from "./components/Dashboard/UserList";
+
 import { MultiStepForm } from "./components/createCourse/MultiStep";
 import UserSchedule from "./components/createCourse/cs";
 import TrainerSchedule from "./components/Trainer/courseScheduler";
@@ -82,7 +83,8 @@ function App() {
         <Route path="/UserSessions" element={<SessionList/>} />
         <Route path="/UserTournaments" element={<Tournamentslist/>} />
        <Route path="/Feed" element={<Feed/>} />
-      
+       <Route path="/Rcodes" element={<Rcodes/>} />
+
 
         <Route path="/RTournament/:id" element={<MultiStepForm/>} />
 

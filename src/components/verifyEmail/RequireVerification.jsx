@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Fragment } from "react/cjs/react.production.min";
 import axios from "../axios/axios";
+
 let Verify = () => {
   const [verified, setVerified] = useState(false);
   const [message, setMessage] = useState("");
@@ -22,6 +23,7 @@ let Verify = () => {
 
   return (
     <Fragment>
+  
       {vSent ? (
         <div
           style={{ backgroundColor: "#222222", color: "#FFAA00" }}

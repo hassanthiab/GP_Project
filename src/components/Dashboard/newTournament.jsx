@@ -69,7 +69,7 @@ function NewTournament() {
 
 
     axios()
-    .post("/api/addTournament",formData)
+    .post("/api/admin/addTournament",formData)
     .then((response) => {
       if(response.status==200){
         var myToastEl = document.getElementById('myToastEl1')

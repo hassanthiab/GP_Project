@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Button from "../Login/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
+import NavTop from '../Homepage/NavTop.jsx';
 
 import { Slide } from "@material-ui/core";
 
@@ -148,6 +149,8 @@ let NewPass = () => {
   };
 
   return (
+    <React.Fragment>
+    <NavTop/>
     <div class="Login">
       <Slide direction="up" in="true">
         <Container size="30vh" width="30vw">
@@ -190,6 +193,7 @@ let NewPass = () => {
         </Container>
       </Slide>
     </div>
+    </React.Fragment>
   );
 };
 

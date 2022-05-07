@@ -14,7 +14,7 @@ import {
  export default function Chart({ grid }) {
    const [data, setData] = useState([]);
   useEffect(() => {
-    axios().get('/api/admin/tournamentsGhart').then((response)=>{
+      axios().get('/api/admin/incomeSum').then((response)=>{
 
       let a=[]
       for(let i=0;i<12;i++){
@@ -26,7 +26,7 @@ import {
 
     return (
       <div className="chart">
-        <h3 className="chartTitle">#Tournaments</h3>
+        <h3 className="chartTitle">Income (ILS)</h3>
         <ResponsiveContainer width="100%" aspect={4 / 2}>
           <LineChart data={data}
            margin={{
@@ -37,7 +37,7 @@ import {
           }}>
             <XAxis dataKey="name" stroke="#5550bd" />
             {/* <YAxis /> */}
-            <Line type="monotone" dataKey="#Tournaments" stroke="#5550bd" />
+            <Line type="monotone" dataKey="income" stroke="#5550bd" />
             <Tooltip />
             {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />}
           </LineChart>
