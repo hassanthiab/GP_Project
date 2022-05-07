@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Container from "../Login/ContainerBox";
 import Input from "../Login/Input";
 import "../Login/LoginStyle.css";
@@ -7,7 +8,13 @@ import Button from "../Login/Button";
 import axios from "../axios/axios";
 import { Component } from "react/cjs/react.production.min";
 import { Slide } from "@material-ui/core";
-
+import NavTop from '../Homepage/NavTop.jsx';
+const ClickableText = styled.h3`
+  margin: 1rem 0 2rem 0;
+  cursor: pointer;
+  color: white;
+  font-size: small;
+`;
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
@@ -100,6 +107,8 @@ let Page = () => {
   };
 
   return (
+    <React.Fragment>
+    <NavTop/>
     <div class="Login">
       <Slide direction="up" in="true">
         <Container size="30vh" width="30vw">
@@ -119,6 +128,7 @@ let Page = () => {
             >
               {message ? message : error}
             </label>
+         
           </InputText>
           <Buttons>
             <div class="container">
@@ -134,6 +144,7 @@ let Page = () => {
         </Container>
       </Slide>
     </div>
+    </React.Fragment>
   );
 };
 

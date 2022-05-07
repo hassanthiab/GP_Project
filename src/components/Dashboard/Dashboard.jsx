@@ -6,7 +6,7 @@ import "./productList.css";
 import { styled } from '@mui/material/styles';
 import Chart from '../Charts/Chart'
 import BarChart from '../Charts/Bar'
-
+import IncomeChart from '../Charts/incomeChart'
 import {userData} from "./dummy-data"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -217,19 +217,20 @@ function Dashboard() {
       </div>
 
 
-      <div className='row'  style={{marginTop:"100px"}}>
-      <div   className='col-md-1'>
+      <div className='row' >
+      <div   className='col-md-6' style={{marginTop:"100px"}}>
  
-   
+      <WidgetSml/>
  </div>
-    <div   className='col-md-10'>
-    <WidgetSml/>
-   
-    </div>
-    <div   className='col-md-1'>
+    {/* <div   className='col-md-1'>
  
    
+    </div> */}
+    <div   className='col-md-6' style={{marginTop:"100px"}}>
+    
+    <IncomeChart/>
     </div>
+ 
     
   </div>
 

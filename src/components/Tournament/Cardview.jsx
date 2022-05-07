@@ -50,7 +50,7 @@ else{
           </div>
         </div>
         <div
-          style={{ backgroundImage: `url(http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${items.image?items.image:''})` }}
+          style={{ backgroundImage:items.image?`url(http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${items.image})`:'' }}
           class="blur_back"
         ></div>
       </div>

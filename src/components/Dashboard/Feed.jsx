@@ -3,6 +3,7 @@ import NavBar from './Sidebar'
 import axios from "../axios/axios";
 import FeedCard from "./FeedCard"
 import  Pagination  from '@mui/material/Pagination'
+import  Typography  from '@mui/material/Typography'
 import NavTop from "../Homepage/NavTop";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -20,7 +21,6 @@ const Input = styled('input')({
 function Feed(){
   const [data, setData] = useState([]);
   const [count, setCount] = useState([]);
-  const [links, setLinks] = useState([]);
   const [link, setLink] = useState();
   const [image, setImage] = useState("");
 
@@ -39,9 +39,8 @@ function Feed(){
   useEffect(() => {
     axios().get('/api/posts').then((response)=>{
       setData(response.data.data)
-      setLinks(response.data.links)
       setCount(response.data.last_page)
-      setLink(response.data.links[1].url)
+      setLink("/api/posts?page=1")
     }).catch((error)=>{if(!error.response)return})
     }, []);
     const [open, setOpen] = useState(false);
@@ -82,17 +81,8 @@ function Feed(){
                     setImage()
                     axios().get(link).then((response)=>{
                       setData(response.data.data)
-                      setLinks(response.data.links)
                       setCount(response.data.last_page)
-                      if(response.data.from==null){
-                        axios().get(response.data.prev_page_url).then((response)=>{
-                          setData(response.data.data)
-                          setLinks(response.data.links)
-                          setCount(response.data.last_page)
-                          
-                        }).catch((error)=>{if(!error.response)return})
-                      }
-                      
+                    
                     }).catch((error)=>{if(!error.response)return})
                
                   }
@@ -149,12 +139,10 @@ function Feed(){
         myToast.show()
         axios().get(link).then((response)=>{
           setData(response.data.data)
-          setLinks(response.data.links)
           setCount(response.data.last_page)
           if(response.data.from==null){
             axios().get(response.data.prev_page_url).then((response)=>{
               setData(response.data.data)
-              setLinks(response.data.links)
               setCount(response.data.last_page)
               
             }).catch((error)=>{if(!error.response)return})
@@ -164,16 +152,14 @@ function Feed(){
       }).catch((error)=>{if(!error.response)return})
     }
     const changedUrl=(event)=>{
-setLink(links[event.target.textContent].url)
-axios().get(links[event.target.textContent].url).then((response)=>{
-  console.log(response)
+setLink("/api/posts?page="+event.target.textContent)
+axios().get("/api/posts?page="+event.target.textContent).then((response)=>{
   setData(response.data.data)
-  setLinks(response.data.links)
 }).catch((error)=>{if(!error.response)return})
     }
 return (
   <React.Fragment>
-  {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop/>}
+  {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop page="Feed"/>}
   <div className='container'> 
   
   <div className='row' style={{marginTop:'10px'}}>
@@ -270,7 +256,7 @@ return (
  
         </div>
         <div className='col-md-4' style={{marginTop:'10px'}}>
-        <Pagination onChange={(event)=>changedUrl(event)} count={count} hidePrevButton hideNextButton />
+        <Pagination onChange={(event)=>changedUrl(event)} count={count} hidePrevButton hideNextButton color="primary"/>
         </div>
       </div>
   </div>

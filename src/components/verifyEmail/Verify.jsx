@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios/axios";
+import NavTop from '../Homepage/NavTop.jsx';
 
 let Verify = () => {
   const [verified, setVerified] = useState(false);
@@ -33,6 +34,7 @@ let Verify = () => {
 
   return (
     <div>
+        <NavTop/>
       <div class="container">
         <div class="row" style={{ marginTop: 40 }}>
           <div class="col-sm-3"></div>

@@ -7,10 +7,18 @@ import Button from "../Login/Button";
 import axios from "../axios/axios";
 import { Slide } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-
+import NavTop from '../Homepage/NavTop.jsx';
+import { Link } from "react-router-dom";
+const ClickableText = styled.h3`
+  margin: 1rem 0 2rem 0;
+  cursor: pointer;
+  color: white;
+  font-size: small;
+`;
 const Title = styled.h2`
   margin: 3rem 0 2rem 0;
 `;
+
 const Buttons = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,6 +81,8 @@ let TwoFALogin = () => {
   };
 
   return (
+    <React.Fragment>
+    <NavTop/>
     <div class="Login">
       <Slide direction="up" in="true">
         <Container size="30vh">
@@ -83,7 +93,10 @@ let TwoFALogin = () => {
               type="text"
               placeholder="the code"
             />
-            <label>{error}</label>
+            <label    style={{ color :" #960000 ",fontWeight: "bold",}}>{error}</label>
+            <Link to={'/Rcodes'}>
+            <ClickableText>recover the codes</ClickableText>
+          </Link>
             <div class="form-check form-switch"></div>
           </InputText>
           <Buttons>
@@ -100,6 +113,7 @@ let TwoFALogin = () => {
         </Container>
       </Slide>
     </div>
+    </React.Fragment>
   );
 };
 
