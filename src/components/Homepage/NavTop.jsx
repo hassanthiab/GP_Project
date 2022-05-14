@@ -274,7 +274,7 @@ return(
   {localStorage.getItem("token")?
   <Link style={{color:'#4e4e4e',marginRight:'7px'}} to={'/Chat'}>
   <IoChatbox />
-  <span class="badge rounded-pill badge-notification bg-danger ">1</span>
+  {/* <span class="badge rounded-pill badge-notification bg-danger ">1</span> */}
 </Link>:""}
  
     {localStorage.getItem("token")?

@@ -30,6 +30,7 @@ import TrainerSchedule from "./components/Trainer/courseScheduler";
 import Tournamentlist from './components/Dashboard/Tournamentlist'
 import EditTournament from './components/Dashboard/editTournament'
 import Feed from "./components/Dashboard/Feed";
+import Chat from "./components/chat/chat"
 
 import NewTrainer from './components/Dashboard/newTrainer';
 import TrainersList from "./components/Dashboard/UserList";
@@ -84,7 +85,7 @@ function App() {
         <Route path="/UserTournaments" element={<Tournamentslist/>} />
        <Route path="/Feed" element={<Feed/>} />
        <Route path="/Rcodes" element={<Rcodes/>} />
-
+       <Route path="/Chat" element={<Chat/>} />
 
         <Route path="/RTournament/:id" element={<MultiStepForm/>} />
 
