@@ -20,6 +20,11 @@ function Tournamentlist() {
       .then((response) => {
         if(response.status==200){
           setData(data.filter((item) => item.id !== id));
+          var myToastEl = document.getElementById('myToastEl1')
+          var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) // Returns a Bootstrap toast instance
+          var myToastEl = document.getElementById('toast-body')
+          myToastEl.innerHTML="tournament has been Deleted";
+          myToast.show()
         }
         
       })
