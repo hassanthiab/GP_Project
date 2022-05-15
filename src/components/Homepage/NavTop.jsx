@@ -125,7 +125,7 @@ return Mindiff<1&&s==" Mins"?"just now":Mindiff+" "+s;
     if (localStorage.getItem("token")) {
 
       axios(localStorage.getItem("token"))
-        .delete("/api/loagout")
+        .delete("/api/logout")
         .then((res)=>
         {    
           pusher.disconnect();

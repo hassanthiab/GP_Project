@@ -1,5 +1,5 @@
 import React, { useState ,useEffect}from 'react'
-import NavTop from '../Homepage/NavTop'
+
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link,useNavigate,useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "../axios/axios";
 import NavBar from '../Dashboard/Sidebar'
+import NavTop from '../Homepage/NavTop'
 function Courses() {
   let { id } = useParams();
     const [data, setData] = useState();
@@ -147,7 +148,7 @@ function Courses() {
 
   return (
     <div>
- {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop />}
+ {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop page='Courses'/>}
  <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Show profile</DialogTitle>
         <DialogContent>

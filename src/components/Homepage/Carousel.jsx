@@ -6,7 +6,7 @@ import Container from "../Login/ContainerBox";
 import axios from "../axios/axios";
 
 function Carousel() {
-const [data, setData] = useState('');
+const [data, setData] = useState([]);
 useEffect(() => {
   axios().get('/api/posts').then((response)=>{
     setData(response.data.data[0])
@@ -90,15 +90,15 @@ At Nablus Equestrian Club we live the equestrian lifestyle at its best.<br/><br/
          
           </div>
           <div class="carousel-item">
-
+          {data?
             <img src={data.image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data.image}`:Img} class="d-block w-100" alt="..." />
-
+        :''  }
             <Link to="/Signup">
               <div class="carousel-caption d-none d-md-block">
               <Container style={{marginBottom:'35%'}}>
-                  <h5>{data.title}</h5>
+                  <h5>{data?data.title:''}</h5>
                   <p>
-                    {data.post}
+                    {data?data.post:''}
                   </p>
                 </Container>
               </div>

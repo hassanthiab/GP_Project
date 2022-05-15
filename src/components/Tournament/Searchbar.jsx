@@ -1,12 +1,13 @@
 import { useState } from "react";
 import React from "react";
-const FilterBar = ({
-  sizes,
-  onNameFilter,
-  onlocationFilter,
-  onsizeFilter,
-  onDateFilter,
-}) => {
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import axios from "../axios/axios";
+
+
+const FilterBar = ({setData,setCount,setSearch}) => {
+
   const [filters, setFilters] = useState({
     name: "",
     location: "",
@@ -15,7 +16,29 @@ const FilterBar = ({
     to: "",
   });
 
-  
+ 
+let options=[ { id: 1, label: 'Small', },
+              { id: 2, label: 'Medium'  },
+              { id: 3,label: 'Large'  },
+]
+const search=()=>{
+
+  axios()
+  .get('/api/search',  {
+    params: filters
+  })
+  .then((response) => {
+
+    setData(response.data.data)
+    setCount(response.data.last_page)
+    setSearch(true)
+
+  })
+  .catch((error) => {
+    if(!error.response)
+    return
+  });
+}
   const handleInput = (field) => (event) => {
     const { value } = event.target;
 
@@ -71,31 +94,31 @@ const FilterBar = ({
       </div>
 
       <div className="col-sm-12 my-2">
-        <label htmlFor="size">size</label>
-        <select
-          className="form-control"
-          id="size"
-          onChange={handleInput("size")}
-        >
 
-          <option value="">Select</option>
-          <option value='Small' key='Small'>
-              Small
-            </option>
-            <option value='Medium' key='Medium'>
-             Medium
-            </option>
-            <option value='Large' key='Large'>
-             Large
-            </option>
+      <Autocomplete
+  disablePortal
+  id="combo-box-demo"
+  options={options}
+  sx={{ width: 150}}
+  onChange={ (e, obj) => {
+    if(obj){
+     setFilters({
+      ...filters,
+      ['size']: obj.label,
+    });
+  }
+  else{
+    setFilters({
+      ...filters,
+      ['size']:"",
+    });
+  }
+      } }
+  // onChange={handleInput("size",event)}
+  renderInput={(params) => <TextField {...params} label="Size" />}
+/>
 
-          <option value="All">Select</option>
-          <option value="Small">Small</option>
-          <option value="Medium">Medium</option>
-          <option value="Large">Large</option>
-          
-
-        </select>
+      
       </div>
 
       <div className="col-sm-12 my-2">
@@ -116,6 +139,9 @@ const FilterBar = ({
           onChange={handleInput("to")}
         />
       </div>
+      <div className="col-sm-12 my-2">
+      <Button onClick={search} variant="outlined">Search</Button>   
+         </div>
     </div>
   );
 };

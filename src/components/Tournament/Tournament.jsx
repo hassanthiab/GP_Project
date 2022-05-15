@@ -10,20 +10,16 @@ import  Pagination  from '@mui/material/Pagination'
 
 
 function Tournament() {
-  const [allData, setData] = useState("");
+  const [allData, setData] = useState([]);
   const [count, setCount] = useState([]);
-  const [links, setLinks] = useState([]);
-  const [link, setLink] = useState();
-  const [image, setImage] = useState("");
+  const [search, setSearch] = useState(false);
   useEffect(() => {
     axios()
       .get("/api/tournamentsP")
       .then((response) => {
         console.log(response.data.data)
         setData(response.data.data);
-        setLinks(response.data.links)
         setCount(response.data.last_page)
-        setLink(response.data.links[1].url)
       })
       .catch((error) => {
         if(!error.response)
@@ -31,7 +27,7 @@ function Tournament() {
       });
   }, []);
   const changedUrl=(event)=>{
-    axios().get("/api/tournamentsP?page="+event.target.textContent).then((response)=>{
+    axios().get(search?"/api/search?page="+event.target.textContent:"/api/tournamentsP?page="+event.target.textContent).then((response)=>{
       console.log(response)
       setData(response.data.data)
     }).catch((error)=>{if(!error.response)return})
@@ -45,11 +41,7 @@ function Tournament() {
       <div className="row">
         <div className="col-sm-3">
 
-          <FilterBar />
-
-        <SimpleAccordion>
-          
-        </SimpleAccordion>
+          <FilterBar setData={setData} setCount={setCount} setSearch={setSearch}/>
 
         </div>
         <div className="col-sm-9">
