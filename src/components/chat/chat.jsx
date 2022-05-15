@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from "react";
+import NavBar from '../Dashboard/Sidebar'
 import NavTop from '../Homepage/NavTop'
 import "./chat.css"
 import axios from "../axios/axios";
@@ -271,7 +272,8 @@ const sendMessage=()=>{
    
   return( 
     <React.Fragment>
-     <NavTop page='Chat'/>
+     {localStorage.getItem('type')=='admin/'?<NavBar/>:<NavTop page='Chat'/>}
+
 
      <div class="container">
 

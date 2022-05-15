@@ -107,7 +107,7 @@ export default function ProductList() {
 
   return (
       <React.Fragment>
-                  <NavTop></NavTop>
+                  <NavTop page='Courses'></NavTop>
           <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Show profile</DialogTitle>
         <DialogContent>
