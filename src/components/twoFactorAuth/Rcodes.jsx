@@ -86,7 +86,7 @@ return(
     <div class="Login">
       <Slide direction="up" in="true">
         <Container size="30vh" width="30vw">
-          <Title>New Password</Title>
+          <Title>Recover the codes</Title>
           <InputText>
             <Input
               onChange={(event) => changed(event, "email")}

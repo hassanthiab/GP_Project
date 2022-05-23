@@ -4,6 +4,7 @@ import { Grow } from "@material-ui/core";
 import Container from "../Login/ContainerBox";
 import { Link } from "react-router-dom";
 import axios from "../axios/axios";
+import { height } from '@mui/system';
 function Cards() {
 const [data, setData] = useState([]);
   useEffect(() => {
@@ -26,7 +27,7 @@ const [data, setData] = useState([]);
           <div class="row">
             <div class="col-sm  hover-zoom">
               <div class="card" style={{ width: "18 rem" }}>
-              {data[0]?<img src={data[0].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[0].image}`:img} class="card-img-top" alt="..." />
+              {data[0]?<img style={{height:'200px'}}  src={data[0].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[0].image}`:img} class="card-img-top" alt="..." />
               :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[0]?'Tile : '+data[0].name:''}</h5>
@@ -39,7 +40,7 @@ const [data, setData] = useState([]);
             </div>
             <div class="col-sm  hover-zoom">
               <div class="card" style={{ width: "18 rem" }}>              
-              {data[1]?  <img src={data[1].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[1].image}`:img} class="card-img-top" alt="..." />
+              {data[1]?  <img style={{height:'200px'}}  src={data[1].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[1].image}`:img} class="card-img-top" alt="..." />
               :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[1]?'Tile : '+data[1].name:''}</h5>
@@ -53,7 +54,7 @@ const [data, setData] = useState([]);
             <div class="col-sm  hover-zoom">
               <div class="card" style={{ width: "18 rem" }}>
              
-              {data[2]? <img src={data[2].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[2].image}`:img} class="card-img-top" alt="..." />
+              {data[2]? <img style={{height:'200px'}} src={data[2].image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data[2].image}`:img} class="card-img-top" alt="..." />
               :''}
                 <div class="card-body">
                 <h5 class="card-title">{data[2]?'Tile : '+data[2].name:''}</h5>
