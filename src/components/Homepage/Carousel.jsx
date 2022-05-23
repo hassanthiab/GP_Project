@@ -80,7 +80,7 @@ At Nablus Equestrian Club we live the equestrian lifestyle at its best.<br/><br/
                   <h5><br/> take a tour</h5>
                   <p>
                   <br/><br/> 
-                   <Link to={'/UserTournament'} class="btn btn-primary">What's new?</Link>
+                   <Link to={'/Feed'} class="btn btn-primary">What's new?</Link>
                   </p>
                   <p>
                   <Link to={'/UserTournament'} class="btn btn-primary">Check out tournaments </Link>
@@ -89,7 +89,7 @@ At Nablus Equestrian Club we live the equestrian lifestyle at its best.<br/><br/
               </div>
          
           </div>
-          <div class="carousel-item">
+          <div class="carousel-item" >
           {data?
             <img src={data.image?`http://${process.env.REACT_APP_HOST_BACKEND}:8000/storage/${data.image}`:Img} class="d-block w-100" alt="..." />
         :''  }

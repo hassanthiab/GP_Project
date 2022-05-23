@@ -43,8 +43,15 @@ else{
             <ul>
          
               <li>
-                {" "}
-                <Button onClick={()=>signUp(items.id)} varient="outline">Register</Button>{" "}
+                {
+                  new Date(items.date)<Date.now()?
+                 <Button disabled onClick={()=>signUp(items.id)} varient="outline"><span class="text-danger" style={{marginRight:'10px'}}>(Closed) </span> Register</Button>
+                 :
+                 <div>  <span class="text-success" style={{marginRight:'-20px'}}>(Opened) </span>
+                 <Button onClick={()=>signUp(items.id)} varient="outline"> Register</Button></div>
+               
+
+                 }
               </li>
             </ul>
           </div>
