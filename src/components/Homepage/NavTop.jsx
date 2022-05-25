@@ -117,6 +117,7 @@ return Mindiff<1&&s==" Mins"?"just now":Mindiff+" "+s;
     return () => {
       if(pusher)
       pusher.disconnect();
+      
     };
   }, []);
 
@@ -128,7 +129,9 @@ return Mindiff<1&&s==" Mins"?"just now":Mindiff+" "+s;
         .delete("/api/logout")
         .then((res)=>
         {    
+          if(pusher)
           pusher.disconnect();
+      
         
         }  
         )
